@@ -19,9 +19,7 @@
 # Dependency directories
 vendor/
 
-# Environment variables and configuration
-.env
-.env.*
+
 config.toml.local
 config.yaml.local
 
