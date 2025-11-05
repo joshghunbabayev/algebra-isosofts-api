@@ -1,0 +1,1089 @@
+1. For get all dropdownlistitems from db
+	GET    /api/tablecomponent/dropdownlistitem
+
+{
+    "affectedPosition": [
+        {
+            "id": "GwRr609JD7Bg72Td021CxD5VA4bxD7",
+            "type": "affectedPosition",
+            "value": "Forklift Operator",
+            "shortValue": ""
+        },
+        {
+            "id": "0q951G724cKSA1440r4p53M6P08fmr",
+            "type": "affectedPosition",
+            "value": "Driver",
+            "shortValue": ""
+        },
+        {
+            "id": "n65430E9S6wV16JD2AH8J0e9AnX8u0",
+            "type": "affectedPosition",
+            "value": "Rigger",
+            "shortValue": ""
+        },
+        {
+            "id": "2ZKPIg85cwW63l4zUs72wNbP8KiG84",
+            "type": "affectedPosition",
+            "value": "All Employees",
+            "shortValue": ""
+        },
+        {
+            "id": "7M2x1rH33M517hwQN2bWZn85532ov9",
+            "type": "affectedPosition",
+            "value": "QHSE Specialist",
+            "shortValue": ""
+        },
+        {
+            "id": "U14hFH72LrEx7d220YuZ45KR3f2lsn",
+            "type": "affectedPosition",
+            "value": "Director",
+            "shortValue": ""
+        },
+        {
+            "id": "0e2C1Bro9WgPo3uKrovsE2680tfC8l",
+            "type": "affectedPosition",
+            "value": "HR Manager",
+            "shortValue": ""
+        }
+    ],
+    "affectedReceptors": [
+        {
+            "id": "4y0404m3Mvh193144xH9D62akT2a05",
+            "type": "affectedReceptors",
+            "value": "Air",
+            "shortValue": ""
+        },
+        {
+            "id": "Ji6oF936t5Et0281CI0iMGZM3XT9cx",
+            "type": "affectedReceptors",
+            "value": "Water",
+            "shortValue": ""
+        },
+        {
+            "id": "2A93sKH020pjP58vT53icks21w8cjG",
+            "type": "affectedReceptors",
+            "value": "Land",
+            "shortValue": ""
+        }
+    ],
+    "aspect": [
+        {
+            "id": "Fw068F1utuf867iO200qy15T40Y1V1",
+            "type": "aspect",
+            "value": "Air pollution",
+            "shortValue": ""
+        },
+        {
+            "id": "ah89O83Q547L1Aw5c5483M42d8V59M",
+            "type": "aspect",
+            "value": "Consumption of energy",
+            "shortValue": ""
+        },
+        {
+            "id": "581VT09cF2ZFxH8JJo72q8Qf2q0290",
+            "type": "aspect",
+            "value": "Soil pollution",
+            "shortValue": ""
+        },
+        {
+            "id": "n4HA4213l36xkL0P4Gzf8qu9S9513b",
+            "type": "aspect",
+            "value": "Row material extraction",
+            "shortValue": ""
+        },
+        {
+            "id": "2Z2lDbmz57mB3w0v28Nn703m58Z02Z",
+            "type": "aspect",
+            "value": "Generation of waste",
+            "shortValue": ""
+        },
+        {
+            "id": "3P32s5swz7J24pf0F3V6Y2wHIzl54q",
+            "type": "aspect",
+            "value": "Fossil fuel usage",
+            "shortValue": ""
+        },
+        {
+            "id": "7Z1hB6V99R2qgSN383M3P38J7377Z1",
+            "type": "aspect",
+            "value": "Biodiversity",
+            "shortValue": ""
+        },
+        {
+            "id": "C6tG8yic9604gJ7GwbZQQAzThx3ok7",
+            "type": "aspect",
+            "value": "Food waste",
+            "shortValue": ""
+        },
+        {
+            "id": "Qk5R43HWn9373kq6dq7Uir1M9UBWi5",
+            "type": "aspect",
+            "value": "Global worming",
+            "shortValue": ""
+        }
+    ],
+    "categoryOfFinding": [
+        {
+            "id": "KK1B5v6dvt4xg3bCURgd5d8YHgw4y2",
+            "type": "categoryOfFinding",
+            "value": "Non conformance",
+            "shortValue": ""
+        },
+        {
+            "id": "Z0oD58GJpMT7uL629F97JTjnJ35uHP",
+            "type": "categoryOfFinding",
+            "value": "Opportunity for Improvement",
+            "shortValue": ""
+        },
+        {
+            "id": "1mzf4A5TJ5R3iL2q829W7tc6L1BZt8",
+            "type": "categoryOfFinding",
+            "value": "Customer complaint",
+            "shortValue": ""
+        },
+        {
+            "id": "Yl75X7mX8NX569Y9WD82rV59F0cgjU",
+            "type": "categoryOfFinding",
+            "value": "Internal complaint",
+            "shortValue": ""
+        },
+        {
+            "id": "j06Y58O7K13oMqXgQ3suVY73i5M9q7",
+            "type": "categoryOfFinding",
+            "value": "External Complaint",
+            "shortValue": ""
+        },
+        {
+            "id": "6L9genMS9Q18D018W465r8r260B66M",
+            "type": "categoryOfFinding",
+            "value": "Good practice",
+            "shortValue": ""
+        },
+        {
+            "id": "1n91yd71r3XmU4yrC7q6Be7Jq05MW1",
+            "type": "categoryOfFinding",
+            "value": "Near miss",
+            "shortValue": ""
+        },
+        {
+            "id": "ZbYXG775XrtP228G4F8Y4hY9Hss8O0",
+            "type": "categoryOfFinding",
+            "value": "Incident",
+            "shortValue": ""
+        },
+        {
+            "id": "OAvO92O4gyJF16PIu8Sz89nZa2WdcA",
+            "type": "categoryOfFinding",
+            "value": "Accident",
+            "shortValue": ""
+        },
+        {
+            "id": "wI8wY69BcQki7Git9bEkCfj29N25Al",
+            "type": "categoryOfFinding",
+            "value": "Unsafe condition",
+            "shortValue": ""
+        },
+        {
+            "id": "9e9uh5Qd2LA67OB40MrAqPNV86q7G4",
+            "type": "categoryOfFinding",
+            "value": "Environmental Incident",
+            "shortValue": ""
+        }
+    ],
+    "depntFunctionName": [
+        {
+            "id": "wxS6n34RQxiy7r1E7y5645a0v0L1u4",
+            "type": "depntFunctionName",
+            "value": "Procurement",
+            "shortValue": "PRC"
+        },
+        {
+            "id": "3B751ZS11bqc08WJ3jGQ135lXGO0eF",
+            "type": "depntFunctionName",
+            "value": "Quality",
+            "shortValue": "QMS"
+        },
+        {
+            "id": "Q6B17TW9njaQm5Bi91gF3r34WTnjwj",
+            "type": "depntFunctionName",
+            "value": "Healty \u0026 Safety \u0026 Env",
+            "shortValue": "HSE"
+        },
+        {
+            "id": "22VfC79m44vulH691kh0O3NiSCmW46",
+            "type": "depntFunctionName",
+            "value": "Legal",
+            "shortValue": "LEG"
+        }
+    ],
+    "documentOrigin": [
+        {
+            "id": "1jwPe8Xv753B1y5g3WTcX698O6l31D",
+            "type": "documentOrigin",
+            "value": "Internal",
+            "shortValue": ""
+        },
+        {
+            "id": "KafX7959H382S5Yn9H5l17B5s0B042",
+            "type": "documentOrigin",
+            "value": "External",
+            "shortValue": ""
+        }
+    ],
+    "documentType": [
+        {
+            "id": "439Z80331K2rJt7980RgEOZ99Lq7dW",
+            "type": "documentType",
+            "value": "Procedure",
+            "shortValue": "PRC"
+        },
+        {
+            "id": "tl6wXAsZ8d09kMj5d15e65p0zPPl81",
+            "type": "documentType",
+            "value": "Form",
+            "shortValue": "FRM"
+        },
+        {
+            "id": "u9T8Q9NU98DPfpIHxyF83hSu78z0C3",
+            "type": "documentType",
+            "value": "Policy",
+            "shortValue": "PLC"
+        },
+        {
+            "id": "q8F76M8YWB072GuDOKcY81206528B6",
+            "type": "documentType",
+            "value": "Register",
+            "shortValue": "REG"
+        }
+    ],
+    "hazard": [
+        {
+            "id": "TP1SI32cT0cqxAQF1sf43oNn98S7K3",
+            "type": "hazard",
+            "value": "Bankering",
+            "shortValue": ""
+        },
+        {
+            "id": "u425Im11agC678tK923L9FFVpnL1rK",
+            "type": "hazard",
+            "value": "Changing Battery",
+            "shortValue": ""
+        },
+        {
+            "id": "NwLJx325F6rnz9H02g6i0q5164mJN9",
+            "type": "hazard",
+            "value": "Lifting",
+            "shortValue": ""
+        }
+    ],
+    "interestedParty": [
+        {
+            "id": "16IBzm2nCTpoj0N283oTnNG2i9yPgf",
+            "type": "interestedParty",
+            "value": "Vendor",
+            "shortValue": ""
+        },
+        {
+            "id": "l30D7YExs798NIq2l797L7X3198Ni2",
+            "type": "interestedParty",
+            "value": "Shareholder",
+            "shortValue": ""
+        },
+        {
+            "id": "AipgM4c4020axF3VF4PS9gb92Eh64v",
+            "type": "interestedParty",
+            "value": "Governmental Bodies",
+            "shortValue": ""
+        },
+        {
+            "id": "5807882x3GRi24YHYYJ6QV3STSu620",
+            "type": "interestedParty",
+            "value": "Certification Bodies",
+            "shortValue": ""
+        },
+        {
+            "id": "xwkc7576j446epR6KF1P0475E0Q79n",
+            "type": "interestedParty",
+            "value": "Employees",
+            "shortValue": ""
+        },
+        {
+            "id": "pONF663V6kQ6ljfT3Wrq3Vhz084952",
+            "type": "interestedParty",
+            "value": "Communities",
+            "shortValue": ""
+        },
+        {
+            "id": "C1Yn825D6NAmA61787I835129AQnNd",
+            "type": "interestedParty",
+            "value": "Media",
+            "shortValue": ""
+        },
+        {
+            "id": "Kc7I9n9uX15kNlEbY70S26XNjQ5N45",
+            "type": "interestedParty",
+            "value": "Environment",
+            "shortValue": ""
+        },
+        {
+            "id": "1fIG4ens9ov2tbDbgm7saW687OZ91l",
+            "type": "interestedParty",
+            "value": "NGO",
+            "shortValue": ""
+        },
+        {
+            "id": "M7E203rTa25q9NSh662il1IK11rV72",
+            "type": "interestedParty",
+            "value": "Partner",
+            "shortValue": ""
+        },
+        {
+            "id": "I3703sCWy1gN1aS192eSwn8Dgqs512",
+            "type": "interestedParty",
+            "value": "Customer",
+            "shortValue": ""
+        },
+        {
+            "id": "4tzB6938E5782cYV58d57V3P2vnX7J",
+            "type": "interestedParty",
+            "value": "Competitors",
+            "shortValue": ""
+        }
+    ],
+    "pestle": [
+        {
+            "id": "m10m5ilAr18W4J4uQ4wY8y2W3j9HEN",
+            "type": "pestle",
+            "value": "Political",
+            "shortValue": ""
+        },
+        {
+            "id": "sxky63X4a65kZ3k43rpl0802yh345G",
+            "type": "pestle",
+            "value": "Economical",
+            "shortValue": ""
+        },
+        {
+            "id": "Mhv0wWt261kkraisQO73C3BoAH8Lth",
+            "type": "pestle",
+            "value": "Social",
+            "shortValue": ""
+        },
+        {
+            "id": "24PYj6E97RzxGXl9z9RFL76745V20f",
+            "type": "pestle",
+            "value": "Technological",
+            "shortValue": ""
+        },
+        {
+            "id": "nCaq3hLL4W0X591947tK2u89i89607",
+            "type": "pestle",
+            "value": "Legal",
+            "shortValue": ""
+        },
+        {
+            "id": "oJV36kZ0CT6tp3EOGR452b0BLK7s64",
+            "type": "pestle",
+            "value": "Environmental",
+            "shortValue": ""
+        },
+        {
+            "id": "BokS47951ITzvGX9eZ09u7lMuSl81q",
+            "type": "pestle",
+            "value": "Competetive",
+            "shortValue": ""
+        },
+        {
+            "id": "3tpm2C4B2S0O0G65hL0556w8UXFl90",
+            "type": "pestle",
+            "value": "Market",
+            "shortValue": ""
+        },
+        {
+            "id": "6R1hz6eP1Iw0R38F6B5a587Gdg4274",
+            "type": "pestle",
+            "value": "Cultural",
+            "shortValue": ""
+        },
+        {
+            "id": "6Y4cduQk4r6580Tg5305cHWWSUAY39",
+            "type": "pestle",
+            "value": "Value",
+            "shortValue": ""
+        },
+        {
+            "id": "7plrk24py2942fuQeOzas1h8uK51yY",
+            "type": "pestle",
+            "value": "Culture",
+            "shortValue": ""
+        },
+        {
+            "id": "sw738dnF152Mv19hn39094A16rc96g",
+            "type": "pestle",
+            "value": "Knowledge",
+            "shortValue": ""
+        },
+        {
+            "id": "8R7Kc4pph6RJ2TfN6497o61OjUAhJ0",
+            "type": "pestle",
+            "value": "Performance",
+            "shortValue": ""
+        },
+        {
+            "id": "4F815Zs96DZ3657rm014NM75C20pGB",
+            "type": "pestle",
+            "value": "Reputation",
+            "shortValue": ""
+        }
+    ],
+    "process": [
+        {
+            "id": "9Yj37E5x58c1DlBrO13rcZh5f5K4OF",
+            "type": "process",
+            "value": "Context of Organisation",
+            "shortValue": ""
+        },
+        {
+            "id": "oM572Dcl16I63w1o17nb5S3776tJvG",
+            "type": "process",
+            "value": "Scope Management System",
+            "shortValue": ""
+        },
+        {
+            "id": "Y6Q2OwgSsx59GTG7I75Nze7Xjw7247",
+            "type": "process",
+            "value": "Processes Management",
+            "shortValue": ""
+        },
+        {
+            "id": "Fy0tZ9kc9ay8cRka3toO9T525H8v9X",
+            "type": "process",
+            "value": "Leadership",
+            "shortValue": ""
+        },
+        {
+            "id": "2Z2z6ov1sq1S039MQ7HIo8lWwiD6m8",
+            "type": "process",
+            "value": "Customer Focus",
+            "shortValue": ""
+        },
+        {
+            "id": "i8881n62848h9AR860zxz7G48A80bY",
+            "type": "process",
+            "value": "Policy",
+            "shortValue": ""
+        },
+        {
+            "id": "alL25028BQR3w3S66uW3p5Mwf08669",
+            "type": "process",
+            "value": "Responsibilities \u0026 Authorities",
+            "shortValue": ""
+        },
+        {
+            "id": "V0K70QJF6d9UM147da13v4F3kSg8XP",
+            "type": "process",
+            "value": "Participation \u0026 Consultation",
+            "shortValue": ""
+        },
+        {
+            "id": "J7ozaeg00NEf5g7854uJP24rub9G19",
+            "type": "process",
+            "value": "Hazards \u0026 Risks",
+            "shortValue": ""
+        },
+        {
+            "id": "Ih42q508crI06xnVE1CQj4r9ina3L3",
+            "type": "process",
+            "value": "Environmental Aspects",
+            "shortValue": ""
+        },
+        {
+            "id": "0lh3aE895qXt6jddvWJ70Kb7S5N9L0",
+            "type": "process",
+            "value": "Legal and Compliance Obligations",
+            "shortValue": ""
+        },
+        {
+            "id": "m8865s696O6vD0Qbh0cgd5MsEY8U73",
+            "type": "process",
+            "value": "Objectives",
+            "shortValue": ""
+        },
+        {
+            "id": "47r6EwdQ1F7HX701LDt8J7oqLa7x8Z",
+            "type": "process",
+            "value": "Change Management",
+            "shortValue": ""
+        },
+        {
+            "id": "Y17u81p12O88Mv7U96aPO4DPU5W6U6",
+            "type": "process",
+            "value": "Human Resources",
+            "shortValue": ""
+        },
+        {
+            "id": "8m2mQX7r7XE1v4sr6ciiu2Lk14L48S",
+            "type": "process",
+            "value": "Infrastucture",
+            "shortValue": ""
+        },
+        {
+            "id": "565yinI83Jv9E5J3b779IRIKD334n5",
+            "type": "process",
+            "value": "Operation Environment",
+            "shortValue": ""
+        },
+        {
+            "id": "0998Pd3sk0zDfKa8RgzmrHyDnQl4Sq",
+            "type": "process",
+            "value": "Monitoring \u0026 Measurement",
+            "shortValue": ""
+        },
+        {
+            "id": "T15hn7415T0VblJp3C7eDb7Q0417w5",
+            "type": "process",
+            "value": "Measurement Traceability",
+            "shortValue": ""
+        },
+        {
+            "id": "00973t51438w37Ku54E4ayVG78Nud8",
+            "type": "process",
+            "value": "Organisational Knowledge",
+            "shortValue": ""
+        },
+        {
+            "id": "2T1P9d53f3O2k6MK7us90exs8u3Kmf",
+            "type": "process",
+            "value": "Competency",
+            "shortValue": ""
+        },
+        {
+            "id": "295vNOq65q47ZV9yIv97ZCABw9UHsi",
+            "type": "process",
+            "value": "Awareness",
+            "shortValue": ""
+        },
+        {
+            "id": "LN1Y9S4QKjG0jmbWy4L3kp99DOy8a8",
+            "type": "process",
+            "value": "Communication",
+            "shortValue": ""
+        },
+        {
+            "id": "Iia745HSL02i78ewl09GU65B1iU523",
+            "type": "process",
+            "value": "Internal documentation",
+            "shortValue": ""
+        },
+        {
+            "id": "6h58AtWvcjtW9Jo846EKWMBu79z2r8",
+            "type": "process",
+            "value": "External documentation",
+            "shortValue": ""
+        },
+        {
+            "id": "7wKWdqL9g8mC0jzQR57QjFp40Y3to9",
+            "type": "process",
+            "value": "Operation planning \u0026 control",
+            "shortValue": ""
+        },
+        {
+            "id": "XCr08U7Lye848k83kPbKE813j8V42B",
+            "type": "process",
+            "value": "Requirements for product/services and sales",
+            "shortValue": ""
+        },
+        {
+            "id": "1yD1914W2ThcV0oaP742GO037rqH0s",
+            "type": "process",
+            "value": "Procurement",
+            "shortValue": ""
+        },
+        {
+            "id": "FLvZ28L94cru7H9ATf00C9d03QOVYb",
+            "type": "process",
+            "value": "Emergency Response",
+            "shortValue": ""
+        },
+        {
+            "id": "1pJ1b14VNC3dqv0C54583j7E81Q1Fg",
+            "type": "process",
+            "value": "Design \u0026 Development",
+            "shortValue": ""
+        },
+        {
+            "id": "xP5ej1o514cno4OE0611gc840IFjqk",
+            "type": "process",
+            "value": "Control of External Providers",
+            "shortValue": ""
+        },
+        {
+            "id": "8aQfxW98092y40LoMb37M059Io269h",
+            "type": "process",
+            "value": "Control of Production/Service",
+            "shortValue": ""
+        },
+        {
+            "id": "71A0gyuIuFCcpc87Q8kQ42sFYdplKi",
+            "type": "process",
+            "value": "Identification of Production/Service Outputes",
+            "shortValue": ""
+        },
+        {
+            "id": "E18LSx9c730V5Qt45MOm8VW06739HT",
+            "type": "process",
+            "value": "Customer or Providers Properties",
+            "shortValue": ""
+        },
+        {
+            "id": "pHW1bX5ER5723sLe34o22POj8I5AAv",
+            "type": "process",
+            "value": "Preservation",
+            "shortValue": ""
+        },
+        {
+            "id": "i876345pff9AwQr0w1s61Si7Q18Qz3",
+            "type": "process",
+            "value": "Post Delivery Activities",
+            "shortValue": ""
+        },
+        {
+            "id": "arL6T987ld70h905z4Ld5A8Ycm63et",
+            "type": "process",
+            "value": "Non conforming product/service",
+            "shortValue": ""
+        },
+        {
+            "id": "377y00003ZcxYF7ZCXL394YfU0Qh37",
+            "type": "process",
+            "value": "Customer Satisfuction",
+            "shortValue": ""
+        },
+        {
+            "id": "A7SZn6ZqjA0o999999jGlMONDkEPUp",
+            "type": "process",
+            "value": "Analysis and Evaluation",
+            "shortValue": ""
+        },
+        {
+            "id": "n5A73mU03l0e1cU4j68zU09Rx77hY2",
+            "type": "process",
+            "value": "Internal Audit",
+            "shortValue": ""
+        },
+        {
+            "id": "685vI90T92SIG5FOg09NHj4YzytT6D",
+            "type": "process",
+            "value": "Management Review",
+            "shortValue": ""
+        },
+        {
+            "id": "4Y57YzKe12CZ3HFcha6161O9TKTiTh",
+            "type": "process",
+            "value": "Non conformances \u0026 Corrective Actions",
+            "shortValue": ""
+        },
+        {
+            "id": "SgI2dVyOFewn5rvl0t6hIo4JK3wjeM",
+            "type": "process",
+            "value": "Continual improvement",
+            "shortValue": ""
+        },
+        {
+            "id": "2VR50y9g020UV4ctwxLH35273T21V5",
+            "type": "process",
+            "value": "Forklift Operations",
+            "shortValue": ""
+        },
+        {
+            "id": "5lm9I1H44KlH79286ZMMEX8A8ShLzZ",
+            "type": "process",
+            "value": "Truck driving",
+            "shortValue": ""
+        }
+    ],
+    "relativeFunction": [
+        {
+            "id": "076cc63NnMbK1iC39m4ImP5Ts8I19o",
+            "type": "relativeFunction",
+            "value": "Management",
+            "shortValue": ""
+        },
+        {
+            "id": "362172R8696Eca7163Kz7a9x2o2lE0",
+            "type": "relativeFunction",
+            "value": "Operations",
+            "shortValue": ""
+        },
+        {
+            "id": "957S5x5347GE762R96w59JOmEcb07R",
+            "type": "relativeFunction",
+            "value": "Legal",
+            "shortValue": ""
+        },
+        {
+            "id": "b0SKj9y006sOc29kuSxFzkID7cwJi7",
+            "type": "relativeFunction",
+            "value": "HR",
+            "shortValue": ""
+        },
+        {
+            "id": "9I54zOx5Pra6C7XH59sh2676u7te4K",
+            "type": "relativeFunction",
+            "value": "Quality",
+            "shortValue": ""
+        },
+        {
+            "id": "x3Pa97WC684j2578q50C31wsXf32Kk",
+            "type": "relativeFunction",
+            "value": "Health \u0026 Safety",
+            "shortValue": ""
+        },
+        {
+            "id": "KveiHj8OXx864OD9KfZMK3260J0INF",
+            "type": "relativeFunction",
+            "value": "Environmental",
+            "shortValue": ""
+        },
+        {
+            "id": "0f0y2aNpD64Ca2TJ2IIX6704wmW96h",
+            "type": "relativeFunction",
+            "value": "Commercial",
+            "shortValue": ""
+        },
+        {
+            "id": "VzyvL5F5yrUz381jK8965jxRc046sh",
+            "type": "relativeFunction",
+            "value": "Security",
+            "shortValue": ""
+        },
+        {
+            "id": "TVl44FFdG00J2Dq3e7b1wT7YGnB69B",
+            "type": "relativeFunction",
+            "value": "Finance",
+            "shortValue": ""
+        },
+        {
+            "id": "VvtDk9I5JwR1pUKC6wjP6ADsSq3sXF",
+            "type": "relativeFunction",
+            "value": "Administrative",
+            "shortValue": ""
+        },
+        {
+            "id": "9q9PSn3yH9K1FUoM57ISPtzx5mRfbE",
+            "type": "relativeFunction",
+            "value": "Procurement",
+            "shortValue": ""
+        },
+        {
+            "id": "Vz59O6yMU3HaZxkW8Xikh1Q5JoV21o",
+            "type": "relativeFunction",
+            "value": "Logistics",
+            "shortValue": ""
+        },
+        {
+            "id": "4lSRcnWbFPlT0DxFt1j1L921ma8d51",
+            "type": "relativeFunction",
+            "value": "IT",
+            "shortValue": ""
+        },
+        {
+            "id": "EG145Y402I6RlUF03p6v03230c8745",
+            "type": "relativeFunction",
+            "value": "Training",
+            "shortValue": ""
+        }
+    ],
+    "resources": [
+        {
+            "id": "BDgs7WI4ENx55v31RBV2FZfI0774n8",
+            "type": "resources",
+            "value": "Human Resources",
+            "shortValue": ""
+        },
+        {
+            "id": "Yw563lqWSH4W592t8Uyj6BdH58tK07",
+            "type": "resources",
+            "value": "Financial Resources",
+            "shortValue": ""
+        },
+        {
+            "id": "c87I4z2Gtg7KXyQ8KCHM92g4vla2hb",
+            "type": "resources",
+            "value": "Technical Resources",
+            "shortValue": ""
+        },
+        {
+            "id": "26PFW9Vxx8a59S64VjtiG8JcO7P4GV",
+            "type": "resources",
+            "value": "Human \u0026 Financial Resources",
+            "shortValue": ""
+        },
+        {
+            "id": "mgii52P3jWXCT2jM897759MWU1q95V",
+            "type": "resources",
+            "value": "Human, Financial \u0026 Technical Resources",
+            "shortValue": ""
+        }
+    ],
+    "risk": [
+        {
+            "id": "3j23l088026g7g8RuXQcA6Y8e9H1iM",
+            "type": "risk",
+            "value": "Slip",
+            "shortValue": ""
+        },
+        {
+            "id": "Wf494A6NO66pD56dpd4qzL0K14fSU3",
+            "type": "risk",
+            "value": "Trip",
+            "shortValue": ""
+        },
+        {
+            "id": "91B8pQB3w3s543v19Z6BXq8R16Mm8Y",
+            "type": "risk",
+            "value": "Fall",
+            "shortValue": ""
+        },
+        {
+            "id": "mCN9v00n7EjaDT4yQ8Hb600E5164ya",
+            "type": "risk",
+            "value": "Good damage",
+            "shortValue": ""
+        }
+    ],
+    "scope": [
+        {
+            "id": "7X8H2C3gJb36R634J1iq3mac91n27h",
+            "type": "scope",
+            "value": "Construction",
+            "shortValue": ""
+        },
+        {
+            "id": "8gb16a8xN6SgnJCF469G2o414On400",
+            "type": "scope",
+            "value": "Trading",
+            "shortValue": ""
+        },
+        {
+            "id": "os89kw835P3WPpAr3P4S5x2a9Npf8F",
+            "type": "scope",
+            "value": "Insurance",
+            "shortValue": ""
+        },
+        {
+            "id": "j2BS49524iX55w2uK2XZkhS5EC4LS3",
+            "type": "scope",
+            "value": "Cerification",
+            "shortValue": ""
+        }
+    ],
+    "sourceOfFinding": [
+        {
+            "id": "xEO502g8tG2vh69k5w759P2eqU2RD1",
+            "type": "sourceOfFinding",
+            "value": "İnternal audit",
+            "shortValue": ""
+        },
+        {
+            "id": "0gr1Uk5Q95MJ305Qm4etCizeDa94y7",
+            "type": "sourceOfFinding",
+            "value": "External Audit",
+            "shortValue": ""
+        },
+        {
+            "id": "N9825K05jf1w5bSydq897F08h53QN6",
+            "type": "sourceOfFinding",
+            "value": "Third party audit",
+            "shortValue": ""
+        },
+        {
+            "id": "6N9Ny9XNX502x920N21n93aTJ85MMK",
+            "type": "sourceOfFinding",
+            "value": "Site inspection",
+            "shortValue": ""
+        },
+        {
+            "id": "L97NO1zerCX859j9PX2ehFlk34D376",
+            "type": "sourceOfFinding",
+            "value": "Random observation",
+            "shortValue": ""
+        }
+    ],
+    "status": [
+        {
+            "id": "11v7UtC84r73uW5843g35Fv39Ae297",
+            "type": "status",
+            "value": "0",
+            "shortValue": ""
+        },
+        {
+            "id": "PYo67700384m611iU3u571s7lW8568",
+            "type": "status",
+            "value": "10",
+            "shortValue": ""
+        },
+        {
+            "id": "s1B40f28lpimwo2dvA206jQaB735t0",
+            "type": "status",
+            "value": "20",
+            "shortValue": ""
+        },
+        {
+            "id": "2g3JsQSv0c0HWg204zaaORyO68oe72",
+            "type": "status",
+            "value": "30",
+            "shortValue": ""
+        },
+        {
+            "id": "83d16FE8IMu68P27ugw05Pl8I52fOh",
+            "type": "status",
+            "value": "40",
+            "shortValue": ""
+        },
+        {
+            "id": "324jT4f1w3G1S3u4O4Un54c480KAsZ",
+            "type": "status",
+            "value": "50",
+            "shortValue": ""
+        },
+        {
+            "id": "LJ1U5z8HjxuX2XfKg9Yz2SXTWVh5Lh",
+            "type": "status",
+            "value": "60",
+            "shortValue": ""
+        },
+        {
+            "id": "nAM2k3L9D62C1701BNH6J7d8wlGl4s",
+            "type": "status",
+            "value": "70",
+            "shortValue": ""
+        },
+        {
+            "id": "Wk3Zb0H55R9z535oL0L60PJbaF9C1a",
+            "type": "status",
+            "value": "80",
+            "shortValue": ""
+        },
+        {
+            "id": "885KQ73a9B9252JXtpO4VN34956Dl6",
+            "type": "status",
+            "value": "90",
+            "shortValue": ""
+        },
+        {
+            "id": "4jB95Pz97t42jRMB56f3tMO82J224M",
+            "type": "status",
+            "value": "100",
+            "shortValue": ""
+        }
+    ],
+    "swot": [
+        {
+            "id": "ZN036B5TGrU2wguf0gR1Cf3Q0O27EW",
+            "type": "swot",
+            "value": "Strengths",
+            "shortValue": ""
+        },
+        {
+            "id": "2DHVc24hvV717Ub9UA6Zvl663BT4i6",
+            "type": "swot",
+            "value": "Weaknesses",
+            "shortValue": ""
+        },
+        {
+            "id": "9Shg9nomC77yRjCvZo233U44GNSL8f",
+            "type": "swot",
+            "value": "Opportunities",
+            "shortValue": ""
+        },
+        {
+            "id": "68Y98gB41P1A70Ucd16HkUw6T3F6yk",
+            "type": "swot",
+            "value": "Threats",
+            "shortValue": ""
+        }
+    ],
+    "typeOfFinding": [
+        {
+            "id": "2S48UW85uiOnxEZOwkNbq0A50O93v9",
+            "type": "typeOfFinding",
+            "value": "Poor quality of service",
+            "shortValue": ""
+        },
+        {
+            "id": "5E183419qTW8hWyyTFCaMBZ3400461",
+            "type": "typeOfFinding",
+            "value": "Poor quality of goods",
+            "shortValue": ""
+        },
+        {
+            "id": "Rw64SP3FC9G8l158827FF6qRw4hf39",
+            "type": "typeOfFinding",
+            "value": "Late delivery",
+            "shortValue": ""
+        },
+        {
+            "id": "CO8SHPYeaMbc5hf8adV5dXnAI1ItjA",
+            "type": "typeOfFinding",
+            "value": "Service delay",
+            "shortValue": ""
+        },
+        {
+            "id": "GD924B5493IQ9910fI4gB14Ul2h28K",
+            "type": "typeOfFinding",
+            "value": "Poor communication",
+            "shortValue": ""
+        },
+        {
+            "id": "0W8RX69TB9o0w549fyjZcHg93K4sg9",
+            "type": "typeOfFinding",
+            "value": "Lack of documentation",
+            "shortValue": ""
+        },
+        {
+            "id": "PKh7K2RL95b6a775r32hy1398fSn32",
+            "type": "typeOfFinding",
+            "value": "Poor Health \u0026 Safety",
+            "shortValue": ""
+        },
+        {
+            "id": "L12w1637t0yw5evT6wCccf02g2963D",
+            "type": "typeOfFinding",
+            "value": "Spill",
+            "shortValue": ""
+        },
+        {
+            "id": "NoKb736HT9Zg6xXrpI57S9A6qc647m",
+            "type": "typeOfFinding",
+            "value": "Fatality",
+            "shortValue": ""
+        },
+        {
+            "id": "lD8HifeTr7Ne6lK138PFs78g008MS6",
+            "type": "typeOfFinding",
+            "value": "First Aid Case",
+            "shortValue": ""
+        }
+    ],
+    "verificationStatus": [
+        {
+            "id": "D65i3px6F34WBy34s03A0v25jI2P1t",
+            "type": "verificationStatus",
+            "value": "Done",
+            "shortValue": ""
+        },
+        {
+            "id": "IzQGU8kDN3rcM73Jr6aiQ5c6kJ6VZ2",
+            "type": "verificationStatus",
+            "value": "Not done",
+            "shortValue": ""
+        },
+        {
+            "id": "Uiw48j2EPm6m6xM58dov9610s2aZ7r",
+            "type": "verificationStatus",
+            "value": "Rework required",
+            "shortValue": ""
+        }
+    ]
+}
