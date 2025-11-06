@@ -9,7 +9,7 @@ import (
 type DropDownListItemModel struct {
 }
 
-func (*DropDownListItemModel) GenerateIdForDropDownListItem() string {
+func (*DropDownListItemModel) GenerateUniqueId() string {
 	Id := modules.GenerateRandomString(30)
 
 	var dropDownListItemModel DropDownListItemModel
@@ -19,7 +19,7 @@ func (*DropDownListItemModel) GenerateIdForDropDownListItem() string {
 	if dropDownListItem.IsEmpty() {
 		return Id
 	} else {
-		return dropDownListItemModel.GenerateIdForDropDownListItem()
+		return dropDownListItemModel.GenerateUniqueId()
 	}
 }
 
@@ -86,7 +86,7 @@ func (*DropDownListItemModel) DuplicateDefaults() error {
 	}
 
 	for _, defaultDropDownListItem := range defaultDropDownListItems {
-		defaultDropDownListItem.Id = dropDownListItemModel.GenerateIdForDropDownListItem()
+		defaultDropDownListItem.Id = dropDownListItemModel.GenerateUniqueId()
 		dropDownListItemModel.Create(defaultDropDownListItem)
 	}
 

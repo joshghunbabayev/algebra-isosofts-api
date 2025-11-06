@@ -2,6 +2,8 @@ package registerHandlers
 
 import (
 	registerModels "algebra-isosofts-api/models/registers"
+	registerTypes "algebra-isosofts-api/types/registers"
+	tableComponentTypes "algebra-isosofts-api/types/tableComponents"
 
 	"github.com/gin-gonic/gin"
 )
@@ -53,17 +55,34 @@ func (*BrHandler) Create(c *gin.Context) {
 		return
 	}
 
-	// brRegister := types.BRRegister{
-	// 	ID:     models.GenerateIDForBRRegister(),
-	// 	SWOT:   body.SWOT,
-	// 	PESTLE: body.PESTLE,
-	// }
+	var brModel registerModels.BrModel
 
-	// var brRegisterModel models.BRRegisterModel
+	br := registerTypes.Br{
+		Id: brModel.GenerateUniqueId(),
+		No: "DEFVALUE!",
+		Swot: tableComponentTypes.DropDownListItem{
+			Id: body.Swot,
+		},
+		Pestle: tableComponentTypes.DropDownListItem{
+			Id: body.Pestle,
+		},
+		InterestedParty: tableComponentTypes.DropDownListItem{
+			Id: body.InterestedParty,
+		},
+		RiskOpportunity: body.RiskOpportunity,
+		Objective:       body.Objective,
+		KPI:             body.KPI,
+		Process: tableComponentTypes.DropDownListItem{
+			Id: body.Process,
+		},
+		ERMEOA:                 body.ERMEOA,
+		InitialRiskSeverity:    body.InitialRiskSeverity,
+		InitialRiskLikelyhood:  body.InitialRiskLikelyhood,
+		ResidualRiskSeverity:   body.ResidualRiskSeverity,
+		ResidualRiskLikelyhood: body.ResidualRiskLikelyhood,
+	}
 
-	// brRegisterModel.Create(brRegister)
+	brModel.Create(br)
 
-	c.JSON(200, gin.H{
-		"token": "aaa",
-	})
+	c.JSON(201, gin.H{})
 }
