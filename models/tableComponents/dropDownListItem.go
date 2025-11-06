@@ -28,7 +28,7 @@ func (*DropDownListItemModel) GetById(Id string) (tableComponentTypes.DropDownLi
 	row := db.QueryRow("SELECT * FROM dropdownlistitems WHERE id = ?", Id)
 
 	var dropDownListItem tableComponentTypes.DropDownListItem
-	err := row.Scan(&dropDownListItem.Id, &dropDownListItem.Type, &dropDownListItem.Value)
+	err := row.Scan(&dropDownListItem.Id, &dropDownListItem.Type, &dropDownListItem.Value, &dropDownListItem.ShortValue)
 
 	return dropDownListItem, err
 }
