@@ -4,6 +4,7 @@ import (
 	"algebra-isosofts-api/routes"
 	"os"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/lpernett/godotenv"
 )
@@ -15,6 +16,7 @@ func main() {
 	}
 
 	r := gin.Default()
+	r.Use(cors.Default())
 	routes.APIRoutes(r.Group("/api"))
 
 	port := os.Getenv("PORT")

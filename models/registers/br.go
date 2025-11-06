@@ -28,7 +28,7 @@ func (*BrModel) GetById(Id string) (registerTypes.Br, error) {
 	row := db.QueryRow("SELECT * FROM brregisters WHERE id = ?", Id)
 
 	var br registerTypes.Br
-	err := row.Scan(&br.Id, &br.Swot, &br.Pestle)
+	err := row.Scan(&br.Id, &br.Swot.Id, &br.Pestle.Id)
 
 	return br, err
 }
@@ -46,7 +46,7 @@ func (*BrModel) GetAll() ([]registerTypes.Br, error) {
 
 	for rows.Next() {
 		var br registerTypes.Br
-		rows.Scan(&br.Id, &br.Swot, &br.Pestle)
+		rows.Scan(&br.Id, &br.No, &br.Swot.Id, &br.Pestle.Id, &br.InterestedParty.Id, &br.RiskOpportunity, &br.Objective, &br.KPI, &br.Process.Id, &br.ERMEOA, &br.InitialRiskSeverity, &br.InitialRiskLikelyhood, &br.ResidualRiskSeverity, &br.ResidualRiskLikelyhood)
 		brs = append(brs, br)
 	}
 

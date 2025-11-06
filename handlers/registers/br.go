@@ -32,10 +32,10 @@ func (*BrHandler) Create(c *gin.Context) {
 		KPI                    string `json:"kpi"`
 		Process                string `json:"process"`
 		ERMEOA                 string `json:"ermeoa"`
-		InitialRiskSeverity    string `json:"initialRiskSeverity"`
-		InitialRiskLikelyhood  string `json:"initialRiskLikelyhood"`
-		ResidualRiskSeverity   string `json:"residualRiskSeverity"`
-		ResidualRiskLikelyhood string `json:"residualRiskLikelyhood"`
+		InitialRiskSeverity    int8   `json:"initialRiskSeverity"`
+		InitialRiskLikelyhood  int8   `json:"initialRiskLikelyhood"`
+		ResidualRiskSeverity   int8   `json:"residualRiskSeverity"`
+		ResidualRiskLikelyhood int8   `json:"residualRiskLikelyhood"`
 	}
 
 	var errs = make(map[string]interface{})
