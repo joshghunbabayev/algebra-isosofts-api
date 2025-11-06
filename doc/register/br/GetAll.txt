@@ -1,0 +1,81 @@
+1. For get all brregister from db
+	GET    /api/register/br
+
+
+
+[
+    {
+        "id": "1111",
+        "no": "BRR/25/001",
+        "Swot": {
+            "id": "ZN036B5TGrU2wguf0gR1Cf3Q0O27EW",
+            "type": "swot",
+            "value": "Strengths",
+            "shortValue": ""
+        },
+        "Pestle": {
+            "id": "sxky63X4a65kZ3k43rpl0802yh345G",
+            "type": "pestle",
+            "value": "Economical",
+            "shortValue": ""
+        },
+        "InterestedParty": {
+            "id": "Kc7I9n9uX15kNlEbY70S26XNjQ5N45",
+            "type": "interestedParty",
+            "value": "Environment",
+            "shortValue": ""
+        },
+        "riskOpportunity": "uhbas ihbdasibd iusabidu basiubd ",
+        "objective": "aisbdisa bdiubas iudbsaiu bd",
+        "kpi": "d asbiudabsdiubsaiudbasiud ",
+        "Process": {
+            "id": "LN1Y9S4QKjG0jmbWy4L3kp99DOy8a8",
+            "type": "process",
+            "value": "Communication",
+            "shortValue": ""
+        },
+        "ermeoa": "das iasubd iuasbidu basiub iudbsaiu da",
+        "initialRiskSeverity": 2,
+        "initialRiskLikelyhood": 4,
+        "residualRiskSeverity": 1,
+        "residualRiskLikelyhood": 2,
+        "Actions": null
+    },
+    {
+        "id": "2222",
+        "no": "BRR/25/002",
+        "Swot": {
+            "id": "2DHVc24hvV717Ub9UA6Zvl663BT4i6",
+            "type": "swot",
+            "value": "Weaknesses",
+            "shortValue": ""
+        },
+        "Pestle": {
+            "id": "nCaq3hLL4W0X591947tK2u89i89607",
+            "type": "pestle",
+            "value": "Legal",
+            "shortValue": ""
+        },
+        "InterestedParty": {
+            "id": "1fIG4ens9ov2tbDbgm7saW687OZ91l",
+            "type": "interestedParty",
+            "value": "NGO",
+            "shortValue": ""
+        },
+        "riskOpportunity": "dsada",
+        "objective": "aisbdisa bdiubas iudbsaiu bd",
+        "kpi": "d asbiudabsdiubsaiudbasiud ",
+        "Process": {
+            "id": "J7ozaeg00NEf5g7854uJP24rub9G19",
+            "type": "process",
+            "value": "Hazards \u0026 Risks",
+            "shortValue": ""
+        },
+        "ermeoa": "das iasubd iuasbidu basiub iudbsaiu da",
+        "initialRiskSeverity": 5,
+        "initialRiskLikelyhood": 2,
+        "residualRiskSeverity": 3,
+        "residualRiskLikelyhood": 1,
+        "Actions": null
+    }
+]
