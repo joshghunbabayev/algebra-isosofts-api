@@ -7,19 +7,19 @@
     {
         "id": "1111",
         "no": "BRR/25/001",
-        "Swot": {
+        "swot": {
             "id": "ZN036B5TGrU2wguf0gR1Cf3Q0O27EW",
             "type": "swot",
             "value": "Strengths",
             "shortValue": ""
         },
-        "Pestle": {
+        "pestle": {
             "id": "sxky63X4a65kZ3k43rpl0802yh345G",
             "type": "pestle",
             "value": "Economical",
             "shortValue": ""
         },
-        "InterestedParty": {
+        "interestedParty": {
             "id": "Kc7I9n9uX15kNlEbY70S26XNjQ5N45",
             "type": "interestedParty",
             "value": "Environment",
@@ -28,7 +28,7 @@
         "riskOpportunity": "uhbas ihbdasibd iusabidu basiubd ",
         "objective": "aisbdisa bdiubas iudbsaiu bd",
         "kpi": "d asbiudabsdiubsaiudbasiud ",
-        "Process": {
+        "process": {
             "id": "LN1Y9S4QKjG0jmbWy4L3kp99DOy8a8",
             "type": "process",
             "value": "Communication",
@@ -39,24 +39,24 @@
         "initialRiskLikelyhood": 4,
         "residualRiskSeverity": 1,
         "residualRiskLikelyhood": 2,
-        "Actions": null
+        "actions": null
     },
     {
         "id": "2222",
         "no": "BRR/25/002",
-        "Swot": {
+        "swot": {
             "id": "2DHVc24hvV717Ub9UA6Zvl663BT4i6",
             "type": "swot",
             "value": "Weaknesses",
             "shortValue": ""
         },
-        "Pestle": {
+        "pestle": {
             "id": "nCaq3hLL4W0X591947tK2u89i89607",
             "type": "pestle",
             "value": "Legal",
             "shortValue": ""
         },
-        "InterestedParty": {
+        "interestedParty": {
             "id": "1fIG4ens9ov2tbDbgm7saW687OZ91l",
             "type": "interestedParty",
             "value": "NGO",
@@ -65,7 +65,7 @@
         "riskOpportunity": "dsada",
         "objective": "aisbdisa bdiubas iudbsaiu bd",
         "kpi": "d asbiudabsdiubsaiudbasiud ",
-        "Process": {
+        "process": {
             "id": "J7ozaeg00NEf5g7854uJP24rub9G19",
             "type": "process",
             "value": "Hazards \u0026 Risks",
@@ -76,6 +76,6 @@
         "initialRiskLikelyhood": 2,
         "residualRiskSeverity": 3,
         "residualRiskLikelyhood": 1,
-        "Actions": null
+        "actions": null
     }
 ]
