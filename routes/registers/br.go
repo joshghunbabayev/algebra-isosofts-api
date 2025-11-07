@@ -10,4 +10,5 @@ func BrRoutes(rg *gin.RouterGroup) {
 	var brHandler registerHandlers.BrHandler
 	rg.GET("/", brHandler.GetAll)
 	rg.POST("/", brHandler.Create)
+	rg.PUT("/:id", brHandler.Update)
 }

@@ -25,17 +25,30 @@ func (*DropDownListItemModel) GenerateUniqueId() string {
 
 func (*DropDownListItemModel) GetById(Id string) (tableComponentTypes.DropDownListItem, error) {
 	db := database.GetDatabase()
-	row := db.QueryRow("SELECT * FROM dropdownlistitems WHERE id = ?", Id)
+	row := db.QueryRow(`
+		SELECT * 
+		FROM dropdownlistitems 
+		WHERE id = ?`,
+		Id,
+	)
 
 	var dropDownListItem tableComponentTypes.DropDownListItem
-	err := row.Scan(&dropDownListItem.Id, &dropDownListItem.Type, &dropDownListItem.Value, &dropDownListItem.ShortValue)
+	err := row.Scan(
+		&dropDownListItem.Id,
+		&dropDownListItem.Type,
+		&dropDownListItem.Value,
+		&dropDownListItem.ShortValue,
+	)
 
 	return dropDownListItem, err
 }
 
 func (*DropDownListItemModel) GetAll() ([]tableComponentTypes.DropDownListItem, error) {
 	db := database.GetDatabase()
-	rows, err := db.Query("SELECT * FROM dropdownlistitems")
+	rows, err := db.Query(
+		`SELECT * 
+		FROM dropdownlistitems`,
+	)
 
 	if err != nil {
 		return nil, err
@@ -46,7 +59,12 @@ func (*DropDownListItemModel) GetAll() ([]tableComponentTypes.DropDownListItem, 
 
 	for rows.Next() {
 		var dropDownListItem tableComponentTypes.DropDownListItem
-		rows.Scan(&dropDownListItem.Id, &dropDownListItem.Type, &dropDownListItem.Value, &dropDownListItem.ShortValue)
+		rows.Scan(
+			&dropDownListItem.Id,
+			&dropDownListItem.Type,
+			&dropDownListItem.Value,
+			&dropDownListItem.ShortValue,
+		)
 		dropDownListItems = append(dropDownListItems, dropDownListItem)
 	}
 
@@ -57,8 +75,18 @@ func (*DropDownListItemModel) Create(dropDownListItem tableComponentTypes.DropDo
 
 	db := database.GetDatabase()
 
-	_, err := db.Exec(`INSERT INTO dropdownlistitems ("id", "type", "value", "shortValue") VALUES (?, ?, ?, ?)`,
-		dropDownListItem.Id, dropDownListItem.Type, dropDownListItem.Value, dropDownListItem.ShortValue)
+	_, err := db.Exec(`
+		INSERT INTO dropdownlistitems (
+			"id", 
+			"type", 
+			"value", 
+			"shortValue"
+		) VALUES (?, ?, ?, ?)`,
+		dropDownListItem.Id,
+		dropDownListItem.Type,
+		dropDownListItem.Value,
+		dropDownListItem.ShortValue,
+	)
 
 	if err != nil {
 		return err
@@ -69,7 +97,10 @@ func (*DropDownListItemModel) Create(dropDownListItem tableComponentTypes.DropDo
 
 func (*DropDownListItemModel) DuplicateDefaults() error {
 	db := database.GetDatabase()
-	rows, err := db.Query("SELECT * FROM defaultdropdownlistitems")
+	rows, err := db.Query(
+		`SELECT * 
+		FROM defaultdropdownlistitems`,
+	)
 
 	if err != nil {
 		return err
@@ -81,7 +112,11 @@ func (*DropDownListItemModel) DuplicateDefaults() error {
 
 	for rows.Next() {
 		var defaultDropDownListItem tableComponentTypes.DropDownListItem
-		rows.Scan(&defaultDropDownListItem.Type, &defaultDropDownListItem.Value, &defaultDropDownListItem.ShortValue)
+		rows.Scan(
+			&defaultDropDownListItem.Type,
+			&defaultDropDownListItem.Value,
+			&defaultDropDownListItem.ShortValue,
+		)
 		defaultDropDownListItems = append(defaultDropDownListItems, defaultDropDownListItem)
 	}
 
