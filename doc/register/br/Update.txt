@@ -1,5 +1,5 @@
 For update brregister
-	PUT    /api/register/br/:id
+	PUT    /api/register/br/one/:id
 
 body:
 {

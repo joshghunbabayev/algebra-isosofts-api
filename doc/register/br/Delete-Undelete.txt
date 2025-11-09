@@ -1,0 +1,3 @@
+For delete and undelete
+    PUT /one/:id/delete
+    PUT /one/:id/undelete

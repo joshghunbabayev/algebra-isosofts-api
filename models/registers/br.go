@@ -54,6 +54,8 @@ func (*BrModel) GetById(Id string) (registerTypes.Br, error) {
 		&br.InitialRiskLikelyhood,
 		&br.ResidualRiskSeverity,
 		&br.ResidualRiskLikelyhood,
+		&br.DbStatus,
+		&br.DbLastStatus,
 	)
 	br.Swot, _ = dropDownListItemModel.GetById(br.Swot.Id)
 	br.Pestle, _ = dropDownListItemModel.GetById(br.Pestle.Id)
@@ -63,13 +65,26 @@ func (*BrModel) GetById(Id string) (registerTypes.Br, error) {
 	return br, err
 }
 
-func (*BrModel) GetAll() ([]registerTypes.Br, error) {
+func (*BrModel) GetAll(filters map[string]interface{}) ([]registerTypes.Br, error) {
 	db := database.GetDatabase()
-	rows, err := db.Query(`
-			SELECT * 
-			FROM brregisters
+	whereClause := ""
+	values := []interface{}{}
+
+	if len(filters) > 0 {
+		whereParts := []string{}
+		for key, val := range filters {
+			whereParts = append(whereParts, fmt.Sprintf(`"%s" = ?`, key))
+			values = append(values, val)
+		}
+		whereClause = "WHERE " + strings.Join(whereParts, " AND ")
+	}
+
+	query := fmt.Sprintf(`
+			SELECT * FROM brregisters %s
 		`,
+		whereClause,
 	)
+	rows, err := db.Query(query, values...)
 
 	if err != nil {
 		return nil, err
@@ -97,6 +112,8 @@ func (*BrModel) GetAll() ([]registerTypes.Br, error) {
 			&br.InitialRiskLikelyhood,
 			&br.ResidualRiskSeverity,
 			&br.ResidualRiskLikelyhood,
+			&br.DbStatus,
+			&br.DbLastStatus,
 		)
 		br.Swot, _ = dropDownListItemModel.GetById(br.Swot.Id)
 		br.Pestle, _ = dropDownListItemModel.GetById(br.Pestle.Id)
@@ -126,8 +143,10 @@ func (*BrModel) Create(br registerTypes.Br) error {
 				"initialRiskSeverity", 
 				"initialRiskLikelyhood", 
 				"residualRiskSeverity", 
-				"residualRiskLikelyhood" 
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+				"residualRiskLikelyhood",
+				"dbStatus",
+				"dbLastStatus"
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
 		br.Id,
 		br.No,
@@ -142,6 +161,8 @@ func (*BrModel) Create(br registerTypes.Br) error {
 		br.InitialRiskLikelyhood,
 		br.ResidualRiskSeverity,
 		br.ResidualRiskLikelyhood,
+		br.DbStatus,
+		br.DbLastStatus,
 	)
 
 	if err != nil {

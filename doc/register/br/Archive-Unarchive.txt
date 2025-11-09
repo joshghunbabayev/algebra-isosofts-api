@@ -1,0 +1,3 @@
+For archive and unarchive
+    PUT /one/:id/archive
+    PUT /one/:id/unarchive

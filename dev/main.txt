@@ -1,13 +1,8 @@
-2️⃣ Table whitelist (təhlükəsizlik üçün):
-
-allowedTables := map[string]bool{
-    "brregisters": true,
-    "users": true,
-}
-if !allowedTables[table] {
-    return fmt.Errorf("table not allowed")
-}
-
-
-
-3️⃣ dropdownlistitem da create deyis
+----- 09/11/2025 -----
+create GenerateUniqueNo func 
+OK status laststatus column
+archive 
+delete
+active
+restore
+GetAll only activies

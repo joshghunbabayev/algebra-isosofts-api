@@ -18,6 +18,8 @@ type Br struct {
 	ResidualRiskSeverity   int8                                 `json:"residualRiskSeverity"`
 	ResidualRiskLikelyhood int8                                 `json:"residualRiskLikelyhood"`
 	Actions                []string                             `json:"actions"`
+	DbStatus               string                               `json:"dbStatus"`
+	DbLastStatus           string                               `json:"-"`
 }
 
 func (br Br) IsEmpty() bool {

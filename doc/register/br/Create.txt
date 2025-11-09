@@ -1,5 +1,5 @@
 For create brregister
-	POST    /api/register/br
+	POST    /api/register/br/one
 
 body:
 {

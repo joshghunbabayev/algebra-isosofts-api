@@ -12,9 +12,17 @@ type BrHandler struct {
 }
 
 func (*BrHandler) GetAll(c *gin.Context) {
+	status := c.Query("status")
+
+	if status == "" {
+		status = "active"
+	}
+
 	var brModel registerModels.BrModel
 
-	brs, err := brModel.GetAll()
+	brs, err := brModel.GetAll(map[string]interface{}{
+		"dbStatus": status,
+	})
 
 	if err != nil {
 		c.JSON(500, gin.H{"error": err.Error()})
@@ -80,6 +88,8 @@ func (*BrHandler) Create(c *gin.Context) {
 		InitialRiskLikelyhood:  body.InitialRiskLikelyhood,
 		ResidualRiskSeverity:   body.ResidualRiskSeverity,
 		ResidualRiskLikelyhood: body.ResidualRiskLikelyhood,
+		DbStatus:               "active",
+		DbLastStatus:           "active",
 	})
 
 	c.IndentedJSON(201, gin.H{})
@@ -140,6 +150,92 @@ func (*BrHandler) Update(c *gin.Context) {
 		"initialRiskLikelyhood":  body.InitialRiskLikelyhood,
 		"residualRiskSeverity":   body.ResidualRiskSeverity,
 		"residualRiskLikelyhood": body.ResidualRiskLikelyhood,
+	})
+
+	c.JSON(200, gin.H{})
+}
+
+func (*BrHandler) Archive(c *gin.Context) {
+	Id := c.Param("id")
+
+	var brModel registerModels.BrModel
+
+	currentBr, _ := brModel.GetById(Id)
+
+	if currentBr.IsEmpty() {
+		c.IndentedJSON(404, gin.H{})
+		return
+	}
+
+	// ikinci shert -> eger active dirse
+
+	brModel.Update(Id, map[string]interface{}{
+		"dbStatus":     "archived",
+		"dbLastStatus": currentBr.DbStatus,
+	})
+
+	c.JSON(200, gin.H{})
+}
+
+func (*BrHandler) Unarchive(c *gin.Context) {
+	Id := c.Param("id")
+
+	var brModel registerModels.BrModel
+
+	currentBr, _ := brModel.GetById(Id)
+
+	if currentBr.IsEmpty() {
+		c.IndentedJSON(404, gin.H{})
+		return
+	}
+
+	// ikinci shert -> eger arxivdirse dirse
+
+	brModel.Update(Id, map[string]interface{}{
+		"dbStatus":     "active",
+		"dbLastStatus": currentBr.DbStatus,
+	})
+
+	c.JSON(200, gin.H{})
+}
+
+func (*BrHandler) Delete(c *gin.Context) {
+	Id := c.Param("id")
+
+	var brModel registerModels.BrModel
+
+	currentBr, _ := brModel.GetById(Id)
+
+	if currentBr.IsEmpty() {
+		c.IndentedJSON(404, gin.H{})
+		return
+	}
+
+	brModel.Update(Id, map[string]interface{}{
+		"dbStatus":     "deleted",
+		"dbLastStatus": currentBr.DbStatus,
+	})
+
+	c.JSON(200, gin.H{})
+}
+
+func (*BrHandler) Undelete(c *gin.Context) {
+	Id := c.Param("id")
+
+	var brModel registerModels.BrModel
+
+	currentBr, _ := brModel.GetById(Id)
+
+	if currentBr.IsEmpty() {
+		c.IndentedJSON(404, gin.H{})
+		return
+	}
+
+	// ikinci shert -> eger silinibse dirse
+
+	brModel.Update(Id, map[string]interface{}{
+		"dbStatus":     currentBr.DbLastStatus,
+		"dbLastStatus": "deleted",
 	})
 
 	c.JSON(200, gin.H{})
