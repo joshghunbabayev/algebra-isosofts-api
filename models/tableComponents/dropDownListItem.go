@@ -26,9 +26,10 @@ func (*DropDownListItemModel) GenerateUniqueId() string {
 func (*DropDownListItemModel) GetById(Id string) (tableComponentTypes.DropDownListItem, error) {
 	db := database.GetDatabase()
 	row := db.QueryRow(`
-		SELECT * 
-		FROM dropdownlistitems 
-		WHERE id = ?`,
+			SELECT * 
+			FROM dropdownlistitems 
+			WHERE id = ?
+		`,
 		Id,
 	)
 
@@ -45,9 +46,10 @@ func (*DropDownListItemModel) GetById(Id string) (tableComponentTypes.DropDownLi
 
 func (*DropDownListItemModel) GetAll() ([]tableComponentTypes.DropDownListItem, error) {
 	db := database.GetDatabase()
-	rows, err := db.Query(
-		`SELECT * 
-		FROM dropdownlistitems`,
+	rows, err := db.Query(`
+			SELECT * 
+			FROM dropdownlistitems
+		`,
 	)
 
 	if err != nil {
@@ -76,12 +78,14 @@ func (*DropDownListItemModel) Create(dropDownListItem tableComponentTypes.DropDo
 	db := database.GetDatabase()
 
 	_, err := db.Exec(`
-		INSERT INTO dropdownlistitems (
-			"id", 
-			"type", 
-			"value", 
-			"shortValue"
-		) VALUES (?, ?, ?, ?)`,
+			INSERT INTO dropdownlistitems (
+				"id", 
+				"type", 
+				"value", 
+				"shortValue"
+			) 
+			VALUES (?, ?, ?, ?)
+		`,
 		dropDownListItem.Id,
 		dropDownListItem.Type,
 		dropDownListItem.Value,
@@ -97,9 +101,10 @@ func (*DropDownListItemModel) Create(dropDownListItem tableComponentTypes.DropDo
 
 func (*DropDownListItemModel) DuplicateDefaults() error {
 	db := database.GetDatabase()
-	rows, err := db.Query(
-		`SELECT * 
-		FROM defaultdropdownlistitems`,
+	rows, err := db.Query(`
+			SELECT * 
+			FROM defaultdropdownlistitems
+		`,
 	)
 
 	if err != nil {

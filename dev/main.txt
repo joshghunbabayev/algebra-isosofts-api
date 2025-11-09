@@ -1,0 +1,13 @@
+2️⃣ Table whitelist (təhlükəsizlik üçün):
+
+allowedTables := map[string]bool{
+    "brregisters": true,
+    "users": true,
+}
+if !allowedTables[table] {
+    return fmt.Errorf("table not allowed")
+}
+
+
+
+3️⃣ dropdownlistitem da create deyis

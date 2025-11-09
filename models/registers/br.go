@@ -5,6 +5,8 @@ import (
 	tableComponentModels "algebra-isosofts-api/models/tableComponents"
 	"algebra-isosofts-api/modules"
 	registerTypes "algebra-isosofts-api/types/registers"
+	"fmt"
+	"strings"
 )
 
 type BrModel struct {
@@ -27,9 +29,10 @@ func (*BrModel) GenerateUniqueId() string {
 func (*BrModel) GetById(Id string) (registerTypes.Br, error) {
 	db := database.GetDatabase()
 	row := db.QueryRow(`
-		SELECT * 
-		FROM brregisters
-		WHERE id = ?`,
+			SELECT * 
+			FROM brregisters
+			WHERE id = ?
+		`,
 		Id,
 	)
 
@@ -63,8 +66,9 @@ func (*BrModel) GetById(Id string) (registerTypes.Br, error) {
 func (*BrModel) GetAll() ([]registerTypes.Br, error) {
 	db := database.GetDatabase()
 	rows, err := db.Query(`
-		SELECT * 
-		FROM brregisters`,
+			SELECT * 
+			FROM brregisters
+		`,
 	)
 
 	if err != nil {
@@ -107,32 +111,31 @@ func (*BrModel) GetAll() ([]registerTypes.Br, error) {
 
 func (*BrModel) Create(br registerTypes.Br) error {
 	db := database.GetDatabase()
-
 	_, err := db.Exec(`
-		INSERT INTO brregisters (
-			"id", 
-			"no", 
-			"swot", 
-			"pestle", 
-			"interestedParty", 
-			"riskOpportunity", 
-			"objective", 
-			"kpi", 
-			"process", 
-			"ermeoa", 
-			"initialRiskSeverity", 
-			"initialRiskLikelyhood", 
-			"residualRiskSeverity", 
-			"residualRiskLikelyhood"
-		) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+			INSERT INTO brregisters ( 
+				"id",
+				"no",
+				"swot", 
+				"pestle", 
+				"interestedParty", 
+				"riskOpportunity", 
+				"objective", 
+				"kpi", 
+				"process", 
+				"ermeoa", 
+				"initialRiskSeverity", 
+				"initialRiskLikelyhood", 
+				"residualRiskSeverity", 
+				"residualRiskLikelyhood" 
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+		`,
 		br.Id,
 		br.No,
 		br.Swot.Id,
 		br.Pestle.Id,
 		br.InterestedParty.Id,
 		br.RiskOpportunity,
-		br.Objective,
-		br.KPI,
+		br.Objective, br.KPI,
 		br.Process.Id,
 		br.ERMEOA,
 		br.InitialRiskSeverity,
@@ -148,43 +151,30 @@ func (*BrModel) Create(br registerTypes.Br) error {
 	return nil
 }
 
-func (*BrModel) Update(Id string, br registerTypes.Br) error {
-	db := database.GetDatabase()
-
-	_, err := db.Exec(`
-		UPDATE brregisters 
-		SET 
-			"swot" = ?,
-			"pestle" = ?,
-			"interestedParty" = ?,
-			"riskOpportunity" = ?,
-			"objective" = ?,
-			"kpi" = ?,
-			"process" = ?,
-			"ermeoa" = ?,
-			"initialRiskSeverity" = ?,
-			"initialRiskLikelyhood" = ?,
-			"residualRiskSeverity" = ?,
-			"residualRiskLikelyhood" = ?
-		WHERE "id" = ?`,
-		br.Swot.Id,
-		br.Pestle.Id,
-		br.InterestedParty.Id,
-		br.RiskOpportunity,
-		br.Objective,
-		br.KPI,
-		br.Process.Id,
-		br.ERMEOA,
-		br.InitialRiskSeverity,
-		br.InitialRiskLikelyhood,
-		br.ResidualRiskSeverity,
-		br.ResidualRiskLikelyhood,
-		Id,
-	)
-
-	if err != nil {
-		return err
+func (*BrModel) Update(Id string, fields map[string]interface{}) error {
+	if len(fields) == 0 {
+		return nil
 	}
 
-	return nil
+	setClause := ""
+	values := []interface{}{}
+
+	for key, val := range fields {
+		setClause += fmt.Sprintf(` "%s" = ?,`, key)
+		values = append(values, val)
+	}
+
+	setClause = strings.TrimSuffix(setClause, ",")
+	query := fmt.Sprintf(`
+			UPDATE brregisters 
+			SET %s 
+			WHERE "id" = ?
+		`,
+		setClause,
+	)
+	values = append(values, Id)
+
+	db := database.GetDatabase()
+	_, err := db.Exec(query, values...)
+	return err
 }

@@ -57,7 +57,7 @@ func (*BrHandler) Create(c *gin.Context) {
 
 	var brModel registerModels.BrModel
 
-	br := registerTypes.Br{
+	brModel.Create(registerTypes.Br{
 		Id: brModel.GenerateUniqueId(),
 		No: "DEFVALUE!",
 		Swot: tableComponentTypes.DropDownListItem{
@@ -80,15 +80,22 @@ func (*BrHandler) Create(c *gin.Context) {
 		InitialRiskLikelyhood:  body.InitialRiskLikelyhood,
 		ResidualRiskSeverity:   body.ResidualRiskSeverity,
 		ResidualRiskLikelyhood: body.ResidualRiskLikelyhood,
-	}
+	})
 
-	brModel.Create(br)
-
-	c.JSON(201, gin.H{})
+	c.IndentedJSON(201, gin.H{})
 }
 
 func (*BrHandler) Update(c *gin.Context) {
 	Id := c.Param("id")
+
+	var brModel registerModels.BrModel
+
+	currentBr, _ := brModel.GetById(Id)
+
+	if currentBr.IsEmpty() {
+		c.IndentedJSON(404, gin.H{})
+		return
+	}
 
 	var body struct {
 		Swot                   string `json:"swot"`
@@ -120,32 +127,20 @@ func (*BrHandler) Update(c *gin.Context) {
 		return
 	}
 
-	var brModel registerModels.BrModel
-
-	br := registerTypes.Br{
-		Swot: tableComponentTypes.DropDownListItem{
-			Id: body.Swot,
-		},
-		Pestle: tableComponentTypes.DropDownListItem{
-			Id: body.Pestle,
-		},
-		InterestedParty: tableComponentTypes.DropDownListItem{
-			Id: body.InterestedParty,
-		},
-		RiskOpportunity: body.RiskOpportunity,
-		Objective:       body.Objective,
-		KPI:             body.KPI,
-		Process: tableComponentTypes.DropDownListItem{
-			Id: body.Process,
-		},
-		ERMEOA:                 body.ERMEOA,
-		InitialRiskSeverity:    body.InitialRiskSeverity,
-		InitialRiskLikelyhood:  body.InitialRiskLikelyhood,
-		ResidualRiskSeverity:   body.ResidualRiskSeverity,
-		ResidualRiskLikelyhood: body.ResidualRiskLikelyhood,
-	}
-
-	brModel.Update(Id, br)
+	brModel.Update(Id, map[string]interface{}{
+		"swot":                   body.Swot,
+		"pestle":                 body.Pestle,
+		"interestedParty":        body.InterestedParty,
+		"riskOpportunity":        body.RiskOpportunity,
+		"objective":              body.Objective,
+		"kpi":                    body.KPI,
+		"process":                body.Process,
+		"ermeoa":                 body.ERMEOA,
+		"initialRiskSeverity":    body.InitialRiskSeverity,
+		"initialRiskLikelyhood":  body.InitialRiskLikelyhood,
+		"residualRiskSeverity":   body.ResidualRiskSeverity,
+		"residualRiskLikelyhood": body.ResidualRiskLikelyhood,
+	})
 
 	c.JSON(200, gin.H{})
 }
