@@ -167,7 +167,10 @@ func (*BrHandler) Archive(c *gin.Context) {
 		return
 	}
 
-	// ikinci shert -> eger active dirse
+	if currentBr.DbStatus != "active" {
+		c.IndentedJSON(400, gin.H{})
+		return
+	}
 
 	brModel.Update(Id, map[string]interface{}{
 		"dbStatus":     "archived",
@@ -189,7 +192,10 @@ func (*BrHandler) Unarchive(c *gin.Context) {
 		return
 	}
 
-	// ikinci shert -> eger arxivdirse dirse
+	if currentBr.DbStatus != "archived" {
+		c.IndentedJSON(400, gin.H{})
+		return
+	}
 
 	brModel.Update(Id, map[string]interface{}{
 		"dbStatus":     "active",
@@ -208,6 +214,11 @@ func (*BrHandler) Delete(c *gin.Context) {
 
 	if currentBr.IsEmpty() {
 		c.IndentedJSON(404, gin.H{})
+		return
+	}
+
+	if currentBr.DbStatus == "deleted" {
+		c.IndentedJSON(400, gin.H{})
 		return
 	}
 
@@ -231,11 +242,14 @@ func (*BrHandler) Undelete(c *gin.Context) {
 		return
 	}
 
-	// ikinci shert -> eger silinibse dirse
+	if currentBr.DbStatus != "deleted" {
+		c.IndentedJSON(400, gin.H{})
+		return
+	}
 
 	brModel.Update(Id, map[string]interface{}{
 		"dbStatus":     currentBr.DbLastStatus,
-		"dbLastStatus": "deleted",
+		"dbLastStatus": currentBr.DbStatus,
 	})
 
 	c.JSON(200, gin.H{})

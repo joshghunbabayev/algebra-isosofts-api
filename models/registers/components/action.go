@@ -1,4 +1,4 @@
-package registerComponentModels
+package registerModels
 
 import (
 	"algebra-isosofts-api/database"
@@ -9,28 +9,28 @@ import (
 	"strings"
 )
 
-type BrModel struct {
+type ActionModel struct {
 }
 
-func (*BrModel) GenerateUniqueId() string {
+func (*ActionModel) GenerateUniqueId() string {
 	Id := modules.GenerateRandomString(30)
 
-	var brModel BrModel
+	var actionModel ActionModel
 
-	br, _ := brModel.GetById(Id)
+	action, _ := actionModel.GetById(Id)
 
-	if br.IsEmpty() {
+	if action.IsEmpty() {
 		return Id
 	} else {
-		return brModel.GenerateUniqueId()
+		return actionModel.GenerateUniqueId()
 	}
 }
 
-func (*BrModel) GetById(Id string) (registerTypes.Br, error) {
+func (*ActionModel) GetById(Id string) (registerTypes.Br, error) {
 	db := database.GetDatabase()
 	row := db.QueryRow(`
 			SELECT * 
-			FROM brregisters
+			FROM actions
 			WHERE id = ?
 		`,
 		Id,
@@ -65,7 +65,7 @@ func (*BrModel) GetById(Id string) (registerTypes.Br, error) {
 	return br, err
 }
 
-func (*BrModel) GetAll(filters map[string]interface{}) ([]registerTypes.Br, error) {
+func (*ActionModel) GetAll(filters map[string]interface{}) ([]registerTypes.Br, error) {
 	db := database.GetDatabase()
 	whereClause := ""
 	values := []interface{}{}
@@ -126,7 +126,7 @@ func (*BrModel) GetAll(filters map[string]interface{}) ([]registerTypes.Br, erro
 	return brs, nil
 }
 
-func (*BrModel) Create(br registerTypes.Br) error {
+func (*ActionModel) Create(br registerTypes.Br) error {
 	db := database.GetDatabase()
 	_, err := db.Exec(`
 			INSERT INTO brregisters ( 
@@ -172,7 +172,7 @@ func (*BrModel) Create(br registerTypes.Br) error {
 	return nil
 }
 
-func (*BrModel) Update(Id string, fields map[string]interface{}) error {
+func (*ActionModel) Update(Id string, fields map[string]interface{}) error {
 	if len(fields) == 0 {
 		return nil
 	}

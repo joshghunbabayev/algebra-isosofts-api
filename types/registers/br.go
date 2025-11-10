@@ -1,6 +1,9 @@
 package registerTypes
 
-import tableComponentTypes "algebra-isosofts-api/types/tableComponents"
+import (
+	registerComponentTypes "algebra-isosofts-api/types/registers/components"
+	tableComponentTypes "algebra-isosofts-api/types/tableComponents"
+)
 
 type Br struct {
 	Id                     string                               `json:"id"`
@@ -17,7 +20,7 @@ type Br struct {
 	InitialRiskLikelyhood  int8                                 `json:"initialRiskLikelyhood"`
 	ResidualRiskSeverity   int8                                 `json:"residualRiskSeverity"`
 	ResidualRiskLikelyhood int8                                 `json:"residualRiskLikelyhood"`
-	Actions                []string                             `json:"actions"`
+	Actions                []registerComponentTypes.Action      `json:"actions"`
 	DbStatus               string                               `json:"dbStatus"`
 	DbLastStatus           string                               `json:"-"`
 }
