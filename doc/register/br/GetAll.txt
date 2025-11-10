@@ -1,9 +1,9 @@
 1. For get all brregister from db
 
-	GET /all                    (active)
-	GET /all?status=active
-	GET /all?status=archived
-	GET /all?status=deleted
+	GET /api/register/br/all                    (active)
+	GET /api/register/br/all?status=active
+	GET /api/register/br/all?status=archived
+	GET /api/register/br/all?status=deleted
 
 
 
