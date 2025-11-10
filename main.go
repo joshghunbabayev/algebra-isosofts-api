@@ -17,6 +17,7 @@ func main() {
 
 	r := gin.Default()
 	r.Use(cors.Default())
+	r.RedirectTrailingSlash = false
 	routes.APIRoutes(r.Group("/api"))
 
 	port := os.Getenv("PORT")
