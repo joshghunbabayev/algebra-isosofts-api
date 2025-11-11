@@ -11,8 +11,8 @@ func BrRoutes(rg *gin.RouterGroup) {
 	rg.GET("/all", brHandler.GetAll)
 	rg.POST("/one", brHandler.Create)
 	rg.PUT("/one/:id", brHandler.Update)
-	rg.PUT("/one/:id/archive", brHandler.Archive)
-	rg.PUT("/one/:id/unarchive", brHandler.Unarchive)
-	rg.PUT("/one/:id/delete", brHandler.Delete)
-	rg.PUT("/one/:id/undelete", brHandler.Undelete)
+	rg.PUT("/all/archive", brHandler.Archive)
+	rg.PUT("/all/unarchive", brHandler.Unarchive)
+	rg.PUT("/all/delete", brHandler.Delete)
+	rg.PUT("/all/undelete", brHandler.Undelete)
 }

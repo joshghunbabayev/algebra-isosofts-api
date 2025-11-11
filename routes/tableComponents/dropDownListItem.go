@@ -8,5 +8,5 @@ import (
 
 func DropDownListItemRoutes(rg *gin.RouterGroup) {
 	var dropDownListItemHandler tableComponentHandlers.DropDownListItemHandler
-	rg.GET("/", dropDownListItemHandler.GetAll)
+	rg.GET("", dropDownListItemHandler.GetAll)
 }

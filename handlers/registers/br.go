@@ -156,101 +156,145 @@ func (*BrHandler) Update(c *gin.Context) {
 }
 
 func (*BrHandler) Archive(c *gin.Context) {
-	Id := c.Param("id")
+	var body struct {
+		Ids []string `json:"ids"`
+	}
+
+	if err := c.ShouldBindJSON(&body); err != nil {
+		c.JSON(400, gin.H{})
+		return
+	}
+
+	if len(body.Ids) == 0 {
+		c.JSON(404, gin.H{})
+		return
+	}
 
 	var brModel registerModels.BrModel
 
-	currentBr, _ := brModel.GetById(Id)
+	for _, Id := range body.Ids {
+		currentBr, _ := brModel.GetById(Id)
+		if currentBr.IsEmpty() {
+			continue
+		}
 
-	if currentBr.IsEmpty() {
-		c.IndentedJSON(404, gin.H{})
-		return
+		if currentBr.DbStatus != "active" {
+			continue
+		}
+
+		brModel.Update(Id, map[string]interface{}{
+			"dbStatus":     "archived",
+			"dbLastStatus": currentBr.DbStatus,
+		})
 	}
-
-	if currentBr.DbStatus != "active" {
-		c.IndentedJSON(400, gin.H{})
-		return
-	}
-
-	brModel.Update(Id, map[string]interface{}{
-		"dbStatus":     "archived",
-		"dbLastStatus": currentBr.DbStatus,
-	})
 
 	c.JSON(200, gin.H{})
 }
 
 func (*BrHandler) Unarchive(c *gin.Context) {
-	Id := c.Param("id")
+	var body struct {
+		Ids []string `json:"ids"`
+	}
+
+	if err := c.ShouldBindJSON(&body); err != nil {
+		c.JSON(400, gin.H{})
+		return
+	}
+
+	if len(body.Ids) == 0 {
+		c.JSON(404, gin.H{})
+		return
+	}
 
 	var brModel registerModels.BrModel
 
-	currentBr, _ := brModel.GetById(Id)
+	for _, Id := range body.Ids {
+		currentBr, _ := brModel.GetById(Id)
+		if currentBr.IsEmpty() {
+			continue
+		}
 
-	if currentBr.IsEmpty() {
-		c.IndentedJSON(404, gin.H{})
-		return
+		if currentBr.DbStatus != "archived" {
+			continue
+		}
+
+		brModel.Update(Id, map[string]interface{}{
+			"dbStatus":     "active",
+			"dbLastStatus": currentBr.DbStatus,
+		})
 	}
-
-	if currentBr.DbStatus != "archived" {
-		c.IndentedJSON(400, gin.H{})
-		return
-	}
-
-	brModel.Update(Id, map[string]interface{}{
-		"dbStatus":     "active",
-		"dbLastStatus": currentBr.DbStatus,
-	})
 
 	c.JSON(200, gin.H{})
 }
 
 func (*BrHandler) Delete(c *gin.Context) {
-	Id := c.Param("id")
+	var body struct {
+		Ids []string `json:"ids"`
+	}
+
+	if err := c.ShouldBindJSON(&body); err != nil {
+		c.JSON(400, gin.H{})
+		return
+	}
+
+	if len(body.Ids) == 0 {
+		c.JSON(404, gin.H{})
+		return
+	}
 
 	var brModel registerModels.BrModel
 
-	currentBr, _ := brModel.GetById(Id)
+	for _, Id := range body.Ids {
+		currentBr, _ := brModel.GetById(Id)
+		if currentBr.IsEmpty() {
+			continue
+		}
 
-	if currentBr.IsEmpty() {
-		c.IndentedJSON(404, gin.H{})
-		return
+		if currentBr.DbStatus == "deleted" {
+			continue
+		}
+
+		brModel.Update(Id, map[string]interface{}{
+			"dbStatus":     "deleted",
+			"dbLastStatus": currentBr.DbStatus,
+		})
 	}
-
-	if currentBr.DbStatus == "deleted" {
-		c.IndentedJSON(400, gin.H{})
-		return
-	}
-
-	brModel.Update(Id, map[string]interface{}{
-		"dbStatus":     "deleted",
-		"dbLastStatus": currentBr.DbStatus,
-	})
 
 	c.JSON(200, gin.H{})
 }
 
 func (*BrHandler) Undelete(c *gin.Context) {
-	Id := c.Param("id")
+	var body struct {
+		Ids []string `json:"ids"`
+	}
+
+	if err := c.ShouldBindJSON(&body); err != nil {
+		c.JSON(400, gin.H{})
+		return
+	}
+
+	if len(body.Ids) == 0 {
+		c.JSON(404, gin.H{})
+		return
+	}
 
 	var brModel registerModels.BrModel
 
-	currentBr, _ := brModel.GetById(Id)
+	for _, Id := range body.Ids {
+		currentBr, _ := brModel.GetById(Id)
+		if currentBr.IsEmpty() {
+			continue
+		}
 
-	if currentBr.IsEmpty() {
-		c.IndentedJSON(404, gin.H{})
-		return
+		if currentBr.DbStatus != "deleted" {
+			continue
+		}
+
+		brModel.Update(Id, map[string]interface{}{
+			"dbStatus":     currentBr.DbLastStatus,
+			"dbLastStatus": currentBr.DbStatus,
+		})
 	}
-
-	if currentBr.DbStatus != "deleted" {
-		c.IndentedJSON(400, gin.H{})
-		return
-	}
-
-	brModel.Update(Id, map[string]interface{}{
-		"dbStatus":     currentBr.DbLastStatus,
-		"dbLastStatus": currentBr.DbStatus,
-	})
 
 	c.JSON(200, gin.H{})
 }
