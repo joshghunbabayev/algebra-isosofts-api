@@ -8,7 +8,7 @@ import (
 
 func BrRoutes(rg *gin.RouterGroup) {
 	var brHandler registerHandlers.BrHandler
-	rg.GET("/all", brHandler.GetAll)
+	rg.GET("/all", brHandler.GetAll) // query: status
 	rg.POST("/one", brHandler.Create)
 	rg.PUT("/one/:id", brHandler.Update)
 	rg.PUT("/all/archive", brHandler.Archive)

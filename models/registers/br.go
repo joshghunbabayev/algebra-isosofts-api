@@ -2,6 +2,7 @@ package registerModels
 
 import (
 	"algebra-isosofts-api/database"
+	registerComponentModels "algebra-isosofts-api/models/registers/components"
 	tableComponentModels "algebra-isosofts-api/models/tableComponents"
 	"algebra-isosofts-api/modules"
 	registerTypes "algebra-isosofts-api/types/registers"
@@ -38,6 +39,7 @@ func (*BrModel) GetById(Id string) (registerTypes.Br, error) {
 
 	var br registerTypes.Br
 	var dropDownListItemModel tableComponentModels.DropDownListItemModel
+	var actionModel registerComponentModels.ActionModel
 
 	err := row.Scan(
 		&br.Id,
@@ -61,6 +63,9 @@ func (*BrModel) GetById(Id string) (registerTypes.Br, error) {
 	br.Pestle, _ = dropDownListItemModel.GetById(br.Pestle.Id)
 	br.InterestedParty, _ = dropDownListItemModel.GetById(br.InterestedParty.Id)
 	br.Process, _ = dropDownListItemModel.GetById(br.Process.Id)
+	br.Actions, _ = actionModel.GetAll(map[string]interface{}{
+		"registerId": br.Id,
+	})
 
 	return br, err
 }
@@ -96,6 +101,7 @@ func (*BrModel) GetAll(filters map[string]interface{}) ([]registerTypes.Br, erro
 	for rows.Next() {
 		var br registerTypes.Br
 		var dropDownListItemModel tableComponentModels.DropDownListItemModel
+		var actionModel registerComponentModels.ActionModel
 
 		rows.Scan(
 			&br.Id,
@@ -119,6 +125,9 @@ func (*BrModel) GetAll(filters map[string]interface{}) ([]registerTypes.Br, erro
 		br.Pestle, _ = dropDownListItemModel.GetById(br.Pestle.Id)
 		br.InterestedParty, _ = dropDownListItemModel.GetById(br.InterestedParty.Id)
 		br.Process, _ = dropDownListItemModel.GetById(br.Process.Id)
+		br.Actions, _ = actionModel.GetAll(map[string]interface{}{
+			"registerId": br.Id,
+		})
 
 		brs = append(brs, br)
 	}

@@ -1,1 +1,3 @@
 create GenerateUniqueNo func 
+
+register status deyisende , onun actionlari da
