@@ -1,4 +1,4 @@
-package registerComponentModels
+package registerModels
 
 import (
 	"algebra-isosofts-api/database"

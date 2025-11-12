@@ -1,10 +1,10 @@
-package registerModels
+package registerComponentModels
 
 import (
 	"algebra-isosofts-api/database"
 	tableComponentModels "algebra-isosofts-api/models/tableComponents"
 	"algebra-isosofts-api/modules"
-	registerTypes "algebra-isosofts-api/types/registers"
+	registerComponentTypes "algebra-isosofts-api/types/registers/components"
 	"fmt"
 	"strings"
 )
@@ -26,7 +26,7 @@ func (*ActionModel) GenerateUniqueId() string {
 	}
 }
 
-func (*ActionModel) GetById(Id string) (registerTypes.Br, error) {
+func (*ActionModel) GetById(Id string) (registerComponentTypes.Action, error) {
 	db := database.GetDatabase()
 	row := db.QueryRow(`
 			SELECT * 
@@ -36,36 +36,61 @@ func (*ActionModel) GetById(Id string) (registerTypes.Br, error) {
 		Id,
 	)
 
-	var br registerTypes.Br
+	var action registerComponentTypes.Action
 	var dropDownListItemModel tableComponentModels.DropDownListItemModel
 
 	err := row.Scan(
-		&br.Id,
-		&br.No,
-		&br.Swot.Id,
-		&br.Pestle.Id,
-		&br.InterestedParty.Id,
-		&br.RiskOpportunity,
-		&br.Objective,
-		&br.KPI,
-		&br.Process.Id,
-		&br.ERMEOA,
-		&br.InitialRiskSeverity,
-		&br.InitialRiskLikelyhood,
-		&br.ResidualRiskSeverity,
-		&br.ResidualRiskLikelyhood,
-		&br.DbStatus,
-		&br.DbLastStatus,
+		&action.Id,
+		&action.RegisterId,
+		&action.Title,
+		&action.RaiseDate,
+		&action.Resources,
+		&action.Currency,
+		&action.RelativeFunction.Id,
+		&action.Responsible.Id,
+		&action.Deadline,
+		&action.Confirmation.Id,
+		&action.Status,
+		&action.CompletionDate,
+		&action.VerificationStatus.Id,
+		&action.Comment,
+		&action.January.Id,
+		&action.February.Id,
+		&action.March.Id,
+		&action.April.Id,
+		&action.May.Id,
+		&action.June.Id,
+		&action.July.Id,
+		&action.August.Id,
+		&action.September.Id,
+		&action.October.Id,
+		&action.November.Id,
+		&action.December.Id,
+		&action.DbStatus,
+		&action.DbLastStatus,
 	)
-	br.Swot, _ = dropDownListItemModel.GetById(br.Swot.Id)
-	br.Pestle, _ = dropDownListItemModel.GetById(br.Pestle.Id)
-	br.InterestedParty, _ = dropDownListItemModel.GetById(br.InterestedParty.Id)
-	br.Process, _ = dropDownListItemModel.GetById(br.Process.Id)
+	action.RelativeFunction, _ = dropDownListItemModel.GetById(action.RelativeFunction.Id)
+	action.Responsible, _ = dropDownListItemModel.GetById(action.Responsible.Id)
+	action.Confirmation, _ = dropDownListItemModel.GetById(action.Confirmation.Id)
+	action.Status, _ = dropDownListItemModel.GetById(action.Status.Id)
+	action.VerificationStatus, _ = dropDownListItemModel.GetById(action.VerificationStatus.Id)
+	action.January, _ = dropDownListItemModel.GetById(action.January.Id)
+	action.February, _ = dropDownListItemModel.GetById(action.February.Id)
+	action.March, _ = dropDownListItemModel.GetById(action.March.Id)
+	action.April, _ = dropDownListItemModel.GetById(action.April.Id)
+	action.May, _ = dropDownListItemModel.GetById(action.May.Id)
+	action.June, _ = dropDownListItemModel.GetById(action.June.Id)
+	action.July, _ = dropDownListItemModel.GetById(action.July.Id)
+	action.August, _ = dropDownListItemModel.GetById(action.August.Id)
+	action.September, _ = dropDownListItemModel.GetById(action.September.Id)
+	action.October, _ = dropDownListItemModel.GetById(action.October.Id)
+	action.November, _ = dropDownListItemModel.GetById(action.November.Id)
+	action.December, _ = dropDownListItemModel.GetById(action.December.Id)
 
-	return br, err
+	return action, err
 }
 
-func (*ActionModel) GetAll(filters map[string]interface{}) ([]registerTypes.Br, error) {
+func (*ActionModel) GetAll(filters map[string]interface{}) ([]registerComponentTypes.Action, error) {
 	db := database.GetDatabase()
 	whereClause := ""
 	values := []interface{}{}
@@ -80,7 +105,7 @@ func (*ActionModel) GetAll(filters map[string]interface{}) ([]registerTypes.Br, 
 	}
 
 	query := fmt.Sprintf(`
-			SELECT * FROM brregisters %s
+			SELECT * FROM actions %s
 		`,
 		whereClause,
 	)
@@ -91,85 +116,131 @@ func (*ActionModel) GetAll(filters map[string]interface{}) ([]registerTypes.Br, 
 	}
 	defer rows.Close()
 
-	var brs []registerTypes.Br
+	var actions []registerComponentTypes.Action
 
 	for rows.Next() {
-		var br registerTypes.Br
+		var action registerComponentTypes.Action
 		var dropDownListItemModel tableComponentModels.DropDownListItemModel
 
 		rows.Scan(
-			&br.Id,
-			&br.No,
-			&br.Swot.Id,
-			&br.Pestle.Id,
-			&br.InterestedParty.Id,
-			&br.RiskOpportunity,
-			&br.Objective,
-			&br.KPI,
-			&br.Process.Id,
-			&br.ERMEOA,
-			&br.InitialRiskSeverity,
-			&br.InitialRiskLikelyhood,
-			&br.ResidualRiskSeverity,
-			&br.ResidualRiskLikelyhood,
-			&br.DbStatus,
-			&br.DbLastStatus,
+			&action.Id,
+			&action.RegisterId,
+			&action.Title,
+			&action.RaiseDate,
+			&action.Resources,
+			&action.Currency,
+			&action.RelativeFunction.Id,
+			&action.Responsible.Id,
+			&action.Deadline,
+			&action.Confirmation.Id,
+			&action.Status,
+			&action.CompletionDate,
+			&action.VerificationStatus.Id,
+			&action.Comment,
+			&action.January.Id,
+			&action.February.Id,
+			&action.March.Id,
+			&action.April.Id,
+			&action.May.Id,
+			&action.June.Id,
+			&action.July.Id,
+			&action.August.Id,
+			&action.September.Id,
+			&action.October.Id,
+			&action.November.Id,
+			&action.December.Id,
+			&action.DbStatus,
+			&action.DbLastStatus,
 		)
-		br.Swot, _ = dropDownListItemModel.GetById(br.Swot.Id)
-		br.Pestle, _ = dropDownListItemModel.GetById(br.Pestle.Id)
-		br.InterestedParty, _ = dropDownListItemModel.GetById(br.InterestedParty.Id)
-		br.Process, _ = dropDownListItemModel.GetById(br.Process.Id)
+		action.RelativeFunction, _ = dropDownListItemModel.GetById(action.RelativeFunction.Id)
+		action.Responsible, _ = dropDownListItemModel.GetById(action.Responsible.Id)
+		action.Confirmation, _ = dropDownListItemModel.GetById(action.Confirmation.Id)
+		action.Status, _ = dropDownListItemModel.GetById(action.Status.Id)
+		action.VerificationStatus, _ = dropDownListItemModel.GetById(action.VerificationStatus.Id)
+		action.January, _ = dropDownListItemModel.GetById(action.January.Id)
+		action.February, _ = dropDownListItemModel.GetById(action.February.Id)
+		action.March, _ = dropDownListItemModel.GetById(action.March.Id)
+		action.April, _ = dropDownListItemModel.GetById(action.April.Id)
+		action.May, _ = dropDownListItemModel.GetById(action.May.Id)
+		action.June, _ = dropDownListItemModel.GetById(action.June.Id)
+		action.July, _ = dropDownListItemModel.GetById(action.July.Id)
+		action.August, _ = dropDownListItemModel.GetById(action.August.Id)
+		action.September, _ = dropDownListItemModel.GetById(action.September.Id)
+		action.October, _ = dropDownListItemModel.GetById(action.October.Id)
+		action.November, _ = dropDownListItemModel.GetById(action.November.Id)
+		action.December, _ = dropDownListItemModel.GetById(action.December.Id)
 
-		brs = append(brs, br)
+		actions = append(actions, action)
 	}
 
-	return brs, nil
+	return actions, nil
 }
 
-func (*ActionModel) Create(br registerTypes.Br) error {
+func (*ActionModel) Create(action registerComponentTypes.Action) error {
 	db := database.GetDatabase()
 	_, err := db.Exec(`
-			INSERT INTO brregisters ( 
+			INSERT INTO actions ( 
 				"id",
-				"no",
-				"swot", 
-				"pestle", 
-				"interestedParty", 
-				"riskOpportunity", 
-				"objective", 
-				"kpi", 
-				"process", 
-				"ermeoa", 
-				"initialRiskSeverity", 
-				"initialRiskLikelyhood", 
-				"residualRiskSeverity", 
-				"residualRiskLikelyhood",
+				"registerId",
+				"title",
+				"raiseDate",
+				"resources",
+				"currency",
+				"relativeFunction",
+				"responsible",
+				"deadline",
+				"confirmation",
+				"status",
+				"completionDate",
+				"verificationStatus",
+				"comment",
+				"january",
+				"february",
+				"march",
+				"april",
+				"may",
+				"june",
+				"july",
+				"august",
+				"september",
+				"october",
+				"november",
+				"december",
 				"dbStatus",
 				"dbLastStatus"
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
-		br.Id,
-		br.No,
-		br.Swot.Id,
-		br.Pestle.Id,
-		br.InterestedParty.Id,
-		br.RiskOpportunity,
-		br.Objective, br.KPI,
-		br.Process.Id,
-		br.ERMEOA,
-		br.InitialRiskSeverity,
-		br.InitialRiskLikelyhood,
-		br.ResidualRiskSeverity,
-		br.ResidualRiskLikelyhood,
-		br.DbStatus,
-		br.DbLastStatus,
+		action.Id,
+		action.RegisterId,
+		action.Title,
+		action.RaiseDate,
+		action.Resources,
+		action.Currency,
+		action.RelativeFunction.Id,
+		action.Responsible.Id,
+		action.Deadline,
+		action.Confirmation.Id,
+		action.Status.Id,
+		action.CompletionDate,
+		action.VerificationStatus.Id,
+		action.Comment,
+		action.January.Id,
+		action.February.Id,
+		action.March.Id,
+		action.April.Id,
+		action.May.Id,
+		action.June.Id,
+		action.July.Id,
+		action.August.Id,
+		action.September.Id,
+		action.October.Id,
+		action.November.Id,
+		action.December.Id,
+		action.DbStatus,
+		action.DbLastStatus,
 	)
 
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return err
 }
 
 func (*ActionModel) Update(Id string, fields map[string]interface{}) error {
@@ -187,7 +258,7 @@ func (*ActionModel) Update(Id string, fields map[string]interface{}) error {
 
 	setClause = strings.TrimSuffix(setClause, ",")
 	query := fmt.Sprintf(`
-			UPDATE brregisters 
+			UPDATE actions 
 			SET %s 
 			WHERE "id" = ?
 		`,
