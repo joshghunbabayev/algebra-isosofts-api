@@ -8,5 +8,5 @@ import (
 
 func MainRoutes(rg *gin.RouterGroup) {
 	BrRoutes(rg.Group("/br"))
-	registerComponentRoutes.ActionRoutes(rg.Group("/action"))
+	registerComponentRoutes.MainComponentRoutes(rg.Group("/component"))
 }

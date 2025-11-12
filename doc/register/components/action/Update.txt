@@ -1,0 +1,30 @@
+PUT /api/register/component/action/one/:id
+
+body
+
+{
+    "title":
+    "raiseDate":
+    "resources":
+    "currency":
+    "relativeFunction":
+    "responsible":
+    "deadline":
+    "confirmation":
+    "status":
+    "completionDate":
+    "verificationStatus":
+    "comment":
+    "january":
+    "february":
+    "march":
+    "april":
+    "may":
+    "june":
+    "july":
+    "august":
+    "september":
+    "october":
+    "november":
+    "december":
+}

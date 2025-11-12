@@ -1,0 +1,123 @@
+GET /api/register/component/action/all
+    query:
+        registerId
+        status
+
+!!!! array
+
+[
+  {
+    "id": "sdsdasd",
+    "registerId": "gWd4CU792IjhmfI17hK9mY3b3eyv35",
+    "title": "dasdasda",
+    "raiseDate": "",
+    "resources": 0,
+    "currency": "",
+    "relativeFunction": {
+      "id": "",
+      "type": "",
+      "value": "",
+      "shortValue": ""
+    },
+    "responsible": {
+      "id": "",
+      "type": "",
+      "value": "",
+      "shortValue": ""
+    },
+    "deadline": "",
+    "confirmation": {
+      "id": "",
+      "type": "",
+      "value": "",
+      "shortValue": ""
+    },
+    "status": {
+      "id": "",
+      "type": "",
+      "value": "",
+      "shortValue": ""
+    },
+    "completionDate": "",
+    "verificationStatus": {
+      "id": "",
+      "type": "",
+      "value": "",
+      "shortValue": ""
+    },
+    "comment": "",
+    "january": {
+      "id": "",
+      "type": "",
+      "value": "",
+      "shortValue": ""
+    },
+    "february": {
+      "id": "",
+      "type": "",
+      "value": "",
+      "shortValue": ""
+    },
+    "march": {
+      "id": "",
+      "type": "",
+      "value": "",
+      "shortValue": ""
+    },
+    "april": {
+      "id": "",
+      "type": "",
+      "value": "",
+      "shortValue": ""
+    },
+    "may": {
+      "id": "",
+      "type": "",
+      "value": "",
+      "shortValue": ""
+    },
+    "june": {
+      "id": "",
+      "type": "",
+      "value": "",
+      "shortValue": ""
+    },
+    "july": {
+      "id": "",
+      "type": "",
+      "value": "",
+      "shortValue": ""
+    },
+    "august": {
+      "id": "",
+      "type": "",
+      "value": "",
+      "shortValue": ""
+    },
+    "september": {
+      "id": "",
+      "type": "",
+      "value": "",
+      "shortValue": ""
+    },
+    "october": {
+      "id": "",
+      "type": "",
+      "value": "",
+      "shortValue": ""
+    },
+    "november": {
+      "id": "",
+      "type": "",
+      "value": "",
+      "shortValue": ""
+    },
+    "december": {
+      "id": "",
+      "type": "",
+      "value": "",
+      "shortValue": ""
+    },
+    "dbStatus": ""
+  }
+]

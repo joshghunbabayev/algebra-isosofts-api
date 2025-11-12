@@ -1,0 +1,31 @@
+POST /api/register/component/action/one
+
+body
+
+{
+    "registerId":
+    "title":
+    "raiseDate":
+    "resources":
+    "currency":
+    "relativeFunction":
+    "responsible":
+    "deadline":
+    "confirmation":
+    "status":
+    "completionDate":
+    "verificationStatus":
+    "comment":
+    "january":
+    "february":
+    "march":
+    "april":
+    "may":
+    "june":
+    "july":
+    "august":
+    "september":
+    "october":
+    "november":
+    "december":
+}
