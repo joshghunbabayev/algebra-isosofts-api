@@ -208,7 +208,7 @@ func (*ActionModel) Create(action registerComponentTypes.Action) error {
 				"december",
 				"dbStatus",
 				"dbLastStatus"
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
 		action.Id,
 		action.RegisterId,
@@ -239,6 +239,8 @@ func (*ActionModel) Create(action registerComponentTypes.Action) error {
 		action.DbStatus,
 		action.DbLastStatus,
 	)
+
+	fmt.Println(err)
 
 	return err
 }

@@ -7,7 +7,9 @@ import (
 	"algebra-isosofts-api/modules"
 	registerTypes "algebra-isosofts-api/types/registers"
 	"fmt"
+	"strconv"
 	"strings"
+	"time"
 )
 
 type BrModel struct {
@@ -25,6 +27,36 @@ func (*BrModel) GenerateUniqueId() string {
 	} else {
 		return brModel.GenerateUniqueId()
 	}
+}
+
+func (*BrModel) GenerateUniqueNo() string {
+	db := database.GetDatabase()
+
+	year := time.Now().Format("06")
+
+	var lastNo string
+	db.QueryRow(`
+		SELECT "no" 
+		FROM brregisters 
+		WHERE "no" LIKE ? 
+		ORDER BY "no" DESC 
+		LIMIT 1
+		`,
+		"BRR/"+year+"/%",
+	).Scan(&lastNo)
+
+	var nextNumber int
+	if lastNo == "" {
+		nextNumber = 1
+	} else {
+		parts := strings.Split(lastNo, "/")
+		numPart := parts[2]
+		num, _ := strconv.Atoi(numPart)
+		nextNumber = num + 1
+	}
+
+	newNo := fmt.Sprintf("BRR/%s/%04d", year, nextNumber)
+	return newNo
 }
 
 func (*BrModel) GetById(Id string) (registerTypes.Br, error) {
