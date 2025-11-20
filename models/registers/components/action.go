@@ -133,7 +133,7 @@ func (*ActionModel) GetAll(filters map[string]interface{}) ([]registerComponentT
 			&action.Responsible.Id,
 			&action.Deadline,
 			&action.Confirmation.Id,
-			&action.Status,
+			&action.Status.Id,
 			&action.CompletionDate,
 			&action.VerificationStatus.Id,
 			&action.Comment,
