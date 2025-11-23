@@ -7,7 +7,7 @@ type Action struct {
 	RegisterId         string                               `json:"registerId"`
 	Title              string                               `json:"title"`
 	RaiseDate          string                               `json:"raiseDate"`
-	Resources          string                               `json:"resources"`
+	Resources          int64                                `json:"resources"`
 	Currency           string                               `json:"currency"`
 	RelativeFunction   tableComponentTypes.DropDownListItem `json:"relativeFunction"`
 	Responsible        tableComponentTypes.DropDownListItem `json:"responsible"`
