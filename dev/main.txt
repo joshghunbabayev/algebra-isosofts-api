@@ -1,3 +1,7 @@
-create GenerateUniqueNo func 
+OK registerId yoxla
 
-register status deyisende , onun actionlari da
+action add olanda
+    OK register status yoxla (ancaq active)
+
+delete actionsss
+undelete actionsss

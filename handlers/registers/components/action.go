@@ -1,6 +1,7 @@
 package registerComponentHandlers
 
 import (
+	registerModels "algebra-isosofts-api/models/registers"
 	registerComponentModels "algebra-isosofts-api/models/registers/components"
 	registerComponentTypes "algebra-isosofts-api/types/registers/components"
 	tableComponentTypes "algebra-isosofts-api/types/tableComponents"
@@ -86,7 +87,19 @@ func (*ActionHandler) Create(c *gin.Context) {
 		return
 	}
 
-	// registerId yoxla
+	var brModel registerModels.BrModel
+
+	br, _ := brModel.GetById(body.RegisterId)
+
+	if br.IsEmpty() {
+		c.IndentedJSON(404, gin.H{})
+		return
+	}
+
+	if br.DbStatus != "active" {
+		c.IndentedJSON(400, gin.H{})
+		return
+	}
 
 	var actionModel registerComponentModels.ActionModel
 
@@ -238,6 +251,78 @@ func (*ActionHandler) Update(c *gin.Context) {
 		"november":           body.November,
 		"december":           body.December,
 	})
+
+	c.JSON(200, gin.H{})
+}
+
+func (*ActionHandler) Delete(c *gin.Context) {
+	var body struct {
+		Ids []string `json:"ids"`
+	}
+
+	if err := c.ShouldBindJSON(&body); err != nil {
+		c.JSON(400, gin.H{})
+		return
+	}
+
+	if len(body.Ids) == 0 {
+		c.JSON(404, gin.H{})
+		return
+	}
+
+	var actionModel registerComponentModels.ActionModel
+
+	for _, Id := range body.Ids {
+		currentAction, _ := actionModel.GetById(Id)
+		if currentAction.IsEmpty() {
+			continue
+		}
+
+		if currentAction.DbStatus == "deleted" {
+			continue
+		}
+
+		actionModel.Update(Id, map[string]interface{}{
+			"dbStatus":     "deleted",
+			"dbLastStatus": currentAction.DbStatus,
+		})
+	}
+
+	c.JSON(200, gin.H{})
+}
+
+func (*ActionHandler) Undelete(c *gin.Context) {
+	var body struct {
+		Ids []string `json:"ids"`
+	}
+
+	if err := c.ShouldBindJSON(&body); err != nil {
+		c.JSON(400, gin.H{})
+		return
+	}
+
+	if len(body.Ids) == 0 {
+		c.JSON(404, gin.H{})
+		return
+	}
+
+	var actionModel registerComponentModels.ActionModel
+
+	for _, Id := range body.Ids {
+		currentAction, _ := actionModel.GetById(Id)
+		if currentAction.IsEmpty() {
+			continue
+		}
+
+		if currentAction.DbStatus != "deleted" {
+			continue
+		}
+
+		actionModel.Update(Id, map[string]interface{}{
+			"dbStatus":     currentAction.DbLastStatus,
+			"dbLastStatus": currentAction.DbStatus,
+		})
+	}
 
 	c.JSON(200, gin.H{})
 }
