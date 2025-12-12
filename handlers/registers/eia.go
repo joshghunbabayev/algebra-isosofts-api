@@ -34,18 +34,19 @@ func (*EIAHandler) GetAll(c *gin.Context) {
 
 func (*EIAHandler) Create(c *gin.Context) {
 	var body struct {
-		Process          string `json:"process"`
-		Aspect           string `json:"aspect"`
-		Impact           string `json:"impact"`
-		ExistingControls string `json:"existingControls"`
-		IDOSProbability  int8   `json:"idosProbability"`
-		IDOSSeverity     int8   `json:"idosSeverity"`
-		IDOSDuration     int8   `json:"idosDuration"`
-		IDOSScale        int8   `json:"idosScale"`
-		RDOSProbability  int8   `json:"rdosProbability"`
-		RDOSSeverity     int8   `json:"rdosSeverity"`
-		RDOSDuration     int8   `json:"rdosDuration"`
-		RDOSScale        int8   `json:"rdosScale"`
+		Process           string `json:"process"`
+		Aspect            string `json:"aspect"`
+		Impact            string `json:"impact"`
+		AffectedReceptors string `json:"affectedReceptors"`
+		ExistingControls  string `json:"existingControls"`
+		IDOSProbability   int8   `json:"idosProbability"`
+		IDOSSeverity      int8   `json:"idosSeverity"`
+		IDOSDuration      int8   `json:"idosDuration"`
+		IDOSScale         int8   `json:"idosScale"`
+		RDOSProbability   int8   `json:"rdosProbability"`
+		RDOSSeverity      int8   `json:"rdosSeverity"`
+		RDOSDuration      int8   `json:"rdosDuration"`
+		RDOSScale         int8   `json:"rdosScale"`
 	}
 
 	var errs = make(map[string]interface{})
@@ -74,7 +75,10 @@ func (*EIAHandler) Create(c *gin.Context) {
 		Aspect: tableComponentTypes.DropDownListItem{
 			Id: body.Aspect,
 		},
-		Impact:           body.Impact,
+		Impact: body.Impact,
+		AffectedReceptors: tableComponentTypes.DropDownListItem{
+			Id: body.AffectedReceptors,
+		},
 		ExistingControls: body.ExistingControls,
 		IDOSProbability:  body.IDOSProbability,
 		IDOSSeverity:     body.IDOSSeverity,
@@ -104,18 +108,19 @@ func (*EIAHandler) Update(c *gin.Context) {
 	}
 
 	var body struct {
-		Process          string `json:"process"`
-		Aspect           string `json:"aspect"`
-		Impact           string `json:"impact"`
-		ExistingControls string `json:"existingControls"`
-		IDOSProbability  int8   `json:"idosProbability"`
-		IDOSSeverity     int8   `json:"idosSeverity"`
-		IDOSDuration     int8   `json:"idosDuration"`
-		IDOSScale        int8   `json:"idosScale"`
-		RDOSProbability  int8   `json:"rdosProbability"`
-		RDOSSeverity     int8   `json:"rdosSeverity"`
-		RDOSDuration     int8   `json:"rdosDuration"`
-		RDOSScale        int8   `json:"rdosScale"`
+		Process           string `json:"process"`
+		Aspect            string `json:"aspect"`
+		Impact            string `json:"impact"`
+		AffectedReceptors string `json:"affectedReceptors"`
+		ExistingControls  string `json:"existingControls"`
+		IDOSProbability   int8   `json:"idosProbability"`
+		IDOSSeverity      int8   `json:"idosSeverity"`
+		IDOSDuration      int8   `json:"idosDuration"`
+		IDOSScale         int8   `json:"idosScale"`
+		RDOSProbability   int8   `json:"rdosProbability"`
+		RDOSSeverity      int8   `json:"rdosSeverity"`
+		RDOSDuration      int8   `json:"rdosDuration"`
+		RDOSScale         int8   `json:"rdosScale"`
 	}
 
 	var errs = make(map[string]interface{})
@@ -134,18 +139,19 @@ func (*EIAHandler) Update(c *gin.Context) {
 	}
 
 	eiaModel.Update(Id, map[string]interface{}{
-		"process":          body.Process,
-		"aspect":           body.Aspect,
-		"impact":           body.Impact,
-		"existingControls": body.ExistingControls,
-		"idosProbability":  body.IDOSProbability,
-		"idosSeverity":     body.IDOSSeverity,
-		"idosDuration":     body.IDOSDuration,
-		"idosScale":        body.IDOSScale,
-		"rdosProbability":  body.RDOSProbability,
-		"rdosSeverity":     body.RDOSSeverity,
-		"rdosDuration":     body.RDOSDuration,
-		"rdosScale":        body.RDOSScale,
+		"process":           body.Process,
+		"aspect":            body.Aspect,
+		"impact":            body.Impact,
+		"affectedReceptors": body.AffectedReceptors,
+		"existingControls":  body.ExistingControls,
+		"idosProbability":   body.IDOSProbability,
+		"idosSeverity":      body.IDOSSeverity,
+		"idosDuration":      body.IDOSDuration,
+		"idosScale":         body.IDOSScale,
+		"rdosProbability":   body.RDOSProbability,
+		"rdosSeverity":      body.RDOSSeverity,
+		"rdosDuration":      body.RDOSDuration,
+		"rdosScale":         body.RDOSScale,
 	})
 
 	c.JSON(200, gin.H{})

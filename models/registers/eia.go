@@ -79,6 +79,7 @@ func (*EIAModel) GetById(Id string) (registerTypes.EIA, error) {
 		&eia.Process.Id,
 		&eia.Aspect.Id,
 		&eia.Impact,
+		&eia.AffectedReceptors.Id,
 		&eia.ExistingControls,
 		&eia.IDOSProbability,
 		&eia.IDOSSeverity,
@@ -93,6 +94,7 @@ func (*EIAModel) GetById(Id string) (registerTypes.EIA, error) {
 	)
 	eia.Process, _ = dropDownListItemModel.GetById(eia.Process.Id)
 	eia.Aspect, _ = dropDownListItemModel.GetById(eia.Aspect.Id)
+	eia.AffectedReceptors, _ = dropDownListItemModel.GetById(eia.AffectedReceptors.Id)
 	eia.Actions, _ = actionModel.GetAll(map[string]interface{}{
 		"registerId": eia.Id,
 	})
@@ -139,6 +141,7 @@ func (*EIAModel) GetAll(filters map[string]interface{}) ([]registerTypes.EIA, er
 			&eia.Process.Id,
 			&eia.Aspect.Id,
 			&eia.Impact,
+			&eia.AffectedReceptors.Id,
 			&eia.ExistingControls,
 			&eia.IDOSProbability,
 			&eia.IDOSSeverity,
@@ -153,6 +156,7 @@ func (*EIAModel) GetAll(filters map[string]interface{}) ([]registerTypes.EIA, er
 		)
 		eia.Process, _ = dropDownListItemModel.GetById(eia.Process.Id)
 		eia.Aspect, _ = dropDownListItemModel.GetById(eia.Aspect.Id)
+		eia.AffectedReceptors, _ = dropDownListItemModel.GetById(eia.AffectedReceptors.Id)
 		eia.Actions, _ = actionModel.GetAll(map[string]interface{}{
 			"registerId": eia.Id,
 		})
@@ -172,6 +176,7 @@ func (*EIAModel) Create(eia registerTypes.EIA) error {
 				"process",
 				"aspect",
 				"impact",
+				"affectedReceptors", 
 				"existingControls",
 				"idosProbability",
 				"idosSeverity",
@@ -183,13 +188,14 @@ func (*EIAModel) Create(eia registerTypes.EIA) error {
 				"rdosScale",
 				"dbStatus",
 				"dbLastStatus"
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
 		eia.Id,
 		eia.No,
 		eia.Process.Id,
 		eia.Aspect.Id,
 		eia.Impact,
+		eia.AffectedReceptors.Id,
 		eia.ExistingControls,
 		eia.IDOSProbability,
 		eia.IDOSSeverity,
