@@ -1,11 +1,11 @@
 BR   ok
-HSR  ok (x Affected Positions col)
-LEG  ok (x Affected Positions col)
+HSR  ok 
+LEG  ok
 EAI  ok (x Affected Receptors col)
 EI   ok
 TRA  ok
-DOC
-Ven
+DOC 
+VEN
 CUS
 FB
 EA   ok

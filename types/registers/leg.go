@@ -13,6 +13,7 @@ type LEG struct {
 	Section                string                               `json:"section"`
 	Requirement            string                               `json:"requirement"`
 	RiskOfViolation        string                               `json:"riskOfViolation"`
+	AffectedPositions      tableComponentTypes.DropDownListItem `json:"affectedPositions"`
 	InitialRiskSeverity    int8                                 `json:"initialRiskSeverity"`
 	InitialRiskLikelyhood  int8                                 `json:"initialRiskLikelyhood"`
 	ResidualRiskSeverity   int8                                 `json:"residualRiskSeverity"`

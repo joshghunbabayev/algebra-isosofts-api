@@ -79,6 +79,7 @@ func (*HSRModel) GetById(Id string) (registerTypes.HSR, error) {
 		&hsr.Process.Id,
 		&hsr.Hazard.Id,
 		&hsr.Risk.Id,
+		&hsr.AffectedPositions.Id,
 		&hsr.ERMA,
 		&hsr.InitialRiskSeverity,
 		&hsr.InitialRiskLikelyhood,
@@ -90,6 +91,7 @@ func (*HSRModel) GetById(Id string) (registerTypes.HSR, error) {
 	hsr.Process, _ = dropDownListItemModel.GetById(hsr.Process.Id)
 	hsr.Hazard, _ = dropDownListItemModel.GetById(hsr.Hazard.Id)
 	hsr.Risk, _ = dropDownListItemModel.GetById(hsr.Risk.Id)
+	hsr.AffectedPositions, _ = dropDownListItemModel.GetById(hsr.AffectedPositions.Id)
 	hsr.Actions, _ = actionModel.GetAll(map[string]interface{}{
 		"registerId": hsr.Id,
 	})
@@ -136,6 +138,7 @@ func (*HSRModel) GetAll(filters map[string]interface{}) ([]registerTypes.HSR, er
 			&hsr.Process.Id,
 			&hsr.Hazard.Id,
 			&hsr.Risk.Id,
+			&hsr.AffectedPositions.Id,
 			&hsr.ERMA,
 			&hsr.InitialRiskSeverity,
 			&hsr.InitialRiskLikelyhood,
@@ -147,6 +150,7 @@ func (*HSRModel) GetAll(filters map[string]interface{}) ([]registerTypes.HSR, er
 		hsr.Process, _ = dropDownListItemModel.GetById(hsr.Process.Id)
 		hsr.Hazard, _ = dropDownListItemModel.GetById(hsr.Hazard.Id)
 		hsr.Risk, _ = dropDownListItemModel.GetById(hsr.Risk.Id)
+		hsr.AffectedPositions, _ = dropDownListItemModel.GetById(hsr.AffectedPositions.Id)
 		hsr.Actions, _ = actionModel.GetAll(map[string]interface{}{
 			"registerId": hsr.Id,
 		})
@@ -166,6 +170,7 @@ func (*HSRModel) Create(hsr registerTypes.HSR) error {
 				"process", 
 				"hazard", 
 				"risk", 
+				"affectedPositions",
 				"erma",
 				"initialRiskSeverity", 
 				"initialRiskLikelyhood", 
@@ -173,13 +178,14 @@ func (*HSRModel) Create(hsr registerTypes.HSR) error {
 				"residualRiskLikelyhood",
 				"dbStatus",
 				"dbLastStatus"
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
 		hsr.Id,
 		hsr.No,
 		hsr.Process.Id,
 		hsr.Hazard.Id,
 		hsr.Risk.Id,
+		hsr.AffectedPositions.Id,
 		hsr.ERMA,
 		hsr.InitialRiskSeverity,
 		hsr.InitialRiskLikelyhood,

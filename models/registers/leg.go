@@ -81,6 +81,7 @@ func (*LEGModel) GetById(Id string) (registerTypes.LEG, error) {
 		&leg.Section,
 		&leg.Requirement,
 		&leg.RiskOfViolation,
+		&leg.AffectedPositions.Id,
 		&leg.InitialRiskSeverity,
 		&leg.InitialRiskLikelyhood,
 		&leg.ResidualRiskSeverity,
@@ -89,6 +90,7 @@ func (*LEGModel) GetById(Id string) (registerTypes.LEG, error) {
 		&leg.DbLastStatus,
 	)
 	leg.Process, _ = dropDownListItemModel.GetById(leg.Process.Id)
+	leg.AffectedPositions, _ = dropDownListItemModel.GetById(leg.AffectedPositions.Id)
 	leg.Actions, _ = actionModel.GetAll(map[string]interface{}{
 		"registerId": leg.Id,
 	})
@@ -137,6 +139,7 @@ func (*LEGModel) GetAll(filters map[string]interface{}) ([]registerTypes.LEG, er
 			&leg.Section,
 			&leg.Requirement,
 			&leg.RiskOfViolation,
+			&leg.AffectedPositions.Id,
 			&leg.InitialRiskSeverity,
 			&leg.InitialRiskLikelyhood,
 			&leg.ResidualRiskSeverity,
@@ -145,6 +148,7 @@ func (*LEGModel) GetAll(filters map[string]interface{}) ([]registerTypes.LEG, er
 			&leg.DbLastStatus,
 		)
 		leg.Process, _ = dropDownListItemModel.GetById(leg.Process.Id)
+		leg.AffectedPositions, _ = dropDownListItemModel.GetById(leg.AffectedPositions.Id)
 		leg.Actions, _ = actionModel.GetAll(map[string]interface{}{
 			"registerId": leg.Id,
 		})
@@ -166,13 +170,14 @@ func (*LEGModel) Create(leg registerTypes.LEG) error {
 				"section", 
 				"requirement", 
 				"riskOfViolation", 
+				"affectedPositions", 
 				"initialRiskSeverity", 
 				"initialRiskLikelyhood", 
 				"residualRiskSeverity", 
 				"residualRiskLikelyhood",
 				"dbStatus",
 				"dbLastStatus"
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
 		leg.Id,
 		leg.No,
@@ -181,6 +186,7 @@ func (*LEGModel) Create(leg registerTypes.LEG) error {
 		leg.Section,
 		leg.Requirement,
 		leg.RiskOfViolation,
+		leg.AffectedPositions.Id,
 		leg.InitialRiskSeverity,
 		leg.InitialRiskLikelyhood,
 		leg.ResidualRiskSeverity,

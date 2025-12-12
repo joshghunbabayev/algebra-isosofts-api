@@ -39,6 +39,7 @@ func (*LEGHandler) Create(c *gin.Context) {
 		Section                string `json:"section"`
 		Requirement            string `json:"requirement"`
 		RiskOfViolation        string `json:"riskOfViolation"`
+		AffectedPositions      string `json:"affectedPositions"`
 		InitialRiskSeverity    int8   `json:"initialRiskSeverity"`
 		InitialRiskLikelyhood  int8   `json:"initialRiskLikelyhood"`
 		ResidualRiskSeverity   int8   `json:"residualRiskSeverity"`
@@ -68,10 +69,13 @@ func (*LEGHandler) Create(c *gin.Context) {
 		Process: tableComponentTypes.DropDownListItem{
 			Id: body.Process,
 		},
-		Legislation:            body.Legislation,
-		Section:                body.Section,
-		Requirement:            body.Requirement,
-		RiskOfViolation:        body.RiskOfViolation,
+		Legislation:     body.Legislation,
+		Section:         body.Section,
+		Requirement:     body.Requirement,
+		RiskOfViolation: body.RiskOfViolation,
+		AffectedPositions: tableComponentTypes.DropDownListItem{
+			Id: body.AffectedPositions,
+		},
 		InitialRiskSeverity:    body.InitialRiskSeverity,
 		InitialRiskLikelyhood:  body.InitialRiskLikelyhood,
 		ResidualRiskSeverity:   body.ResidualRiskSeverity,
@@ -101,6 +105,7 @@ func (*LEGHandler) Update(c *gin.Context) {
 		Section                string `json:"section"`
 		Requirement            string `json:"requirement"`
 		RiskOfViolation        string `json:"riskOfViolation"`
+		AffectedPositions      string `json:"affectedPositions"`
 		InitialRiskSeverity    int8   `json:"initialRiskSeverity"`
 		InitialRiskLikelyhood  int8   `json:"initialRiskLikelyhood"`
 		ResidualRiskSeverity   int8   `json:"residualRiskSeverity"`
@@ -128,6 +133,7 @@ func (*LEGHandler) Update(c *gin.Context) {
 		"section":                body.Section,
 		"requirement":            body.Requirement,
 		"riskOfViolation":        body.RiskOfViolation,
+		"affectedPositions":      body.AffectedPositions,
 		"initialRiskSeverity":    body.InitialRiskSeverity,
 		"initialRiskLikelyhood":  body.InitialRiskLikelyhood,
 		"residualRiskSeverity":   body.ResidualRiskSeverity,

@@ -6,6 +6,7 @@ type HSR struct {
 	Process                tableComponentTypes.DropDownListItem `json:"process"`
 	Hazard                 tableComponentTypes.DropDownListItem `json:"hazard"`
 	Risk                   tableComponentTypes.DropDownListItem `json:"risk"`
+	AffectedPositions      tableComponentTypes.DropDownListItem `json:"affectedPositions"`
 	ERMA                   string                               `json:"erma"`
 	InitialRiskSeverity    int8                                 `json:"initialRiskSeverity"`
 	InitialRiskLikelyhood  int8                                 `json:"initialRiskLikelyhood"`

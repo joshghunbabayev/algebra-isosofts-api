@@ -1,2 +1,6 @@
 EI reg
     column -> Days Left to Next Examiantion    
+
+heleki sadece bir secim
+    Affected Positions
+    Affected Receptors
