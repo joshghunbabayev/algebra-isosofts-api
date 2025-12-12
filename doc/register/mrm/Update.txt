@@ -1,0 +1,9 @@
+For update mrmregister
+	PUT    /api/register/mrm/one/:id
+
+body:
+type MRM struct {
+	RISOS        tableComponentTypes.DropDownListItem `json:"risos"`
+	Topic        tableComponentTypes.DropDownListItem `json:"topic"`
+	Process      tableComponentTypes.DropDownListItem `json:"process"`
+}

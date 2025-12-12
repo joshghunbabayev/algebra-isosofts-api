@@ -1,0 +1,13 @@
+For update traregister
+	PUT    /api/register/tra/one/:id
+
+body
+type TRA struct {
+	EmployeeName     string                          `json:"employeeName"`
+	Position         string                          `json:"position"`
+	CLName           string                          `json:"clname"`
+	TCLID            string                          `json:"nvcd"`
+	CLNumber         string                          `json:"clnumber"`
+	NCD              string                          `json:"ncd"`
+	CompetencyStatus int8                            `json:"competencyStatus"`
+}

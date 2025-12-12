@@ -50,7 +50,7 @@ func (*ActionModel) GetById(Id string) (registerComponentTypes.Action, error) {
 		&action.Responsible.Id,
 		&action.Deadline,
 		&action.Confirmation.Id,
-		&action.Status,
+		&action.Status.Id,
 		&action.CompletionDate,
 		&action.VerificationStatus.Id,
 		&action.Comment,

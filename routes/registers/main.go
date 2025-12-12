@@ -7,6 +7,13 @@ import (
 )
 
 func MainRoutes(rg *gin.RouterGroup) {
-	BrRoutes(rg.Group("/br"))
+	BRRoutes(rg.Group("/br"))
+	HSRRoutes(rg.Group("/hsr"))
+	LEGRoutes(rg.Group("/leg"))
+	EIARoutes(rg.Group("/eia"))
+	EIRoutes(rg.Group("/ei"))
+	TRARoutes(rg.Group("/tra"))
+	EARoutes(rg.Group("/ea"))
+	MRMRoutes(rg.Group("/mrm"))
 	registerComponentRoutes.MainComponentRoutes(rg.Group("/component"))
 }

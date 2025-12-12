@@ -12,13 +12,13 @@ import (
 	"time"
 )
 
-type BrModel struct {
+type BRModel struct {
 }
 
-func (*BrModel) GenerateUniqueId() string {
+func (*BRModel) GenerateUniqueId() string {
 	Id := modules.GenerateRandomString(30)
 
-	var brModel BrModel
+	var brModel BRModel
 
 	br, _ := brModel.GetById(Id)
 
@@ -29,7 +29,7 @@ func (*BrModel) GenerateUniqueId() string {
 	}
 }
 
-func (*BrModel) GenerateUniqueNo() string {
+func (*BRModel) GenerateUniqueNo() string {
 	db := database.GetDatabase()
 
 	year := time.Now().Format("06")
@@ -59,7 +59,7 @@ func (*BrModel) GenerateUniqueNo() string {
 	return newNo
 }
 
-func (*BrModel) GetById(Id string) (registerTypes.Br, error) {
+func (*BRModel) GetById(Id string) (registerTypes.BR, error) {
 	db := database.GetDatabase()
 	row := db.QueryRow(`
 			SELECT * 
@@ -69,7 +69,7 @@ func (*BrModel) GetById(Id string) (registerTypes.Br, error) {
 		Id,
 	)
 
-	var br registerTypes.Br
+	var br registerTypes.BR
 	var dropDownListItemModel tableComponentModels.DropDownListItemModel
 	var actionModel registerComponentModels.ActionModel
 
@@ -102,7 +102,7 @@ func (*BrModel) GetById(Id string) (registerTypes.Br, error) {
 	return br, err
 }
 
-func (*BrModel) GetAll(filters map[string]interface{}) ([]registerTypes.Br, error) {
+func (*BRModel) GetAll(filters map[string]interface{}) ([]registerTypes.BR, error) {
 	db := database.GetDatabase()
 	whereClause := ""
 	values := []interface{}{}
@@ -128,10 +128,10 @@ func (*BrModel) GetAll(filters map[string]interface{}) ([]registerTypes.Br, erro
 	}
 	defer rows.Close()
 
-	var brs []registerTypes.Br
+	var brs []registerTypes.BR
 
 	for rows.Next() {
-		var br registerTypes.Br
+		var br registerTypes.BR
 		var dropDownListItemModel tableComponentModels.DropDownListItemModel
 		var actionModel registerComponentModels.ActionModel
 
@@ -167,7 +167,7 @@ func (*BrModel) GetAll(filters map[string]interface{}) ([]registerTypes.Br, erro
 	return brs, nil
 }
 
-func (*BrModel) Create(br registerTypes.Br) error {
+func (*BRModel) Create(br registerTypes.BR) error {
 	db := database.GetDatabase()
 	_, err := db.Exec(`
 			INSERT INTO brregisters ( 
@@ -213,7 +213,7 @@ func (*BrModel) Create(br registerTypes.Br) error {
 	return nil
 }
 
-func (*BrModel) Update(Id string, fields map[string]interface{}) error {
+func (*BRModel) Update(Id string, fields map[string]interface{}) error {
 	if len(fields) == 0 {
 		return nil
 	}

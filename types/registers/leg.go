@@ -5,17 +5,14 @@ import (
 	tableComponentTypes "algebra-isosofts-api/types/tableComponents"
 )
 
-type BR struct {
+type LEG struct {
 	Id                     string                               `json:"id"`
 	No                     string                               `json:"no"`
-	Swot                   tableComponentTypes.DropDownListItem `json:"swot"`
-	Pestle                 tableComponentTypes.DropDownListItem `json:"pestle"`
-	InterestedParty        tableComponentTypes.DropDownListItem `json:"interestedParty"`
-	RiskOpportunity        string                               `json:"riskOpportunity"`
-	Objective              string                               `json:"objective"`
-	KPI                    string                               `json:"kpi"`
 	Process                tableComponentTypes.DropDownListItem `json:"process"`
-	ERMEOA                 string                               `json:"ermeoa"`
+	Legislation            string                               `json:"legislation"`
+	Section                string                               `json:"section"`
+	Requirement            string                               `json:"requirement"`
+	RiskOfViolation        string                               `json:"riskOfViolation"`
 	InitialRiskSeverity    int8                                 `json:"initialRiskSeverity"`
 	InitialRiskLikelyhood  int8                                 `json:"initialRiskLikelyhood"`
 	ResidualRiskSeverity   int8                                 `json:"residualRiskSeverity"`
@@ -25,6 +22,6 @@ type BR struct {
 	Actions                []registerComponentTypes.Action      `json:"actions"`
 }
 
-func (br BR) IsEmpty() bool {
-	return br.Id == ""
+func (leg LEG) IsEmpty() bool {
+	return leg.Id == ""
 }

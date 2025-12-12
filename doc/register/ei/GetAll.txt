@@ -1,0 +1,24 @@
+1. For get all eiregister from db
+
+	GET /api/register/ei/all                    (active)
+	GET /api/register/ei/all?status=active
+	GET /api/register/ei/all?status=archived
+	GET /api/register/ei/all?status=deleted
+
+
+
+array / icinde : 
+type EI struct {
+	Id                  string                               `json:"id"`
+	No                  string                               `json:"no"`
+	Name                string                               `json:"name"`
+	SerialNumber        string                               `json:"serialNumber"`
+	CertificateNo       string                               `json:"certificateNo"`
+	InspectionFrequency tableComponentTypes.DropDownListItem `json:"inspectionFrequency"`
+	ICD                 string                               `json:"icd"`
+	NVCD                string                               `json:"nvcd"`
+	SafeToUse           int8                                 `json:"safeToUse"`
+	DbStatus            string                               `json:"dbStatus"`
+	DbLastStatus        string                               `json:"-"`
+	Actions             []registerComponentTypes.Action      `json:"actions"`
+}

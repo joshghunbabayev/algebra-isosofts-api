@@ -542,7 +542,7 @@
         {
             "id": "T15hn7415T0VblJp3C7eDb7Q0417w5",
             "type": "process",
-            "value": "Measurement Traceability",
+            "value": "Measurement TRAceability",
             "shortValue": ""
         },
         {
@@ -790,7 +790,7 @@
         {
             "id": "EG145Y402I6RlUF03p6v03230c8745",
             "type": "relativeFunction",
-            "value": "Training",
+            "value": "TRAining",
             "shortValue": ""
         }
     ],
@@ -862,7 +862,7 @@
         {
             "id": "8gb16a8xN6SgnJCF469G2o414On400",
             "type": "scope",
-            "value": "Trading",
+            "value": "TRAding",
             "shortValue": ""
         },
         {

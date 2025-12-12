@@ -1,0 +1,13 @@
+For create eiregister
+	POST    /api/register/ei/one
+
+body:
+type EI struct {
+	Name                string                               `json:"name"`
+	SerialNumber        string                               `json:"serialNumber"`
+	CertificateNo       string                               `json:"certificateNo"`
+	InspectionFrequency tableComponentTypes.DropDownListItem `json:"inspectionFrequency"`
+	ICD                 string                               `json:"icd"`
+	NVCD                string                               `json:"nvcd"`
+	SafeToUse           int8                                 `json:"safeToUse"`
+}

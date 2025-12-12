@@ -1,0 +1,15 @@
+For create brregister
+	POST    /api/register/br/one
+
+body:
+type LEG struct {
+	Process                tableComponentTypes.DropDownListItem `json:"process"`
+	Legislation            string                               `json:"legislation"`
+	Section                string                               `json:"section"`
+	Requirement            string                               `json:"requirement"`
+	RiskOfViolation        string                               `json:"riskOfViolation"`
+	InitialRiskSeverity    int8                                 `json:"initialRiskSeverity"`
+	InitialRiskLikelyhood  int8                                 `json:"initialRiskLikelyhood"`
+	ResidualRiskSeverity   int8                                 `json:"residualRiskSeverity"`
+	ResidualRiskLikelyhood int8                                 `json:"residualRiskLikelyhood"`
+}

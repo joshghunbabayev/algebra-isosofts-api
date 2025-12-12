@@ -1,0 +1,14 @@
+For update earegister
+	PUT    /api/register/ea/one/:id
+
+body:
+type EA struct {
+	EmployeeName    string                          `json:"employeeName"`
+	Position        string                          `json:"position"`
+	LineManager     string                          `json:"lineManager"`
+	ESD             string                          `json:"esd"`
+	AppraisalDate   string                          `json:"appraisalDate"`
+	AppraisalType   string                          `json:"appraisalType"`
+	TCA             string                          `json:"tca"`
+	SkillsAppraisal string                          `json:"skillsAppraisal"`
+}

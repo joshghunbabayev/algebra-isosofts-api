@@ -1,0 +1,9 @@
+For create mrmregister
+	POST    /api/register/mrm/one
+
+body:
+type MRM struct {
+	RISOS        tableComponentTypes.DropDownListItem `json:"risos"`
+	Topic        tableComponentTypes.DropDownListItem `json:"topic"`
+	Process      tableComponentTypes.DropDownListItem `json:"process"`
+}

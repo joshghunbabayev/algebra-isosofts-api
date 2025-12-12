@@ -1,0 +1,27 @@
+1. For get all eiaregister from db
+
+	GET /api/register/eia/all                    (active)
+	GET /api/register/eia/all?status=active
+	GET /api/register/eia/all?status=archived
+	GET /api/register/eia/all?status=deleted
+
+array / icinde :
+type EIA struct {
+	Id               string                               `json:"id"`
+	No               string                               `json:"no"`
+	Process          tableComponentTypes.DropDownListItem `json:"process"`
+	Aspect           tableComponentTypes.DropDownListItem `json:"aspect"`
+	Impact           string                               `json:"impact"`
+	ExistingControls string                               `json:"existingControls"`
+	IDOSProbability  int8                                 `json:"idosProbability"`
+	IDOSSeverity     int8                                 `json:"idosSeverity"`
+	IDOSDuration     int8                                 `json:"idosDuration"`
+	IDOSScale        int8                                 `json:"idosScale"`
+	RDOSProbability  int8                                 `json:"rdosProbability"`
+	RDOSSeverity     int8                                 `json:"rdosSeverity"`
+	RDOSDuration     int8                                 `json:"rdosDuration"`
+	RDOSScale        int8                                 `json:"rdosScale"`
+	DbStatus         string                               `json:"dbStatus"`
+	DbLastStatus     string                               `json:"-"`
+	Actions          []registerComponentTypes.Action      `json:"actions"`
+}

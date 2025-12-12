@@ -1,0 +1,8 @@
+For delete and undelete
+    PUT /api/register/tra/all/delete
+    PUT /api/register/tra/all/undelete
+
+body: 
+{
+  "ids": ["id1", "id2", ......]
+}

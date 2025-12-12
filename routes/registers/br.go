@@ -6,8 +6,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func BrRoutes(rg *gin.RouterGroup) {
-	var brHandler registerHandlers.BrHandler
+func BRRoutes(rg *gin.RouterGroup) {
+	var brHandler registerHandlers.BRHandler
 	rg.GET("/all", brHandler.GetAll) // query: status
 	rg.POST("/one", brHandler.Create)
 	rg.PUT("/one/:id", brHandler.Update)

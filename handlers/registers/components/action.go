@@ -87,7 +87,7 @@ func (*ActionHandler) Create(c *gin.Context) {
 		return
 	}
 
-	var brModel registerModels.BrModel
+	var brModel registerModels.BRModel
 
 	br, _ := brModel.GetById(body.RegisterId)
 

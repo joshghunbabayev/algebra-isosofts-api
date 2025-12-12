@@ -1,0 +1,8 @@
+For delete and undelete
+    PUT /api/register/ei/all/delete
+    PUT /api/register/ei/all/undelete
+
+body: 
+{
+  "ids": ["id1", "id2", ......]
+}

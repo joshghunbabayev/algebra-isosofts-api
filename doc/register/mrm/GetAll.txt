@@ -1,0 +1,20 @@
+1. For get all mrmregister from db
+
+	GET /api/register/mrm/all                    (active)
+	GET /api/register/mrm/all?status=active
+	GET /api/register/mrm/all?status=archived
+	GET /api/register/mrm/all?status=deleted
+
+
+
+array olaraq/ icinde : 
+type MRM struct {
+	Id           string                               `json:"id"`
+	No           string                               `json:"no"`
+	RISOS        tableComponentTypes.DropDownListItem `json:"risos"`
+	Topic        tableComponentTypes.DropDownListItem `json:"topic"`
+	Process      tableComponentTypes.DropDownListItem `json:"process"`
+	DbStatus     string                               `json:"dbStatus"`
+	DbLastStatus string                               `json:"-"`
+	Actions      []registerComponentTypes.Action      `json:"actions"`
+}

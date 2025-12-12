@@ -8,19 +8,19 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type BRHandler struct {
+type LEGHandler struct {
 }
 
-func (*BRHandler) GetAll(c *gin.Context) {
+func (*LEGHandler) GetAll(c *gin.Context) {
 	status := c.Query("status")
 
 	if status == "" {
 		status = "active"
 	}
 
-	var brModel registerModels.BRModel
+	var legModel registerModels.LEGModel
 
-	brs, err := brModel.GetAll(map[string]interface{}{
+	legs, err := legModel.GetAll(map[string]interface{}{
 		"dbStatus": status,
 	})
 
@@ -29,19 +29,16 @@ func (*BRHandler) GetAll(c *gin.Context) {
 		return
 	}
 
-	c.IndentedJSON(200, brs)
+	c.IndentedJSON(200, legs)
 }
 
-func (*BRHandler) Create(c *gin.Context) {
+func (*LEGHandler) Create(c *gin.Context) {
 	var body struct {
-		Swot                   string `json:"swot"`
-		Pestle                 string `json:"pestle"`
-		InterestedParty        string `json:"interestedParty"`
-		RiskOpportunity        string `json:"riskOpportunity"`
-		Objective              string `json:"objective"`
-		KPI                    string `json:"kpi"`
 		Process                string `json:"process"`
-		ERMEOA                 string `json:"ermeoa"`
+		Legislation            string `json:"legislation"`
+		Section                string `json:"section"`
+		Requirement            string `json:"requirement"`
+		RiskOfViolation        string `json:"riskOfViolation"`
 		InitialRiskSeverity    int8   `json:"initialRiskSeverity"`
 		InitialRiskLikelyhood  int8   `json:"initialRiskLikelyhood"`
 		ResidualRiskSeverity   int8   `json:"residualRiskSeverity"`
@@ -63,27 +60,18 @@ func (*BRHandler) Create(c *gin.Context) {
 		return
 	}
 
-	var brModel registerModels.BRModel
+	var legModel registerModels.LEGModel
 
-	brModel.Create(registerTypes.BR{
-		Id: brModel.GenerateUniqueId(),
-		No: brModel.GenerateUniqueNo(),
-		Swot: tableComponentTypes.DropDownListItem{
-			Id: body.Swot,
-		},
-		Pestle: tableComponentTypes.DropDownListItem{
-			Id: body.Pestle,
-		},
-		InterestedParty: tableComponentTypes.DropDownListItem{
-			Id: body.InterestedParty,
-		},
-		RiskOpportunity: body.RiskOpportunity,
-		Objective:       body.Objective,
-		KPI:             body.KPI,
+	legModel.Create(registerTypes.LEG{
+		Id: legModel.GenerateUniqueId(),
+		No: legModel.GenerateUniqueNo(),
 		Process: tableComponentTypes.DropDownListItem{
 			Id: body.Process,
 		},
-		ERMEOA:                 body.ERMEOA,
+		Legislation:            body.Legislation,
+		Section:                body.Section,
+		Requirement:            body.Requirement,
+		RiskOfViolation:        body.RiskOfViolation,
 		InitialRiskSeverity:    body.InitialRiskSeverity,
 		InitialRiskLikelyhood:  body.InitialRiskLikelyhood,
 		ResidualRiskSeverity:   body.ResidualRiskSeverity,
@@ -95,27 +83,24 @@ func (*BRHandler) Create(c *gin.Context) {
 	c.IndentedJSON(201, gin.H{})
 }
 
-func (*BRHandler) Update(c *gin.Context) {
+func (*LEGHandler) Update(c *gin.Context) {
 	Id := c.Param("id")
 
-	var brModel registerModels.BRModel
+	var legModel registerModels.LEGModel
 
-	currentBR, _ := brModel.GetById(Id)
+	currentLEG, _ := legModel.GetById(Id)
 
-	if currentBR.IsEmpty() {
+	if currentLEG.IsEmpty() {
 		c.IndentedJSON(404, gin.H{})
 		return
 	}
 
 	var body struct {
-		Swot                   string `json:"swot"`
-		Pestle                 string `json:"pestle"`
-		InterestedParty        string `json:"interestedParty"`
-		RiskOpportunity        string `json:"riskOpportunity"`
-		Objective              string `json:"objective"`
-		KPI                    string `json:"kpi"`
 		Process                string `json:"process"`
-		ERMEOA                 string `json:"ermeoa"`
+		Legislation            string `json:"legislation"`
+		Section                string `json:"section"`
+		Requirement            string `json:"requirement"`
+		RiskOfViolation        string `json:"riskOfViolation"`
 		InitialRiskSeverity    int8   `json:"initialRiskSeverity"`
 		InitialRiskLikelyhood  int8   `json:"initialRiskLikelyhood"`
 		ResidualRiskSeverity   int8   `json:"residualRiskSeverity"`
@@ -137,15 +122,12 @@ func (*BRHandler) Update(c *gin.Context) {
 		return
 	}
 
-	brModel.Update(Id, map[string]interface{}{
-		"swot":                   body.Swot,
-		"pestle":                 body.Pestle,
-		"interestedParty":        body.InterestedParty,
-		"riskOpportunity":        body.RiskOpportunity,
-		"objective":              body.Objective,
-		"kpi":                    body.KPI,
+	legModel.Update(Id, map[string]interface{}{
 		"process":                body.Process,
-		"ermeoa":                 body.ERMEOA,
+		"legislation":            body.Legislation,
+		"section":                body.Section,
+		"requirement":            body.Requirement,
+		"riskOfViolation":        body.RiskOfViolation,
 		"initialRiskSeverity":    body.InitialRiskSeverity,
 		"initialRiskLikelyhood":  body.InitialRiskLikelyhood,
 		"residualRiskSeverity":   body.ResidualRiskSeverity,
@@ -155,7 +137,7 @@ func (*BRHandler) Update(c *gin.Context) {
 	c.JSON(200, gin.H{})
 }
 
-func (*BRHandler) Archive(c *gin.Context) {
+func (*LEGHandler) Archive(c *gin.Context) {
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -170,28 +152,28 @@ func (*BRHandler) Archive(c *gin.Context) {
 		return
 	}
 
-	var brModel registerModels.BRModel
+	var legModel registerModels.LEGModel
 
 	for _, Id := range body.Ids {
-		currentBR, _ := brModel.GetById(Id)
-		if currentBR.IsEmpty() {
+		currentLEG, _ := legModel.GetById(Id)
+		if currentLEG.IsEmpty() {
 			continue
 		}
 
-		if currentBR.DbStatus != "active" {
+		if currentLEG.DbStatus != "active" {
 			continue
 		}
 
-		brModel.Update(Id, map[string]interface{}{
+		legModel.Update(Id, map[string]interface{}{
 			"dbStatus":     "archived",
-			"dbLastStatus": currentBR.DbStatus,
+			"dbLastStatus": currentLEG.DbStatus,
 		})
 	}
 
 	c.JSON(200, gin.H{})
 }
 
-func (*BRHandler) Unarchive(c *gin.Context) {
+func (*LEGHandler) Unarchive(c *gin.Context) {
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -206,28 +188,28 @@ func (*BRHandler) Unarchive(c *gin.Context) {
 		return
 	}
 
-	var brModel registerModels.BRModel
+	var legModel registerModels.LEGModel
 
 	for _, Id := range body.Ids {
-		currentBR, _ := brModel.GetById(Id)
-		if currentBR.IsEmpty() {
+		currentLEG, _ := legModel.GetById(Id)
+		if currentLEG.IsEmpty() {
 			continue
 		}
 
-		if currentBR.DbStatus != "archived" {
+		if currentLEG.DbStatus != "archived" {
 			continue
 		}
 
-		brModel.Update(Id, map[string]interface{}{
+		legModel.Update(Id, map[string]interface{}{
 			"dbStatus":     "active",
-			"dbLastStatus": currentBR.DbStatus,
+			"dbLastStatus": currentLEG.DbStatus,
 		})
 	}
 
 	c.JSON(200, gin.H{})
 }
 
-func (*BRHandler) Delete(c *gin.Context) {
+func (*LEGHandler) Delete(c *gin.Context) {
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -242,28 +224,28 @@ func (*BRHandler) Delete(c *gin.Context) {
 		return
 	}
 
-	var brModel registerModels.BRModel
+	var legModel registerModels.LEGModel
 
 	for _, Id := range body.Ids {
-		currentBR, _ := brModel.GetById(Id)
-		if currentBR.IsEmpty() {
+		currentLEG, _ := legModel.GetById(Id)
+		if currentLEG.IsEmpty() {
 			continue
 		}
 
-		if currentBR.DbStatus == "deleted" {
+		if currentLEG.DbStatus == "deleted" {
 			continue
 		}
 
-		brModel.Update(Id, map[string]interface{}{
+		legModel.Update(Id, map[string]interface{}{
 			"dbStatus":     "deleted",
-			"dbLastStatus": currentBR.DbStatus,
+			"dbLastStatus": currentLEG.DbStatus,
 		})
 	}
 
 	c.JSON(200, gin.H{})
 }
 
-func (*BRHandler) Undelete(c *gin.Context) {
+func (*LEGHandler) Undelete(c *gin.Context) {
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -278,21 +260,21 @@ func (*BRHandler) Undelete(c *gin.Context) {
 		return
 	}
 
-	var brModel registerModels.BRModel
+	var legModel registerModels.LEGModel
 
 	for _, Id := range body.Ids {
-		currentBR, _ := brModel.GetById(Id)
-		if currentBR.IsEmpty() {
+		currentLEG, _ := legModel.GetById(Id)
+		if currentLEG.IsEmpty() {
 			continue
 		}
 
-		if currentBR.DbStatus != "deleted" {
+		if currentLEG.DbStatus != "deleted" {
 			continue
 		}
 
-		brModel.Update(Id, map[string]interface{}{
-			"dbStatus":     currentBR.DbLastStatus,
-			"dbLastStatus": currentBR.DbStatus,
+		legModel.Update(Id, map[string]interface{}{
+			"dbStatus":     currentLEG.DbLastStatus,
+			"dbLastStatus": currentLEG.DbStatus,
 		})
 	}
 
