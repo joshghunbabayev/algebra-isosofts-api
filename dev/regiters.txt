@@ -1,7 +1,7 @@
 BR   ok
 HSR  ok 
 LEG  ok
-EAI  ok (x Affected Receptors col)
+EAI  ok
 EI   ok
 TRA  ok
 DOC 
@@ -9,6 +9,6 @@ VEN
 CUS
 FB
 EA   ok
-MC
+MOC
 FIN
 MRM  ok
