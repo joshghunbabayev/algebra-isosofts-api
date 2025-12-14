@@ -102,15 +102,15 @@ func (*HSRHandler) Update(c *gin.Context) {
 	}
 
 	var body struct {
-		Process                tableComponentTypes.DropDownListItem `json:"process"`
-		Hazard                 tableComponentTypes.DropDownListItem `json:"hazard"`
-		Risk                   tableComponentTypes.DropDownListItem `json:"risk"`
-		AffectedPositions      string                               `json:"affectedPositions"`
-		ERMA                   string                               `json:"erma"`
-		InitialRiskSeverity    int8                                 `json:"initialRiskSeverity"`
-		InitialRiskLikelyhood  int8                                 `json:"initialRiskLikelyhood"`
-		ResidualRiskSeverity   int8                                 `json:"residualRiskSeverity"`
-		ResidualRiskLikelyhood int8                                 `json:"residualRiskLikelyhood"`
+		Process                string `json:"process"`
+		Hazard                 string `json:"hazard"`
+		Risk                   string `json:"risk"`
+		AffectedPositions      string `json:"affectedPositions"`
+		ERMA                   string `json:"erma"`
+		InitialRiskSeverity    int8   `json:"initialRiskSeverity"`
+		InitialRiskLikelyhood  int8   `json:"initialRiskLikelyhood"`
+		ResidualRiskSeverity   int8   `json:"residualRiskSeverity"`
+		ResidualRiskLikelyhood int8   `json:"residualRiskLikelyhood"`
 	}
 
 	var errs = make(map[string]interface{})
