@@ -17,5 +17,6 @@ func MainRoutes(rg *gin.RouterGroup) {
 	MOCRoutes(rg.Group("/moc"))
 	FINRoutes(rg.Group("/fin"))
 	MRMRoutes(rg.Group("/mrm"))
+	AOPRoutes(rg.Group("/aop"))
 	registerComponentRoutes.MainComponentRoutes(rg.Group("/component"))
 }

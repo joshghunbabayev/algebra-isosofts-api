@@ -1,0 +1,17 @@
+For update aopregister
+	PUT    /api/register/aop/one/:id
+
+body:
+	var body struct {
+		ActivityDescription string `json:"activityDescription"`
+		AuditorInspector    string `json:"auditorInspector"`
+		AuditeeInspectee    string `json:"auditeeInspectee"`
+		ReviewedPremises    string `json:"reviewedPremises"`
+		ReviewedProcess     string `json:"reviewedProcess"`
+		RTIC                string `json:"rtic"`
+		Frequency           string `json:"frequency"`
+		AuditDate           string `json:"auditDate"`
+		InspectionFrequency string `json:"inspectionFrequency"`
+		NextAuditDate       string `json:"nextAuditDate"`
+		AuditStatus         string `json:"auditStatus"`
+	}

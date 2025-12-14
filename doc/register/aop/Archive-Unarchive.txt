@@ -1,0 +1,8 @@
+For archive and unarchive
+    PUT /api/register/aop/all/archive
+    PUT /api/register/aop/all/unarchive
+
+body: 
+{
+  "ids": ["id1", "id2", ......]
+}

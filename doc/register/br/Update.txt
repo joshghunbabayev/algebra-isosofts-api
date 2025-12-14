@@ -2,17 +2,17 @@ For update brregister
 	PUT    /api/register/br/one/:id
 
 body:
-{
-  "swot": "2DHVc24hvV717Ub9UA6Zvl663BT4i6", // id
-  "pestle": "m10m5ilAr18W4J4uQ4wY8y2W3j9HEN", // id 
-  "interestedParty": "16IBzm2nCTpoj0N283oTnNG2i9yPgf", // id
-  "riskOpportunity": "isabdiubas iudbiasub diubas dbasiub disab iudbsaiubd iuasbdi",
-  "objective": "sadsad",
-  "kpi": "dasdasdadasdas",
-  "process": "9Yj37E5x58c1DlBrO13rcZh5f5K4OF", // id
-  "ermeoa": "sdasd asdn asoidn ioasd",
-  "initialRiskSeverity": 4,
-  "initialRiskLikelyhood": 3,
-  "residualRiskSeverity": 2,
-  "residualRiskLikelyhood": 1
-}
+var body struct {
+		Swot                   string `json:"swot"`
+		Pestle                 string `json:"pestle"`
+		InterestedParty        string `json:"interestedParty"`
+		RiskOpportunity        string `json:"riskOpportunity"`
+		Objective              string `json:"objective"`
+		KPI                    string `json:"kpi"`
+		Process                string `json:"process"`
+		ERMEOA                 string `json:"ermeoa"`
+		InitialRiskSeverity    int8   `json:"initialRiskSeverity"`
+		InitialRiskLikelyhood  int8   `json:"initialRiskLikelyhood"`
+		ResidualRiskSeverity   int8   `json:"residualRiskSeverity"`
+		ResidualRiskLikelyhood int8   `json:"residualRiskLikelyhood"`
+	}
