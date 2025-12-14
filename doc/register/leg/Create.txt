@@ -1,5 +1,5 @@
-For create brregister
-	POST    /api/register/br/one
+For create legregister
+	POST    /api/register/leg/one
 
 body:
 type LEG struct {

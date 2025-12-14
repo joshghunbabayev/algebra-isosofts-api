@@ -1,6 +1,6 @@
 For archive and unarchive
-    PUT /api/register/br/all/archive
-    PUT /api/register/br/all/unarchive
+    PUT /api/register/leg/all/archive
+    PUT /api/register/leg/all/unarchive
 
 body: 
 {

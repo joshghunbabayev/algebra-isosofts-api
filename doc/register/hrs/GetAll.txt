@@ -1,9 +1,9 @@
-1. For get all brregister from db
+1. For get all hsrregister from db
 
-	GET /api/register/br/all                    (active)
-	GET /api/register/br/all?status=active
-	GET /api/register/br/all?status=archived
-	GET /api/register/br/all?status=deleted
+	GET /api/register/hsr/all                    (active)
+	GET /api/register/hsr/all?status=active
+	GET /api/register/hsr/all?status=archived
+	GET /api/register/hsr/all?status=deleted
 
 
 array / icinde : 

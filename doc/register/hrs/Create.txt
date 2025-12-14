@@ -1,5 +1,5 @@
-For create brregister
-	POST    /api/register/br/one
+For create hsrregister
+	POST    /api/register/hsr/one
 
 body:
 type HSR struct {

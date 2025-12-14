@@ -1,6 +1,6 @@
 For delete and undelete
-    PUT /api/register/br/all/delete
-    PUT /api/register/br/all/undelete
+    PUT /api/register/hsr/all/delete
+    PUT /api/register/hsr/all/undelete
 
 body: 
 {

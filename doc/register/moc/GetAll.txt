@@ -1,21 +1,21 @@
-1. For get all legregister from db
+1. For get all mocregister from db
 
-	GET /api/register/leg/all                    (active)
-	GET /api/register/leg/all?status=active
-	GET /api/register/leg/all?status=archived
-	GET /api/register/leg/all?status=deleted
+	GET /api/register/moc/all                    (active)
+	GET /api/register/moc/all?status=active
+	GET /api/register/moc/all?status=archived
+	GET /api/register/moc/all?status=deleted
 
 
-array/ icinde : 
-type LEG struct {
+array / icinde 
+
+type MOC struct {
 	Id                     string                               `json:"id"`
 	No                     string                               `json:"no"`
+	Issuer                 string                               `json:"issuer"`
+	ReasonOfChange         string                               `json:"reasonOfChange"`
 	Process                tableComponentTypes.DropDownListItem `json:"process"`
-	Legislation            string                               `json:"legislation"`
-	Section                string                               `json:"section"`
-	Requirement            string                               `json:"requirement"`
-	RiskOfViolation        string                               `json:"riskOfViolation"`
-	AffectedPositions      tableComponentTypes.DropDownListItem `json:"affectedPositions"`
+	Action                 string                               `json:"action"`
+	Risks                  string                               `json:"risks"`
 	InitialRiskSeverity    int8                                 `json:"initialRiskSeverity"`
 	InitialRiskLikelyhood  int8                                 `json:"initialRiskLikelyhood"`
 	ResidualRiskSeverity   int8                                 `json:"residualRiskSeverity"`

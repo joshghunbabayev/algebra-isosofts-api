@@ -1,5 +1,5 @@
-For update brregister
-	PUT    /api/register/br/one/:id
+For update hsrregister
+	PUT    /api/register/hsr/one/:id
 
 body:
 type HSR struct {

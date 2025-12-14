@@ -1,5 +1,5 @@
-For update brregister
-	PUT    /api/register/br/one/:id
+For update legregister
+	PUT    /api/register/leg/one/:id
 
 body:
 type LEG struct {
