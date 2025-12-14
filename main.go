@@ -20,6 +20,12 @@ func main() {
 	r.RedirectTrailingSlash = false
 	routes.APIRoutes(r.Group("/api"))
 
+	// r.GET("/reddli", func(c *gin.Context) {
+	// 	var dropDownListItemModel tableComponentModels.DropDownListItemModel
+	// 	dropDownListItemModel.DuplicateDefaults()
+	// 	c.IndentedJSON(201, gin.H{})
+	// })
+
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8000"
