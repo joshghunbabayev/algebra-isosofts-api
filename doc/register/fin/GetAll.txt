@@ -1,0 +1,25 @@
+1. For get all finregister from db
+
+	GET /api/register/fin/all                    (active)
+	GET /api/register/fin/all?status=active
+	GET /api/register/fin/all?status=archived
+	GET /api/register/fin/all?status=deleted
+
+array / icinde : 
+type FIN struct {
+	Id                string                               `json:"id"`
+	No                string                               `json:"no"`
+	Issuer            string                               `json:"issuer"`
+	Process           tableComponentTypes.DropDownListItem `json:"process"`
+	CategoryOfFinding tableComponentTypes.DropDownListItem `json:"categoryOfFinding"`
+	TypeOfFinding     tableComponentTypes.DropDownListItem `json:"typeOfFinding"`
+	SourceOfFinding   tableComponentTypes.DropDownListItem `json:"sourceOfFinding"`
+	Customer          string                               `json:"customer"`
+	Vendor            string                               `json:"vendor"`
+	Description       string                               `json:"description"`
+	ContainmentAction string                               `json:"containmentAction"`
+	RootCauses        string                               `json:"rootCauses"`
+	DbStatus          string                               `json:"dbStatus"`
+	DbLastStatus      string                               `json:"-"`
+	Actions           []registerComponentTypes.Action      `json:"actions"`
+}

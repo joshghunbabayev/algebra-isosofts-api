@@ -10,6 +10,6 @@ CUS
 FB
 EA   ok
 MOC  ok
-FIN
+FIN  ok
 MRM  ok
 AOP

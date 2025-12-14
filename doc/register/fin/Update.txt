@@ -1,0 +1,16 @@
+For update finregister
+	PUT    /api/register/fin/one/:id
+
+body:
+var body struct {
+		Issuer            string `json:"issuer"`
+		Process           string `json:"process"`
+		CategoryOfFinding string `json:"categoryOfFinding"`
+		TypeOfFinding     string `json:"typeOfFinding"`
+		SourceOfFinding   string `json:"sourceOfFinding"`
+		Customer          string `json:"customer"`
+		Vendor            string `json:"vendor"`
+		Description       string `json:"description"`
+		ContainmentAction string `json:"containmentAction"`
+		RootCauses        string `json:"rootCauses"`
+	}
