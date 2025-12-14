@@ -1,8 +1,8 @@
-For create eiaregister
-	POST    /api/register/eia/one
+For create eairegister
+	POST    /api/register/eai/one
 
 body:
-type EIA struct {
+type EAI struct {
 	Process          tableComponentTypes.DropDownListItem `json:"process"`
 	Aspect           tableComponentTypes.DropDownListItem `json:"aspect"`
 	Impact           string                               `json:"impact"`

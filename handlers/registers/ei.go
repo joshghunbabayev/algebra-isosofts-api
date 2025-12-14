@@ -84,9 +84,9 @@ func (*EIHandler) Update(c *gin.Context) {
 
 	var eiModel registerModels.EIModel
 
-	currentEI, _ := eiModel.GetById(Id)
+	currentEi, _ := eiModel.GetById(Id)
 
-	if currentEI.IsEmpty() {
+	if currentEi.IsEmpty() {
 		c.IndentedJSON(404, gin.H{})
 		return
 	}
@@ -147,18 +147,18 @@ func (*EIHandler) Archive(c *gin.Context) {
 	var eiModel registerModels.EIModel
 
 	for _, Id := range body.Ids {
-		currentEI, _ := eiModel.GetById(Id)
-		if currentEI.IsEmpty() {
+		currentEi, _ := eiModel.GetById(Id)
+		if currentEi.IsEmpty() {
 			continue
 		}
 
-		if currentEI.DbStatus != "active" {
+		if currentEi.DbStatus != "active" {
 			continue
 		}
 
 		eiModel.Update(Id, map[string]interface{}{
 			"dbStatus":     "archived",
-			"dbLastStatus": currentEI.DbStatus,
+			"dbLastStatus": currentEi.DbStatus,
 		})
 	}
 
@@ -183,18 +183,18 @@ func (*EIHandler) Unarchive(c *gin.Context) {
 	var eiModel registerModels.EIModel
 
 	for _, Id := range body.Ids {
-		currentEI, _ := eiModel.GetById(Id)
-		if currentEI.IsEmpty() {
+		currentEi, _ := eiModel.GetById(Id)
+		if currentEi.IsEmpty() {
 			continue
 		}
 
-		if currentEI.DbStatus != "archived" {
+		if currentEi.DbStatus != "archived" {
 			continue
 		}
 
 		eiModel.Update(Id, map[string]interface{}{
 			"dbStatus":     "active",
-			"dbLastStatus": currentEI.DbStatus,
+			"dbLastStatus": currentEi.DbStatus,
 		})
 	}
 
@@ -219,18 +219,18 @@ func (*EIHandler) Delete(c *gin.Context) {
 	var eiModel registerModels.EIModel
 
 	for _, Id := range body.Ids {
-		currentEI, _ := eiModel.GetById(Id)
-		if currentEI.IsEmpty() {
+		currentEi, _ := eiModel.GetById(Id)
+		if currentEi.IsEmpty() {
 			continue
 		}
 
-		if currentEI.DbStatus == "deleted" {
+		if currentEi.DbStatus == "deleted" {
 			continue
 		}
 
 		eiModel.Update(Id, map[string]interface{}{
 			"dbStatus":     "deleted",
-			"dbLastStatus": currentEI.DbStatus,
+			"dbLastStatus": currentEi.DbStatus,
 		})
 	}
 
@@ -255,18 +255,18 @@ func (*EIHandler) Undelete(c *gin.Context) {
 	var eiModel registerModels.EIModel
 
 	for _, Id := range body.Ids {
-		currentEI, _ := eiModel.GetById(Id)
-		if currentEI.IsEmpty() {
+		currentEi, _ := eiModel.GetById(Id)
+		if currentEi.IsEmpty() {
 			continue
 		}
 
-		if currentEI.DbStatus != "deleted" {
+		if currentEi.DbStatus != "deleted" {
 			continue
 		}
 
 		eiModel.Update(Id, map[string]interface{}{
-			"dbStatus":     currentEI.DbLastStatus,
-			"dbLastStatus": currentEI.DbStatus,
+			"dbStatus":     currentEi.DbLastStatus,
+			"dbLastStatus": currentEi.DbStatus,
 		})
 	}
 

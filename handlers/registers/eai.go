@@ -8,19 +8,19 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type EIAHandler struct {
+type EAIHandler struct {
 }
 
-func (*EIAHandler) GetAll(c *gin.Context) {
+func (*EAIHandler) GetAll(c *gin.Context) {
 	status := c.Query("status")
 
 	if status == "" {
 		status = "active"
 	}
 
-	var eiaModel registerModels.EIAModel
+	var eaiModel registerModels.EAIModel
 
-	eias, err := eiaModel.GetAll(map[string]interface{}{
+	eais, err := eaiModel.GetAll(map[string]interface{}{
 		"dbStatus": status,
 	})
 
@@ -29,10 +29,10 @@ func (*EIAHandler) GetAll(c *gin.Context) {
 		return
 	}
 
-	c.IndentedJSON(200, eias)
+	c.IndentedJSON(200, eais)
 }
 
-func (*EIAHandler) Create(c *gin.Context) {
+func (*EAIHandler) Create(c *gin.Context) {
 	var body struct {
 		Process           string `json:"process"`
 		Aspect            string `json:"aspect"`
@@ -64,11 +64,11 @@ func (*EIAHandler) Create(c *gin.Context) {
 		return
 	}
 
-	var eiaModel registerModels.EIAModel
+	var eaiModel registerModels.EAIModel
 
-	eiaModel.Create(registerTypes.EIA{
-		Id: eiaModel.GenerateUniqueId(),
-		No: eiaModel.GenerateUniqueNo(),
+	eaiModel.Create(registerTypes.EAI{
+		Id: eaiModel.GenerateUniqueId(),
+		No: eaiModel.GenerateUniqueNo(),
 		Process: tableComponentTypes.DropDownListItem{
 			Id: body.Process,
 		},
@@ -95,14 +95,14 @@ func (*EIAHandler) Create(c *gin.Context) {
 	c.IndentedJSON(201, gin.H{})
 }
 
-func (*EIAHandler) Update(c *gin.Context) {
+func (*EAIHandler) Update(c *gin.Context) {
 	Id := c.Param("id")
 
-	var eiaModel registerModels.EIAModel
+	var eaiModel registerModels.EAIModel
 
-	currentEIA, _ := eiaModel.GetById(Id)
+	currentEai, _ := eaiModel.GetById(Id)
 
-	if currentEIA.IsEmpty() {
+	if currentEai.IsEmpty() {
 		c.IndentedJSON(404, gin.H{})
 		return
 	}
@@ -138,7 +138,7 @@ func (*EIAHandler) Update(c *gin.Context) {
 		return
 	}
 
-	eiaModel.Update(Id, map[string]interface{}{
+	eaiModel.Update(Id, map[string]interface{}{
 		"process":           body.Process,
 		"aspect":            body.Aspect,
 		"impact":            body.Impact,
@@ -157,7 +157,7 @@ func (*EIAHandler) Update(c *gin.Context) {
 	c.JSON(200, gin.H{})
 }
 
-func (*EIAHandler) Archive(c *gin.Context) {
+func (*EAIHandler) Archive(c *gin.Context) {
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -172,28 +172,28 @@ func (*EIAHandler) Archive(c *gin.Context) {
 		return
 	}
 
-	var eiaModel registerModels.EIAModel
+	var eaiModel registerModels.EAIModel
 
 	for _, Id := range body.Ids {
-		currentEIA, _ := eiaModel.GetById(Id)
-		if currentEIA.IsEmpty() {
+		currentEai, _ := eaiModel.GetById(Id)
+		if currentEai.IsEmpty() {
 			continue
 		}
 
-		if currentEIA.DbStatus != "active" {
+		if currentEai.DbStatus != "active" {
 			continue
 		}
 
-		eiaModel.Update(Id, map[string]interface{}{
+		eaiModel.Update(Id, map[string]interface{}{
 			"dbStatus":     "archived",
-			"dbLastStatus": currentEIA.DbStatus,
+			"dbLastStatus": currentEai.DbStatus,
 		})
 	}
 
 	c.JSON(200, gin.H{})
 }
 
-func (*EIAHandler) Unarchive(c *gin.Context) {
+func (*EAIHandler) Unarchive(c *gin.Context) {
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -208,28 +208,28 @@ func (*EIAHandler) Unarchive(c *gin.Context) {
 		return
 	}
 
-	var eiaModel registerModels.EIAModel
+	var eaiModel registerModels.EAIModel
 
 	for _, Id := range body.Ids {
-		currentEIA, _ := eiaModel.GetById(Id)
-		if currentEIA.IsEmpty() {
+		currentEai, _ := eaiModel.GetById(Id)
+		if currentEai.IsEmpty() {
 			continue
 		}
 
-		if currentEIA.DbStatus != "archived" {
+		if currentEai.DbStatus != "archived" {
 			continue
 		}
 
-		eiaModel.Update(Id, map[string]interface{}{
+		eaiModel.Update(Id, map[string]interface{}{
 			"dbStatus":     "active",
-			"dbLastStatus": currentEIA.DbStatus,
+			"dbLastStatus": currentEai.DbStatus,
 		})
 	}
 
 	c.JSON(200, gin.H{})
 }
 
-func (*EIAHandler) Delete(c *gin.Context) {
+func (*EAIHandler) Delete(c *gin.Context) {
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -244,28 +244,28 @@ func (*EIAHandler) Delete(c *gin.Context) {
 		return
 	}
 
-	var eiaModel registerModels.EIAModel
+	var eaiModel registerModels.EAIModel
 
 	for _, Id := range body.Ids {
-		currentEIA, _ := eiaModel.GetById(Id)
-		if currentEIA.IsEmpty() {
+		currentEai, _ := eaiModel.GetById(Id)
+		if currentEai.IsEmpty() {
 			continue
 		}
 
-		if currentEIA.DbStatus == "deleted" {
+		if currentEai.DbStatus == "deleted" {
 			continue
 		}
 
-		eiaModel.Update(Id, map[string]interface{}{
+		eaiModel.Update(Id, map[string]interface{}{
 			"dbStatus":     "deleted",
-			"dbLastStatus": currentEIA.DbStatus,
+			"dbLastStatus": currentEai.DbStatus,
 		})
 	}
 
 	c.JSON(200, gin.H{})
 }
 
-func (*EIAHandler) Undelete(c *gin.Context) {
+func (*EAIHandler) Undelete(c *gin.Context) {
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -280,21 +280,21 @@ func (*EIAHandler) Undelete(c *gin.Context) {
 		return
 	}
 
-	var eiaModel registerModels.EIAModel
+	var eaiModel registerModels.EAIModel
 
 	for _, Id := range body.Ids {
-		currentEIA, _ := eiaModel.GetById(Id)
-		if currentEIA.IsEmpty() {
+		currentEai, _ := eaiModel.GetById(Id)
+		if currentEai.IsEmpty() {
 			continue
 		}
 
-		if currentEIA.DbStatus != "deleted" {
+		if currentEai.DbStatus != "deleted" {
 			continue
 		}
 
-		eiaModel.Update(Id, map[string]interface{}{
-			"dbStatus":     currentEIA.DbLastStatus,
-			"dbLastStatus": currentEIA.DbStatus,
+		eaiModel.Update(Id, map[string]interface{}{
+			"dbStatus":     currentEai.DbLastStatus,
+			"dbLastStatus": currentEai.DbStatus,
 		})
 	}
 

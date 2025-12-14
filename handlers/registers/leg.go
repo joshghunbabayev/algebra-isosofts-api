@@ -92,9 +92,9 @@ func (*LEGHandler) Update(c *gin.Context) {
 
 	var legModel registerModels.LEGModel
 
-	currentLEG, _ := legModel.GetById(Id)
+	currentLeg, _ := legModel.GetById(Id)
 
-	if currentLEG.IsEmpty() {
+	if currentLeg.IsEmpty() {
 		c.IndentedJSON(404, gin.H{})
 		return
 	}
@@ -161,18 +161,18 @@ func (*LEGHandler) Archive(c *gin.Context) {
 	var legModel registerModels.LEGModel
 
 	for _, Id := range body.Ids {
-		currentLEG, _ := legModel.GetById(Id)
-		if currentLEG.IsEmpty() {
+		currentLeg, _ := legModel.GetById(Id)
+		if currentLeg.IsEmpty() {
 			continue
 		}
 
-		if currentLEG.DbStatus != "active" {
+		if currentLeg.DbStatus != "active" {
 			continue
 		}
 
 		legModel.Update(Id, map[string]interface{}{
 			"dbStatus":     "archived",
-			"dbLastStatus": currentLEG.DbStatus,
+			"dbLastStatus": currentLeg.DbStatus,
 		})
 	}
 
@@ -197,18 +197,18 @@ func (*LEGHandler) Unarchive(c *gin.Context) {
 	var legModel registerModels.LEGModel
 
 	for _, Id := range body.Ids {
-		currentLEG, _ := legModel.GetById(Id)
-		if currentLEG.IsEmpty() {
+		currentLeg, _ := legModel.GetById(Id)
+		if currentLeg.IsEmpty() {
 			continue
 		}
 
-		if currentLEG.DbStatus != "archived" {
+		if currentLeg.DbStatus != "archived" {
 			continue
 		}
 
 		legModel.Update(Id, map[string]interface{}{
 			"dbStatus":     "active",
-			"dbLastStatus": currentLEG.DbStatus,
+			"dbLastStatus": currentLeg.DbStatus,
 		})
 	}
 
@@ -233,18 +233,18 @@ func (*LEGHandler) Delete(c *gin.Context) {
 	var legModel registerModels.LEGModel
 
 	for _, Id := range body.Ids {
-		currentLEG, _ := legModel.GetById(Id)
-		if currentLEG.IsEmpty() {
+		currentLeg, _ := legModel.GetById(Id)
+		if currentLeg.IsEmpty() {
 			continue
 		}
 
-		if currentLEG.DbStatus == "deleted" {
+		if currentLeg.DbStatus == "deleted" {
 			continue
 		}
 
 		legModel.Update(Id, map[string]interface{}{
 			"dbStatus":     "deleted",
-			"dbLastStatus": currentLEG.DbStatus,
+			"dbLastStatus": currentLeg.DbStatus,
 		})
 	}
 
@@ -269,18 +269,18 @@ func (*LEGHandler) Undelete(c *gin.Context) {
 	var legModel registerModels.LEGModel
 
 	for _, Id := range body.Ids {
-		currentLEG, _ := legModel.GetById(Id)
-		if currentLEG.IsEmpty() {
+		currentLeg, _ := legModel.GetById(Id)
+		if currentLeg.IsEmpty() {
 			continue
 		}
 
-		if currentLEG.DbStatus != "deleted" {
+		if currentLeg.DbStatus != "deleted" {
 			continue
 		}
 
 		legModel.Update(Id, map[string]interface{}{
-			"dbStatus":     currentLEG.DbLastStatus,
-			"dbLastStatus": currentLEG.DbStatus,
+			"dbStatus":     currentLeg.DbLastStatus,
+			"dbLastStatus": currentLeg.DbStatus,
 		})
 	}
 

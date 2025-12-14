@@ -88,9 +88,9 @@ func (*MOCHandler) Update(c *gin.Context) {
 
 	var mocModel registerModels.MOCModel
 
-	currentMOC, _ := mocModel.GetById(Id)
+	currentMoc, _ := mocModel.GetById(Id)
 
-	if currentMOC.IsEmpty() {
+	if currentMoc.IsEmpty() {
 		c.IndentedJSON(404, gin.H{})
 		return
 	}
@@ -155,18 +155,18 @@ func (*MOCHandler) Archive(c *gin.Context) {
 	var mocModel registerModels.MOCModel
 
 	for _, Id := range body.Ids {
-		currentMOC, _ := mocModel.GetById(Id)
-		if currentMOC.IsEmpty() {
+		currentMoc, _ := mocModel.GetById(Id)
+		if currentMoc.IsEmpty() {
 			continue
 		}
 
-		if currentMOC.DbStatus != "active" {
+		if currentMoc.DbStatus != "active" {
 			continue
 		}
 
 		mocModel.Update(Id, map[string]interface{}{
 			"dbStatus":     "archived",
-			"dbLastStatus": currentMOC.DbStatus,
+			"dbLastStatus": currentMoc.DbStatus,
 		})
 	}
 
@@ -191,18 +191,18 @@ func (*MOCHandler) Unarchive(c *gin.Context) {
 	var mocModel registerModels.MOCModel
 
 	for _, Id := range body.Ids {
-		currentMOC, _ := mocModel.GetById(Id)
-		if currentMOC.IsEmpty() {
+		currentMoc, _ := mocModel.GetById(Id)
+		if currentMoc.IsEmpty() {
 			continue
 		}
 
-		if currentMOC.DbStatus != "archived" {
+		if currentMoc.DbStatus != "archived" {
 			continue
 		}
 
 		mocModel.Update(Id, map[string]interface{}{
 			"dbStatus":     "active",
-			"dbLastStatus": currentMOC.DbStatus,
+			"dbLastStatus": currentMoc.DbStatus,
 		})
 	}
 
@@ -227,18 +227,18 @@ func (*MOCHandler) Delete(c *gin.Context) {
 	var mocModel registerModels.MOCModel
 
 	for _, Id := range body.Ids {
-		currentMOC, _ := mocModel.GetById(Id)
-		if currentMOC.IsEmpty() {
+		currentMoc, _ := mocModel.GetById(Id)
+		if currentMoc.IsEmpty() {
 			continue
 		}
 
-		if currentMOC.DbStatus == "deleted" {
+		if currentMoc.DbStatus == "deleted" {
 			continue
 		}
 
 		mocModel.Update(Id, map[string]interface{}{
 			"dbStatus":     "deleted",
-			"dbLastStatus": currentMOC.DbStatus,
+			"dbLastStatus": currentMoc.DbStatus,
 		})
 	}
 
@@ -263,18 +263,18 @@ func (*MOCHandler) Undelete(c *gin.Context) {
 	var mocModel registerModels.MOCModel
 
 	for _, Id := range body.Ids {
-		currentMOC, _ := mocModel.GetById(Id)
-		if currentMOC.IsEmpty() {
+		currentMoc, _ := mocModel.GetById(Id)
+		if currentMoc.IsEmpty() {
 			continue
 		}
 
-		if currentMOC.DbStatus != "deleted" {
+		if currentMoc.DbStatus != "deleted" {
 			continue
 		}
 
 		mocModel.Update(Id, map[string]interface{}{
-			"dbStatus":     currentMOC.DbLastStatus,
-			"dbLastStatus": currentMOC.DbStatus,
+			"dbStatus":     currentMoc.DbLastStatus,
+			"dbLastStatus": currentMoc.DbStatus,
 		})
 	}
 

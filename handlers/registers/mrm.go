@@ -80,9 +80,9 @@ func (*MRMHandler) Update(c *gin.Context) {
 
 	var mrmModel registerModels.MRMModel
 
-	currentMRM, _ := mrmModel.GetById(Id)
+	currentMrm, _ := mrmModel.GetById(Id)
 
-	if currentMRM.IsEmpty() {
+	if currentMrm.IsEmpty() {
 		c.IndentedJSON(404, gin.H{})
 		return
 	}
@@ -135,18 +135,18 @@ func (*MRMHandler) Archive(c *gin.Context) {
 	var mrmModel registerModels.MRMModel
 
 	for _, Id := range body.Ids {
-		currentMRM, _ := mrmModel.GetById(Id)
-		if currentMRM.IsEmpty() {
+		currentMrm, _ := mrmModel.GetById(Id)
+		if currentMrm.IsEmpty() {
 			continue
 		}
 
-		if currentMRM.DbStatus != "active" {
+		if currentMrm.DbStatus != "active" {
 			continue
 		}
 
 		mrmModel.Update(Id, map[string]interface{}{
 			"dbStatus":     "archived",
-			"dbLastStatus": currentMRM.DbStatus,
+			"dbLastStatus": currentMrm.DbStatus,
 		})
 	}
 
@@ -171,18 +171,18 @@ func (*MRMHandler) Unarchive(c *gin.Context) {
 	var mrmModel registerModels.MRMModel
 
 	for _, Id := range body.Ids {
-		currentMRM, _ := mrmModel.GetById(Id)
-		if currentMRM.IsEmpty() {
+		currentMrm, _ := mrmModel.GetById(Id)
+		if currentMrm.IsEmpty() {
 			continue
 		}
 
-		if currentMRM.DbStatus != "archived" {
+		if currentMrm.DbStatus != "archived" {
 			continue
 		}
 
 		mrmModel.Update(Id, map[string]interface{}{
 			"dbStatus":     "active",
-			"dbLastStatus": currentMRM.DbStatus,
+			"dbLastStatus": currentMrm.DbStatus,
 		})
 	}
 
@@ -207,18 +207,18 @@ func (*MRMHandler) Delete(c *gin.Context) {
 	var mrmModel registerModels.MRMModel
 
 	for _, Id := range body.Ids {
-		currentMRM, _ := mrmModel.GetById(Id)
-		if currentMRM.IsEmpty() {
+		currentMrm, _ := mrmModel.GetById(Id)
+		if currentMrm.IsEmpty() {
 			continue
 		}
 
-		if currentMRM.DbStatus == "deleted" {
+		if currentMrm.DbStatus == "deleted" {
 			continue
 		}
 
 		mrmModel.Update(Id, map[string]interface{}{
 			"dbStatus":     "deleted",
-			"dbLastStatus": currentMRM.DbStatus,
+			"dbLastStatus": currentMrm.DbStatus,
 		})
 	}
 
@@ -243,18 +243,18 @@ func (*MRMHandler) Undelete(c *gin.Context) {
 	var mrmModel registerModels.MRMModel
 
 	for _, Id := range body.Ids {
-		currentMRM, _ := mrmModel.GetById(Id)
-		if currentMRM.IsEmpty() {
+		currentMrm, _ := mrmModel.GetById(Id)
+		if currentMrm.IsEmpty() {
 			continue
 		}
 
-		if currentMRM.DbStatus != "deleted" {
+		if currentMrm.DbStatus != "deleted" {
 			continue
 		}
 
 		mrmModel.Update(Id, map[string]interface{}{
-			"dbStatus":     currentMRM.DbLastStatus,
-			"dbLastStatus": currentMRM.DbStatus,
+			"dbStatus":     currentMrm.DbLastStatus,
+			"dbLastStatus": currentMrm.DbStatus,
 		})
 	}
 

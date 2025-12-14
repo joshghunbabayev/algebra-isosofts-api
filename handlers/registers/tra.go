@@ -81,9 +81,9 @@ func (*TRAHandler) Update(c *gin.Context) {
 
 	var traModel registerModels.TRAModel
 
-	currentTRA, _ := traModel.GetById(Id)
+	currentTra, _ := traModel.GetById(Id)
 
-	if currentTRA.IsEmpty() {
+	if currentTra.IsEmpty() {
 		c.IndentedJSON(404, gin.H{})
 		return
 	}
@@ -144,18 +144,18 @@ func (*TRAHandler) Archive(c *gin.Context) {
 	var traModel registerModels.TRAModel
 
 	for _, Id := range body.Ids {
-		currentTRA, _ := traModel.GetById(Id)
-		if currentTRA.IsEmpty() {
+		currentTra, _ := traModel.GetById(Id)
+		if currentTra.IsEmpty() {
 			continue
 		}
 
-		if currentTRA.DbStatus != "active" {
+		if currentTra.DbStatus != "active" {
 			continue
 		}
 
 		traModel.Update(Id, map[string]interface{}{
 			"dbStatus":     "archived",
-			"dbLastStatus": currentTRA.DbStatus,
+			"dbLastStatus": currentTra.DbStatus,
 		})
 	}
 
@@ -180,18 +180,18 @@ func (*TRAHandler) Unarchive(c *gin.Context) {
 	var traModel registerModels.TRAModel
 
 	for _, Id := range body.Ids {
-		currentTRA, _ := traModel.GetById(Id)
-		if currentTRA.IsEmpty() {
+		currentTra, _ := traModel.GetById(Id)
+		if currentTra.IsEmpty() {
 			continue
 		}
 
-		if currentTRA.DbStatus != "archived" {
+		if currentTra.DbStatus != "archived" {
 			continue
 		}
 
 		traModel.Update(Id, map[string]interface{}{
 			"dbStatus":     "active",
-			"dbLastStatus": currentTRA.DbStatus,
+			"dbLastStatus": currentTra.DbStatus,
 		})
 	}
 
@@ -216,18 +216,18 @@ func (*TRAHandler) Delete(c *gin.Context) {
 	var traModel registerModels.TRAModel
 
 	for _, Id := range body.Ids {
-		currentTRA, _ := traModel.GetById(Id)
-		if currentTRA.IsEmpty() {
+		currentTra, _ := traModel.GetById(Id)
+		if currentTra.IsEmpty() {
 			continue
 		}
 
-		if currentTRA.DbStatus == "deleted" {
+		if currentTra.DbStatus == "deleted" {
 			continue
 		}
 
 		traModel.Update(Id, map[string]interface{}{
 			"dbStatus":     "deleted",
-			"dbLastStatus": currentTRA.DbStatus,
+			"dbLastStatus": currentTra.DbStatus,
 		})
 	}
 
@@ -252,18 +252,18 @@ func (*TRAHandler) Undelete(c *gin.Context) {
 	var traModel registerModels.TRAModel
 
 	for _, Id := range body.Ids {
-		currentTRA, _ := traModel.GetById(Id)
-		if currentTRA.IsEmpty() {
+		currentTra, _ := traModel.GetById(Id)
+		if currentTra.IsEmpty() {
 			continue
 		}
 
-		if currentTRA.DbStatus != "deleted" {
+		if currentTra.DbStatus != "deleted" {
 			continue
 		}
 
 		traModel.Update(Id, map[string]interface{}{
-			"dbStatus":     currentTRA.DbLastStatus,
-			"dbLastStatus": currentTRA.DbStatus,
+			"dbStatus":     currentTra.DbLastStatus,
+			"dbLastStatus": currentTra.DbStatus,
 		})
 	}
 

@@ -1,6 +1,6 @@
 For delete and undelete
-    PUT /api/register/eia/all/delete
-    PUT /api/register/eia/all/undelete
+    PUT /api/register/eai/all/delete
+    PUT /api/register/eai/all/undelete
 
 body: 
 {

@@ -83,9 +83,9 @@ func (*EAHandler) Update(c *gin.Context) {
 
 	var eaModel registerModels.EAModel
 
-	currentEA, _ := eaModel.GetById(Id)
+	currentEa, _ := eaModel.GetById(Id)
 
-	if currentEA.IsEmpty() {
+	if currentEa.IsEmpty() {
 		c.IndentedJSON(404, gin.H{})
 		return
 	}
@@ -148,18 +148,18 @@ func (*EAHandler) Archive(c *gin.Context) {
 	var eaModel registerModels.EAModel
 
 	for _, Id := range body.Ids {
-		currentEA, _ := eaModel.GetById(Id)
-		if currentEA.IsEmpty() {
+		currentEa, _ := eaModel.GetById(Id)
+		if currentEa.IsEmpty() {
 			continue
 		}
 
-		if currentEA.DbStatus != "active" {
+		if currentEa.DbStatus != "active" {
 			continue
 		}
 
 		eaModel.Update(Id, map[string]interface{}{
 			"dbStatus":     "archived",
-			"dbLastStatus": currentEA.DbStatus,
+			"dbLastStatus": currentEa.DbStatus,
 		})
 	}
 
@@ -184,18 +184,18 @@ func (*EAHandler) Unarchive(c *gin.Context) {
 	var eaModel registerModels.EAModel
 
 	for _, Id := range body.Ids {
-		currentEA, _ := eaModel.GetById(Id)
-		if currentEA.IsEmpty() {
+		currentEa, _ := eaModel.GetById(Id)
+		if currentEa.IsEmpty() {
 			continue
 		}
 
-		if currentEA.DbStatus != "archived" {
+		if currentEa.DbStatus != "archived" {
 			continue
 		}
 
 		eaModel.Update(Id, map[string]interface{}{
 			"dbStatus":     "active",
-			"dbLastStatus": currentEA.DbStatus,
+			"dbLastStatus": currentEa.DbStatus,
 		})
 	}
 
@@ -220,18 +220,18 @@ func (*EAHandler) Delete(c *gin.Context) {
 	var eaModel registerModels.EAModel
 
 	for _, Id := range body.Ids {
-		currentEA, _ := eaModel.GetById(Id)
-		if currentEA.IsEmpty() {
+		currentEa, _ := eaModel.GetById(Id)
+		if currentEa.IsEmpty() {
 			continue
 		}
 
-		if currentEA.DbStatus == "deleted" {
+		if currentEa.DbStatus == "deleted" {
 			continue
 		}
 
 		eaModel.Update(Id, map[string]interface{}{
 			"dbStatus":     "deleted",
-			"dbLastStatus": currentEA.DbStatus,
+			"dbLastStatus": currentEa.DbStatus,
 		})
 	}
 
@@ -256,18 +256,18 @@ func (*EAHandler) Undelete(c *gin.Context) {
 	var eaModel registerModels.EAModel
 
 	for _, Id := range body.Ids {
-		currentEA, _ := eaModel.GetById(Id)
-		if currentEA.IsEmpty() {
+		currentEa, _ := eaModel.GetById(Id)
+		if currentEa.IsEmpty() {
 			continue
 		}
 
-		if currentEA.DbStatus != "deleted" {
+		if currentEa.DbStatus != "deleted" {
 			continue
 		}
 
 		eaModel.Update(Id, map[string]interface{}{
-			"dbStatus":     currentEA.DbLastStatus,
-			"dbLastStatus": currentEA.DbStatus,
+			"dbStatus":     currentEa.DbLastStatus,
+			"dbLastStatus": currentEa.DbStatus,
 		})
 	}
 

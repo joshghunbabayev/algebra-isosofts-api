@@ -10,11 +10,12 @@ func MainRoutes(rg *gin.RouterGroup) {
 	BRRoutes(rg.Group("/br"))
 	HSRRoutes(rg.Group("/hsr"))
 	LEGRoutes(rg.Group("/leg"))
-	EIARoutes(rg.Group("/eia"))
+	EAIRoutes(rg.Group("/eai"))
 	EIRoutes(rg.Group("/ei"))
 	TRARoutes(rg.Group("/tra"))
 	EARoutes(rg.Group("/ea"))
 	MOCRoutes(rg.Group("/moc"))
+	FINRoutes(rg.Group("/fin"))
 	MRMRoutes(rg.Group("/mrm"))
 	registerComponentRoutes.MainComponentRoutes(rg.Group("/component"))
 }

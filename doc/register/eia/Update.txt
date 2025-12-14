@@ -1,8 +1,8 @@
-For update eiaregister
-	PUT    /api/register/eia/one/:id
+For update eairegister
+	PUT    /api/register/eai/one/:id
 
 body:
-type EIA struct {
+type EAI struct {
 	Process          tableComponentTypes.DropDownListItem `json:"process"`
 	Aspect           tableComponentTypes.DropDownListItem `json:"aspect"`
 	Impact           string                               `json:"impact"`

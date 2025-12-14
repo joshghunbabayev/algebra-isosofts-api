@@ -1,6 +1,6 @@
 For archive and unarchive
-    PUT /api/register/eia/all/archive
-    PUT /api/register/eia/all/unarchive
+    PUT /api/register/eai/all/archive
+    PUT /api/register/eai/all/unarchive
 
 body: 
 {

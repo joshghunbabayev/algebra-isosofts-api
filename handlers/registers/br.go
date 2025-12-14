@@ -100,9 +100,9 @@ func (*BRHandler) Update(c *gin.Context) {
 
 	var brModel registerModels.BRModel
 
-	currentBR, _ := brModel.GetById(Id)
+	currentBr, _ := brModel.GetById(Id)
 
-	if currentBR.IsEmpty() {
+	if currentBr.IsEmpty() {
 		c.IndentedJSON(404, gin.H{})
 		return
 	}
@@ -173,18 +173,18 @@ func (*BRHandler) Archive(c *gin.Context) {
 	var brModel registerModels.BRModel
 
 	for _, Id := range body.Ids {
-		currentBR, _ := brModel.GetById(Id)
-		if currentBR.IsEmpty() {
+		currentBr, _ := brModel.GetById(Id)
+		if currentBr.IsEmpty() {
 			continue
 		}
 
-		if currentBR.DbStatus != "active" {
+		if currentBr.DbStatus != "active" {
 			continue
 		}
 
 		brModel.Update(Id, map[string]interface{}{
 			"dbStatus":     "archived",
-			"dbLastStatus": currentBR.DbStatus,
+			"dbLastStatus": currentBr.DbStatus,
 		})
 	}
 
@@ -209,18 +209,18 @@ func (*BRHandler) Unarchive(c *gin.Context) {
 	var brModel registerModels.BRModel
 
 	for _, Id := range body.Ids {
-		currentBR, _ := brModel.GetById(Id)
-		if currentBR.IsEmpty() {
+		currentBr, _ := brModel.GetById(Id)
+		if currentBr.IsEmpty() {
 			continue
 		}
 
-		if currentBR.DbStatus != "archived" {
+		if currentBr.DbStatus != "archived" {
 			continue
 		}
 
 		brModel.Update(Id, map[string]interface{}{
 			"dbStatus":     "active",
-			"dbLastStatus": currentBR.DbStatus,
+			"dbLastStatus": currentBr.DbStatus,
 		})
 	}
 
@@ -245,18 +245,18 @@ func (*BRHandler) Delete(c *gin.Context) {
 	var brModel registerModels.BRModel
 
 	for _, Id := range body.Ids {
-		currentBR, _ := brModel.GetById(Id)
-		if currentBR.IsEmpty() {
+		currentBr, _ := brModel.GetById(Id)
+		if currentBr.IsEmpty() {
 			continue
 		}
 
-		if currentBR.DbStatus == "deleted" {
+		if currentBr.DbStatus == "deleted" {
 			continue
 		}
 
 		brModel.Update(Id, map[string]interface{}{
 			"dbStatus":     "deleted",
-			"dbLastStatus": currentBR.DbStatus,
+			"dbLastStatus": currentBr.DbStatus,
 		})
 	}
 
@@ -281,18 +281,18 @@ func (*BRHandler) Undelete(c *gin.Context) {
 	var brModel registerModels.BRModel
 
 	for _, Id := range body.Ids {
-		currentBR, _ := brModel.GetById(Id)
-		if currentBR.IsEmpty() {
+		currentBr, _ := brModel.GetById(Id)
+		if currentBr.IsEmpty() {
 			continue
 		}
 
-		if currentBR.DbStatus != "deleted" {
+		if currentBr.DbStatus != "deleted" {
 			continue
 		}
 
 		brModel.Update(Id, map[string]interface{}{
-			"dbStatus":     currentBR.DbLastStatus,
-			"dbLastStatus": currentBR.DbStatus,
+			"dbStatus":     currentBr.DbLastStatus,
+			"dbLastStatus": currentBr.DbStatus,
 		})
 	}
 

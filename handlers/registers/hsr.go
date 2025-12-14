@@ -94,9 +94,9 @@ func (*HSRHandler) Update(c *gin.Context) {
 
 	var hsrModel registerModels.HSRModel
 
-	currentHSR, _ := hsrModel.GetById(Id)
+	currentHsr, _ := hsrModel.GetById(Id)
 
-	if currentHSR.IsEmpty() {
+	if currentHsr.IsEmpty() {
 		c.IndentedJSON(404, gin.H{})
 		return
 	}
@@ -161,18 +161,18 @@ func (*HSRHandler) Archive(c *gin.Context) {
 	var hsrModel registerModels.HSRModel
 
 	for _, Id := range body.Ids {
-		currentHSR, _ := hsrModel.GetById(Id)
-		if currentHSR.IsEmpty() {
+		currentHsr, _ := hsrModel.GetById(Id)
+		if currentHsr.IsEmpty() {
 			continue
 		}
 
-		if currentHSR.DbStatus != "active" {
+		if currentHsr.DbStatus != "active" {
 			continue
 		}
 
 		hsrModel.Update(Id, map[string]interface{}{
 			"dbStatus":     "archived",
-			"dbLastStatus": currentHSR.DbStatus,
+			"dbLastStatus": currentHsr.DbStatus,
 		})
 	}
 
@@ -197,18 +197,18 @@ func (*HSRHandler) Unarchive(c *gin.Context) {
 	var hsrModel registerModels.HSRModel
 
 	for _, Id := range body.Ids {
-		currentHSR, _ := hsrModel.GetById(Id)
-		if currentHSR.IsEmpty() {
+		currentHsr, _ := hsrModel.GetById(Id)
+		if currentHsr.IsEmpty() {
 			continue
 		}
 
-		if currentHSR.DbStatus != "archived" {
+		if currentHsr.DbStatus != "archived" {
 			continue
 		}
 
 		hsrModel.Update(Id, map[string]interface{}{
 			"dbStatus":     "active",
-			"dbLastStatus": currentHSR.DbStatus,
+			"dbLastStatus": currentHsr.DbStatus,
 		})
 	}
 
@@ -233,18 +233,18 @@ func (*HSRHandler) Delete(c *gin.Context) {
 	var hsrModel registerModels.HSRModel
 
 	for _, Id := range body.Ids {
-		currentHSR, _ := hsrModel.GetById(Id)
-		if currentHSR.IsEmpty() {
+		currentHsr, _ := hsrModel.GetById(Id)
+		if currentHsr.IsEmpty() {
 			continue
 		}
 
-		if currentHSR.DbStatus == "deleted" {
+		if currentHsr.DbStatus == "deleted" {
 			continue
 		}
 
 		hsrModel.Update(Id, map[string]interface{}{
 			"dbStatus":     "deleted",
-			"dbLastStatus": currentHSR.DbStatus,
+			"dbLastStatus": currentHsr.DbStatus,
 		})
 	}
 
@@ -269,18 +269,18 @@ func (*HSRHandler) Undelete(c *gin.Context) {
 	var hsrModel registerModels.HSRModel
 
 	for _, Id := range body.Ids {
-		currentHSR, _ := hsrModel.GetById(Id)
-		if currentHSR.IsEmpty() {
+		currentHsr, _ := hsrModel.GetById(Id)
+		if currentHsr.IsEmpty() {
 			continue
 		}
 
-		if currentHSR.DbStatus != "deleted" {
+		if currentHsr.DbStatus != "deleted" {
 			continue
 		}
 
 		hsrModel.Update(Id, map[string]interface{}{
-			"dbStatus":     currentHSR.DbLastStatus,
-			"dbLastStatus": currentHSR.DbStatus,
+			"dbStatus":     currentHsr.DbLastStatus,
+			"dbLastStatus": currentHsr.DbStatus,
 		})
 	}
 

@@ -1,12 +1,12 @@
-1. For get all eiaregister from db
+1. For get all eairegister from db
 
-	GET /api/register/eia/all                    (active)
-	GET /api/register/eia/all?status=active
-	GET /api/register/eia/all?status=archived
-	GET /api/register/eia/all?status=deleted
+	GET /api/register/eai/all                    (active)
+	GET /api/register/eai/all?status=active
+	GET /api/register/eai/all?status=archived
+	GET /api/register/eai/all?status=deleted
 
 array / icinde :
-type EIA struct {
+type EAI struct {
 	Id               string                               `json:"id"`
 	No               string                               `json:"no"`
 	Process          tableComponentTypes.DropDownListItem `json:"process"`

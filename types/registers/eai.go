@@ -5,7 +5,7 @@ import (
 	tableComponentTypes "algebra-isosofts-api/types/tableComponents"
 )
 
-type EIA struct {
+type EAI struct {
 	Id                string                               `json:"id"`
 	No                string                               `json:"no"`
 	Process           tableComponentTypes.DropDownListItem `json:"process"`
@@ -26,6 +26,6 @@ type EIA struct {
 	Actions           []registerComponentTypes.Action      `json:"actions"`
 }
 
-func (eia EIA) IsEmpty() bool {
-	return eia.Id == ""
+func (eai EAI) IsEmpty() bool {
+	return eai.Id == ""
 }

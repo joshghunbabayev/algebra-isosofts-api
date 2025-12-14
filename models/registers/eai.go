@@ -12,24 +12,24 @@ import (
 	"time"
 )
 
-type EIAModel struct {
+type EAIModel struct {
 }
 
-func (*EIAModel) GenerateUniqueId() string {
+func (*EAIModel) GenerateUniqueId() string {
 	Id := modules.GenerateRandomString(30)
 
-	var eiaModel EIAModel
+	var eaiModel EAIModel
 
-	eia, _ := eiaModel.GetById(Id)
+	eai, _ := eaiModel.GetById(Id)
 
-	if eia.IsEmpty() {
+	if eai.IsEmpty() {
 		return Id
 	} else {
-		return eiaModel.GenerateUniqueId()
+		return eaiModel.GenerateUniqueId()
 	}
 }
 
-func (*EIAModel) GenerateUniqueNo() string {
+func (*EAIModel) GenerateUniqueNo() string {
 	db := database.GetDatabase()
 
 	year := time.Now().Format("06")
@@ -37,12 +37,12 @@ func (*EIAModel) GenerateUniqueNo() string {
 	var lastNo string
 	db.QueryRow(`
 		SELECT "no" 
-		FROM eiaregisters 
+		FROM eairegisters 
 		WHERE "no" LIKE ? 
 		ORDER BY "no" DESC 
 		LIMIT 1
 		`,
-		"EIAR/"+year+"/%",
+		"EAIR/"+year+"/%",
 	).Scan(&lastNo)
 
 	var nextNumber int
@@ -55,54 +55,54 @@ func (*EIAModel) GenerateUniqueNo() string {
 		nextNumber = num + 1
 	}
 
-	newNo := fmt.Sprintf("EIAR/%s/%04d", year, nextNumber)
+	newNo := fmt.Sprintf("EAIR/%s/%04d", year, nextNumber)
 	return newNo
 }
 
-func (*EIAModel) GetById(Id string) (registerTypes.EIA, error) {
+func (*EAIModel) GetById(Id string) (registerTypes.EAI, error) {
 	db := database.GetDatabase()
 	row := db.QueryRow(`
 			SELECT * 
-			FROM eiaregisters
+			FROM eairegisters
 			WHERE id = ?
 		`,
 		Id,
 	)
 
-	var eia registerTypes.EIA
+	var eai registerTypes.EAI
 	var dropDownListItemModel tableComponentModels.DropDownListItemModel
 	var actionModel registerComponentModels.ActionModel
 
 	err := row.Scan(
-		&eia.Id,
-		&eia.No,
-		&eia.Process.Id,
-		&eia.Aspect.Id,
-		&eia.Impact,
-		&eia.AffectedReceptors.Id,
-		&eia.ExistingControls,
-		&eia.IDOSProbability,
-		&eia.IDOSSeverity,
-		&eia.IDOSDuration,
-		&eia.IDOSScale,
-		&eia.RDOSProbability,
-		&eia.RDOSSeverity,
-		&eia.RDOSDuration,
-		&eia.RDOSScale,
-		&eia.DbStatus,
-		&eia.DbLastStatus,
+		&eai.Id,
+		&eai.No,
+		&eai.Process.Id,
+		&eai.Aspect.Id,
+		&eai.Impact,
+		&eai.AffectedReceptors.Id,
+		&eai.ExistingControls,
+		&eai.IDOSProbability,
+		&eai.IDOSSeverity,
+		&eai.IDOSDuration,
+		&eai.IDOSScale,
+		&eai.RDOSProbability,
+		&eai.RDOSSeverity,
+		&eai.RDOSDuration,
+		&eai.RDOSScale,
+		&eai.DbStatus,
+		&eai.DbLastStatus,
 	)
-	eia.Process, _ = dropDownListItemModel.GetById(eia.Process.Id)
-	eia.Aspect, _ = dropDownListItemModel.GetById(eia.Aspect.Id)
-	eia.AffectedReceptors, _ = dropDownListItemModel.GetById(eia.AffectedReceptors.Id)
-	eia.Actions, _ = actionModel.GetAll(map[string]interface{}{
-		"registerId": eia.Id,
+	eai.Process, _ = dropDownListItemModel.GetById(eai.Process.Id)
+	eai.Aspect, _ = dropDownListItemModel.GetById(eai.Aspect.Id)
+	eai.AffectedReceptors, _ = dropDownListItemModel.GetById(eai.AffectedReceptors.Id)
+	eai.Actions, _ = actionModel.GetAll(map[string]interface{}{
+		"registerId": eai.Id,
 	})
 
-	return eia, err
+	return eai, err
 }
 
-func (*EIAModel) GetAll(filters map[string]interface{}) ([]registerTypes.EIA, error) {
+func (*EAIModel) GetAll(filters map[string]interface{}) ([]registerTypes.EAI, error) {
 	db := database.GetDatabase()
 	whereClause := ""
 	values := []interface{}{}
@@ -117,7 +117,7 @@ func (*EIAModel) GetAll(filters map[string]interface{}) ([]registerTypes.EIA, er
 	}
 
 	query := fmt.Sprintf(`
-			SELECT * FROM eiaregisters %s
+			SELECT * FROM eairegisters %s
 		`,
 		whereClause,
 	)
@@ -128,49 +128,49 @@ func (*EIAModel) GetAll(filters map[string]interface{}) ([]registerTypes.EIA, er
 	}
 	defer rows.Close()
 
-	var eias []registerTypes.EIA
+	var eais []registerTypes.EAI
 
 	for rows.Next() {
-		var eia registerTypes.EIA
+		var eai registerTypes.EAI
 		var dropDownListItemModel tableComponentModels.DropDownListItemModel
 		var actionModel registerComponentModels.ActionModel
 
 		rows.Scan(
-			&eia.Id,
-			&eia.No,
-			&eia.Process.Id,
-			&eia.Aspect.Id,
-			&eia.Impact,
-			&eia.AffectedReceptors.Id,
-			&eia.ExistingControls,
-			&eia.IDOSProbability,
-			&eia.IDOSSeverity,
-			&eia.IDOSDuration,
-			&eia.IDOSScale,
-			&eia.RDOSProbability,
-			&eia.RDOSSeverity,
-			&eia.RDOSDuration,
-			&eia.RDOSScale,
-			&eia.DbStatus,
-			&eia.DbLastStatus,
+			&eai.Id,
+			&eai.No,
+			&eai.Process.Id,
+			&eai.Aspect.Id,
+			&eai.Impact,
+			&eai.AffectedReceptors.Id,
+			&eai.ExistingControls,
+			&eai.IDOSProbability,
+			&eai.IDOSSeverity,
+			&eai.IDOSDuration,
+			&eai.IDOSScale,
+			&eai.RDOSProbability,
+			&eai.RDOSSeverity,
+			&eai.RDOSDuration,
+			&eai.RDOSScale,
+			&eai.DbStatus,
+			&eai.DbLastStatus,
 		)
-		eia.Process, _ = dropDownListItemModel.GetById(eia.Process.Id)
-		eia.Aspect, _ = dropDownListItemModel.GetById(eia.Aspect.Id)
-		eia.AffectedReceptors, _ = dropDownListItemModel.GetById(eia.AffectedReceptors.Id)
-		eia.Actions, _ = actionModel.GetAll(map[string]interface{}{
-			"registerId": eia.Id,
+		eai.Process, _ = dropDownListItemModel.GetById(eai.Process.Id)
+		eai.Aspect, _ = dropDownListItemModel.GetById(eai.Aspect.Id)
+		eai.AffectedReceptors, _ = dropDownListItemModel.GetById(eai.AffectedReceptors.Id)
+		eai.Actions, _ = actionModel.GetAll(map[string]interface{}{
+			"registerId": eai.Id,
 		})
 
-		eias = append(eias, eia)
+		eais = append(eais, eai)
 	}
 
-	return eias, nil
+	return eais, nil
 }
 
-func (*EIAModel) Create(eia registerTypes.EIA) error {
+func (*EAIModel) Create(eai registerTypes.EAI) error {
 	db := database.GetDatabase()
 	_, err := db.Exec(`
-			INSERT INTO eiaregisters ( 
+			INSERT INTO eairegisters ( 
 				"id",
 				"no",
 				"process",
@@ -190,23 +190,23 @@ func (*EIAModel) Create(eia registerTypes.EIA) error {
 				"dbLastStatus"
 			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
-		eia.Id,
-		eia.No,
-		eia.Process.Id,
-		eia.Aspect.Id,
-		eia.Impact,
-		eia.AffectedReceptors.Id,
-		eia.ExistingControls,
-		eia.IDOSProbability,
-		eia.IDOSSeverity,
-		eia.IDOSDuration,
-		eia.IDOSScale,
-		eia.RDOSProbability,
-		eia.RDOSSeverity,
-		eia.RDOSDuration,
-		eia.RDOSScale,
-		eia.DbStatus,
-		eia.DbLastStatus,
+		eai.Id,
+		eai.No,
+		eai.Process.Id,
+		eai.Aspect.Id,
+		eai.Impact,
+		eai.AffectedReceptors.Id,
+		eai.ExistingControls,
+		eai.IDOSProbability,
+		eai.IDOSSeverity,
+		eai.IDOSDuration,
+		eai.IDOSScale,
+		eai.RDOSProbability,
+		eai.RDOSSeverity,
+		eai.RDOSDuration,
+		eai.RDOSScale,
+		eai.DbStatus,
+		eai.DbLastStatus,
 	)
 
 	if err != nil {
@@ -216,7 +216,7 @@ func (*EIAModel) Create(eia registerTypes.EIA) error {
 	return nil
 }
 
-func (*EIAModel) Update(Id string, fields map[string]interface{}) error {
+func (*EAIModel) Update(Id string, fields map[string]interface{}) error {
 	if len(fields) == 0 {
 		return nil
 	}
@@ -231,7 +231,7 @@ func (*EIAModel) Update(Id string, fields map[string]interface{}) error {
 
 	setClause = strings.TrimSuffix(setClause, ",")
 	query := fmt.Sprintf(`
-			UPDATE eiaregisters 
+			UPDATE eairegisters 
 			SET %s 
 			WHERE "id" = ?
 		`,
