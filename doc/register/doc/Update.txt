@@ -1,0 +1,18 @@
+For update docregister
+	PUT    /api/register/doc/one/:id
+
+body:
+var body struct {
+		Name              string `json:"name"`
+		Origin            string `json:"origin"`
+		Number            string `json:"number"`
+		DepntFunctionName string `json:"depntFunctionName"`
+		Type              string `json:"type"`
+		SerialNumber      string `json:"serialNumber"`
+		RevNumber         string `json:"revNumber"`
+		Issuer            string `json:"issuer"`
+		Approver          string `json:"approver"`
+		IssueDate         string `json:"issueDate"`
+		NextReviewDate    string `json:"nextReviewDate"`
+		Actual            int8   `json:"actual"`
+	}

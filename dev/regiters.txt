@@ -5,8 +5,7 @@ EAI  ok
 EI   ok
 TRA  ok
 DOC  ok
-VEN
-CUS
+VC
 FB
 EA   ok
 MOC  ok
