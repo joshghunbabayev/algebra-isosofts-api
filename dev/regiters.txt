@@ -4,7 +4,7 @@ LEG  ok
 EAI  ok
 EI   ok
 TRA  ok
-DOC 
+DOC  ok
 VEN
 CUS
 FB
@@ -12,4 +12,4 @@ EA   ok
 MOC  ok
 FIN  ok
 MRM  ok
-AOP
+AOP  ok
