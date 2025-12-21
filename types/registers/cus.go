@@ -5,7 +5,7 @@ import (
 	tableComponentTypes "algebra-isosofts-api/types/tableComponents"
 )
 
-type VC struct {
+type CUS struct {
 	Id               string                               `json:"id"`
 	No               string                               `json:"no"`
 	Name             string                               `json:"name"`
@@ -15,7 +15,7 @@ type VC struct {
 	Scope3           tableComponentTypes.DropDownListItem `json:"scope3"`
 	RegistrationDate string                               `json:"registrationDate"`
 	ReviewDate       string                               `json:"reviewDate"`
-	ApprovedActual   int8                                 `json:"approvedActual"`
+	Actual           int8                                 `json:"actual"`
 	QGS              int8                                 `json:"qgs"`
 	Communication    int8                                 `json:"communication"`
 	OTD              int8                                 `json:"otd"`
@@ -27,6 +27,6 @@ type VC struct {
 	Actions          []registerComponentTypes.Action      `json:"actions"`
 }
 
-func (vc VC) IsEmpty() bool {
-	return vc.Id == ""
+func (cus CUS) IsEmpty() bool {
+	return cus.Id == ""
 }

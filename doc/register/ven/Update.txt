@@ -1,0 +1,14 @@
+For update venregister
+	PUT    /api/register/ven/one/:id
+
+body:
+	var body struct {
+		Name             string `json:"name"`
+		RegNumber        string `json:"regNumber"`
+		Scope1           string `json:"scope1"`
+		Scope2           string `json:"scope2"`
+		Scope3           string `json:"scope3"`
+		RegistrationDate string `json:"registrationDate"`
+		ReviewDate       string `json:"reviewDate"`
+		Approved         int8   `json:"approved"`
+	}

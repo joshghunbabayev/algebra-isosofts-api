@@ -1,0 +1,14 @@
+For create cusregister
+	POST    /api/register/cus/one
+
+body:
+	var body struct {
+		Name             string `json:"name"`
+		RegNumber        string `json:"regNumber"`
+		Scope1           string `json:"scope1"`
+		Scope2           string `json:"scope2"`
+		Scope3           string `json:"scope3"`
+		RegistrationDate string `json:"registrationDate"`
+		ReviewDate       string `json:"reviewDate"`
+		Actual           int8   `json:"actual"`
+	}

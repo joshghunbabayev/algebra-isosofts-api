@@ -14,6 +14,8 @@ func MainRoutes(rg *gin.RouterGroup) {
 	EIRoutes(rg.Group("/ei"))
 	TRARoutes(rg.Group("/tra"))
 	DOCRoutes(rg.Group("/doc"))
+	VENRoutes(rg.Group("/ven"))
+	CUSRoutes(rg.Group("/cus"))
 	EARoutes(rg.Group("/ea"))
 	MOCRoutes(rg.Group("/moc"))
 	FINRoutes(rg.Group("/fin"))

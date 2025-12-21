@@ -1,0 +1,8 @@
+For archive and unarchive
+    PUT /api/register/cus/all/archive
+    PUT /api/register/cus/all/unarchive
+
+body: 
+{
+  "ids": ["id1", "id2", ......]
+}

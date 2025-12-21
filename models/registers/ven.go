@@ -12,24 +12,24 @@ import (
 	"time"
 )
 
-type VCModel struct {
+type VENModel struct {
 }
 
-func (*VCModel) GenerateUniqueId() string {
+func (*VENModel) GenerateUniqueId() string {
 	Id := modules.GenerateRandomString(30)
 
-	var vcModel VCModel
+	var venModel VENModel
 
-	vc, _ := vcModel.GetById(Id)
+	ven, _ := venModel.GetById(Id)
 
-	if vc.IsEmpty() {
+	if ven.IsEmpty() {
 		return Id
 	} else {
-		return vcModel.GenerateUniqueId()
+		return venModel.GenerateUniqueId()
 	}
 }
 
-func (*VCModel) GenerateUniqueNo() string {
+func (*VENModel) GenerateUniqueNo() string {
 	db := database.GetDatabase()
 
 	year := time.Now().Format("06")
@@ -37,12 +37,12 @@ func (*VCModel) GenerateUniqueNo() string {
 	var lastNo string
 	db.QueryRow(`
 		SELECT "no" 
-		FROM vcregisters 
+		FROM venregisters 
 		WHERE "no" LIKE ? 
 		ORDER BY "no" DESC 
 		LIMIT 1
 		`,
-		"VCR/"+year+"/%",
+		"VENR/"+year+"/%",
 	).Scan(&lastNo)
 
 	var nextNumber int
@@ -55,55 +55,55 @@ func (*VCModel) GenerateUniqueNo() string {
 		nextNumber = num + 1
 	}
 
-	newNo := fmt.Sprintf("VCR/%s/%04d", year, nextNumber)
+	newNo := fmt.Sprintf("VENR/%s/%04d", year, nextNumber)
 	return newNo
 }
 
-func (*VCModel) GetById(Id string) (registerTypes.VC, error) {
+func (*VENModel) GetById(Id string) (registerTypes.VEN, error) {
 	db := database.GetDatabase()
 	row := db.QueryRow(`
 			SELECT * 
-			FROM vcregisters
+			FROM venregisters
 			WHERE id = ?
 		`,
 		Id,
 	)
 
-	var vc registerTypes.VC
+	var ven registerTypes.VEN
 	var dropDownListItemModel tableComponentModels.DropDownListItemModel
 	var actionModel registerComponentModels.ActionModel
 
 	err := row.Scan(
-		&vc.Id,
-		&vc.No,
-		&vc.Name,
-		&vc.RegNumber,
-		&vc.Scope1.Id,
-		&vc.Scope2.Id,
-		&vc.Scope3.Id,
-		&vc.RegistrationDate,
-		&vc.ReviewDate,
-		&vc.ApprovedActual,
-		&vc.QGS,
-		&vc.Communication,
-		&vc.OTD,
-		&vc.Documentation,
-		&vc.HS,
-		&vc.Environment,
-		&vc.DbStatus,
-		&vc.DbLastStatus,
+		&ven.Id,
+		&ven.No,
+		&ven.Name,
+		&ven.RegNumber,
+		&ven.Scope1.Id,
+		&ven.Scope2.Id,
+		&ven.Scope3.Id,
+		&ven.RegistrationDate,
+		&ven.ReviewDate,
+		&ven.Approved,
+		&ven.QGS,
+		&ven.Communication,
+		&ven.OTD,
+		&ven.Documentation,
+		&ven.HS,
+		&ven.Environment,
+		&ven.DbStatus,
+		&ven.DbLastStatus,
 	)
-	vc.Scope1, _ = dropDownListItemModel.GetById(vc.Scope1.Id)
-	vc.Scope2, _ = dropDownListItemModel.GetById(vc.Scope2.Id)
-	vc.Scope3, _ = dropDownListItemModel.GetById(vc.Scope3.Id)
-	vc.Actions, _ = actionModel.GetAll(map[string]interface{}{
-		"registerId": vc.Id,
+	ven.Scope1, _ = dropDownListItemModel.GetById(ven.Scope1.Id)
+	ven.Scope2, _ = dropDownListItemModel.GetById(ven.Scope2.Id)
+	ven.Scope3, _ = dropDownListItemModel.GetById(ven.Scope3.Id)
+	ven.Actions, _ = actionModel.GetAll(map[string]interface{}{
+		"registerId": ven.Id,
 	})
 
-	return vc, err
+	return ven, err
 }
 
-func (*VCModel) GetAll(filters map[string]interface{}) ([]registerTypes.VC, error) {
+func (*VENModel) GetAll(filters map[string]interface{}) ([]registerTypes.VEN, error) {
 	db := database.GetDatabase()
 	whereClause := ""
 	values := []interface{}{}
@@ -118,7 +118,7 @@ func (*VCModel) GetAll(filters map[string]interface{}) ([]registerTypes.VC, erro
 	}
 
 	query := fmt.Sprintf(`
-			SELECT * FROM vcregisters %s
+			SELECT * FROM venregisters %s
 		`,
 		whereClause,
 	)
@@ -129,50 +129,50 @@ func (*VCModel) GetAll(filters map[string]interface{}) ([]registerTypes.VC, erro
 	}
 	defer rows.Close()
 
-	var vcs []registerTypes.VC
+	var vens []registerTypes.VEN
 
 	for rows.Next() {
-		var vc registerTypes.VC
+		var ven registerTypes.VEN
 		var dropDownListItemModel tableComponentModels.DropDownListItemModel
 		var actionModel registerComponentModels.ActionModel
 
 		rows.Scan(
-			&vc.Id,
-			&vc.No,
-			&vc.Name,
-			&vc.RegNumber,
-			&vc.Scope1.Id,
-			&vc.Scope2.Id,
-			&vc.Scope3.Id,
-			&vc.RegistrationDate,
-			&vc.ReviewDate,
-			&vc.ApprovedActual,
-			&vc.QGS,
-			&vc.Communication,
-			&vc.OTD,
-			&vc.Documentation,
-			&vc.HS,
-			&vc.Environment,
-			&vc.DbStatus,
-			&vc.DbLastStatus,
+			&ven.Id,
+			&ven.No,
+			&ven.Name,
+			&ven.RegNumber,
+			&ven.Scope1.Id,
+			&ven.Scope2.Id,
+			&ven.Scope3.Id,
+			&ven.RegistrationDate,
+			&ven.ReviewDate,
+			&ven.Approved,
+			&ven.QGS,
+			&ven.Communication,
+			&ven.OTD,
+			&ven.Documentation,
+			&ven.HS,
+			&ven.Environment,
+			&ven.DbStatus,
+			&ven.DbLastStatus,
 		)
-		vc.Scope1, _ = dropDownListItemModel.GetById(vc.Scope1.Id)
-		vc.Scope2, _ = dropDownListItemModel.GetById(vc.Scope2.Id)
-		vc.Scope3, _ = dropDownListItemModel.GetById(vc.Scope3.Id)
-		vc.Actions, _ = actionModel.GetAll(map[string]interface{}{
-			"registerId": vc.Id,
+		ven.Scope1, _ = dropDownListItemModel.GetById(ven.Scope1.Id)
+		ven.Scope2, _ = dropDownListItemModel.GetById(ven.Scope2.Id)
+		ven.Scope3, _ = dropDownListItemModel.GetById(ven.Scope3.Id)
+		ven.Actions, _ = actionModel.GetAll(map[string]interface{}{
+			"registerId": ven.Id,
 		})
 
-		vcs = append(vcs, vc)
+		vens = append(vens, ven)
 	}
 
-	return vcs, nil
+	return vens, nil
 }
 
-func (*VCModel) Create(vc registerTypes.VC) error {
+func (*VENModel) Create(ven registerTypes.VEN) error {
 	db := database.GetDatabase()
 	_, err := db.Exec(`
-			INSERT INTO vcregisters ( 
+			INSERT INTO venregisters ( 
 				"id",
 				"no",
 				"name", 
@@ -182,7 +182,7 @@ func (*VCModel) Create(vc registerTypes.VC) error {
 				"scope3", 
 				"registrationDate", 
 				"reviewDate", 
-				"approvedActual", 
+				"approved", 
 				"qgs", 
 				"communication", 
 				"otd", 
@@ -193,24 +193,24 @@ func (*VCModel) Create(vc registerTypes.VC) error {
 				"dbLastStatus"
 			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
-		vc.Id,
-		vc.No,
-		vc.Name,
-		vc.RegNumber,
-		vc.Scope1.Id,
-		vc.Scope2.Id,
-		vc.Scope3.Id,
-		vc.RegistrationDate,
-		vc.ReviewDate,
-		vc.ApprovedActual,
-		vc.QGS,
-		vc.Communication,
-		vc.OTD,
-		vc.Documentation,
-		vc.HS,
-		vc.Environment,
-		vc.DbStatus,
-		vc.DbLastStatus,
+		ven.Id,
+		ven.No,
+		ven.Name,
+		ven.RegNumber,
+		ven.Scope1.Id,
+		ven.Scope2.Id,
+		ven.Scope3.Id,
+		ven.RegistrationDate,
+		ven.ReviewDate,
+		ven.Approved,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		ven.DbStatus,
+		ven.DbLastStatus,
 	)
 
 	if err != nil {
@@ -220,7 +220,7 @@ func (*VCModel) Create(vc registerTypes.VC) error {
 	return nil
 }
 
-func (*VCModel) Update(Id string, fields map[string]interface{}) error {
+func (*VENModel) Update(Id string, fields map[string]interface{}) error {
 	if len(fields) == 0 {
 		return nil
 	}
@@ -235,7 +235,7 @@ func (*VCModel) Update(Id string, fields map[string]interface{}) error {
 
 	setClause = strings.TrimSuffix(setClause, ",")
 	query := fmt.Sprintf(`
-			UPDATE vcregisters 
+			UPDATE venregisters 
 			SET %s 
 			WHERE "id" = ?
 		`,
