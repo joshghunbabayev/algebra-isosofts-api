@@ -72,7 +72,7 @@ func (*DOCHandler) Create(c *gin.Context) {
 	if originDDLI.Value == "Internal" {
 		depntFunctionNameDDLI, _ := dropDownListItemModel.GetById(body.DepntFunctionName)
 		typeDDLI, _ := dropDownListItemModel.GetById(body.Type)
-		number = docModel.GenerateUniqueNumber(depntFunctionNameDDLI.Value + "/" + typeDDLI.Value)
+		number = docModel.GenerateUniqueNumber(depntFunctionNameDDLI.ShortValue + "/" + typeDDLI.ShortValue)
 	} else if originDDLI.Value == "External" {
 		number = body.Number
 	}
@@ -154,7 +154,7 @@ func (*DOCHandler) Update(c *gin.Context) {
 	if originDDLI.Value == "Internal" {
 		depntFunctionNameDDLI, _ := dropDownListItemModel.GetById(body.DepntFunctionName)
 		typeDDLI, _ := dropDownListItemModel.GetById(body.Type)
-		number = docModel.GenerateUniqueNumber(depntFunctionNameDDLI.Value + "/" + typeDDLI.Value)
+		number = docModel.GenerateUniqueNumber(depntFunctionNameDDLI.ShortValue + "/" + typeDDLI.ShortValue)
 	} else if originDDLI.Value == "External" {
 		number = body.Number
 	}
