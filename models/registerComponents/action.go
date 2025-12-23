@@ -4,7 +4,7 @@ import (
 	"algebra-isosofts-api/database"
 	tableComponentModels "algebra-isosofts-api/models/tableComponents"
 	"algebra-isosofts-api/modules"
-	registerComponentTypes "algebra-isosofts-api/types/registers/components"
+	registerComponentTypes "algebra-isosofts-api/types/registerComponents"
 	"fmt"
 	"strings"
 )

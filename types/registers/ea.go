@@ -1,8 +1,6 @@
 package registerTypes
 
-import (
-	registerComponentTypes "algebra-isosofts-api/types/registers/components"
-)
+import registerComponentTypes "algebra-isosofts-api/types/registerComponents"
 
 type EA struct {
 	Id              string                          `json:"id"`

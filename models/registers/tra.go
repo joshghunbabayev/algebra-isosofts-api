@@ -2,7 +2,7 @@ package registerModels
 
 import (
 	"algebra-isosofts-api/database"
-	registerComponentModels "algebra-isosofts-api/models/registers/components"
+	registerComponentModels "algebra-isosofts-api/models/registerComponents"
 	"algebra-isosofts-api/modules"
 	registerTypes "algebra-isosofts-api/types/registers"
 	"fmt"

@@ -1,7 +1,7 @@
 package registerComponentRoutes
 
 import (
-	registerComponentHandlers "algebra-isosofts-api/handlers/registers/components"
+	registerComponentHandlers "algebra-isosofts-api/handlers/registerComponents"
 
 	"github.com/gin-gonic/gin"
 )
