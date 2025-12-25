@@ -1,7 +1,7 @@
 package registerTypes
 
 import (
-	registerComponentTypes "algebra-isosofts-api/types/registerComponents"
+	registerComponentTypes "algebra-isosofts-api/types/registers/components"
 	tableComponentTypes "algebra-isosofts-api/types/tableComponents"
 )
 

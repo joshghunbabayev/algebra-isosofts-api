@@ -1,7 +1,7 @@
 package registerTypes
 
 import (
-	registerComponentTypes "algebra-isosofts-api/types/registerComponents"
+	registerComponentTypes "algebra-isosofts-api/types/registers/components"
 )
 
 type TRA struct {

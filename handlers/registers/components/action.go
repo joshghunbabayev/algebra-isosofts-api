@@ -1,8 +1,8 @@
 package registerComponentHandlers
 
 import (
-	registerComponentModels "algebra-isosofts-api/models/registerComponents"
-	registerComponentTypes "algebra-isosofts-api/types/registerComponents"
+	registerComponentModels "algebra-isosofts-api/models/registers/components"
+	registerComponentTypes "algebra-isosofts-api/types/registers/components"
 	tableComponentTypes "algebra-isosofts-api/types/tableComponents"
 
 	"github.com/gin-gonic/gin"

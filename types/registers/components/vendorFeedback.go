@@ -1,0 +1,25 @@
+package registerComponentTypes
+
+import (
+	tableComponentTypes "algebra-isosofts-api/types/tableComponents"
+)
+
+type VendorFeedback struct {
+	Id            string                               `json:"id"`
+	RegisterId    string                               `json:"registerId"`
+	Scope         tableComponentTypes.DropDownListItem `json:"scope"`
+	VendorId      string                               `json:"vendorId"`
+	TypeOfFinding tableComponentTypes.DropDownListItem `json:"typeOfFinding"`
+	QGS           int8                                 `json:"qgs"`
+	Communication int8                                 `json:"communication"`
+	OTD           int8                                 `json:"otd"`
+	Documentation int8                                 `json:"documentation"`
+	HS            int8                                 `json:"hs"`
+	Environment   int8                                 `json:"environment"`
+	DbStatus      string                               `json:"dbStatus"`
+	DbLastStatus  string                               `json:"-"`
+}
+
+func (feedback VendorFeedback) IsEmpty() bool {
+	return feedback.Id == ""
+}
