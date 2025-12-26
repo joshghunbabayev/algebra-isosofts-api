@@ -2,6 +2,7 @@ package registerModels
 
 import (
 	"algebra-isosofts-api/database"
+	registerComponentModels "algebra-isosofts-api/models/registers/components"
 	tableComponentModels "algebra-isosofts-api/models/tableComponents"
 	"algebra-isosofts-api/modules"
 	registerTypes "algebra-isosofts-api/types/registers"
@@ -70,6 +71,7 @@ func (*FBModel) GetById(Id string) (registerTypes.FB, error) {
 
 	var fb registerTypes.FB
 	var dropDownListItemModel tableComponentModels.DropDownListItemModel
+	var vendorFeedbackModel registerComponentModels.VendorFeedbackModel
 
 	err := row.Scan(
 		&fb.Id,
@@ -91,6 +93,9 @@ func (*FBModel) GetById(Id string) (registerTypes.FB, error) {
 	)
 	fb.Scope, _ = dropDownListItemModel.GetById(fb.Scope.Id)
 	fb.TypeOfFinding, _ = dropDownListItemModel.GetById(fb.TypeOfFinding.Id)
+	fb.VendorFeedbacks, _ = vendorFeedbackModel.GetAll(map[string]interface{}{
+		"registerId": fb.Id,
+	})
 
 	return fb, err
 }
@@ -126,6 +131,7 @@ func (*FBModel) GetAll(filters map[string]interface{}) ([]registerTypes.FB, erro
 	for rows.Next() {
 		var fb registerTypes.FB
 		var dropDownListItemModel tableComponentModels.DropDownListItemModel
+		var vendorFeedbackModel registerComponentModels.VendorFeedbackModel
 
 		rows.Scan(
 			&fb.Id,
@@ -147,6 +153,9 @@ func (*FBModel) GetAll(filters map[string]interface{}) ([]registerTypes.FB, erro
 		)
 		fb.Scope, _ = dropDownListItemModel.GetById(fb.Scope.Id)
 		fb.TypeOfFinding, _ = dropDownListItemModel.GetById(fb.TypeOfFinding.Id)
+		fb.VendorFeedbacks, _ = vendorFeedbackModel.GetAll(map[string]interface{}{
+			"registerId": fb.Id,
+		})
 
 		fbs = append(fbs, fb)
 	}
