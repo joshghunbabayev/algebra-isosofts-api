@@ -2,7 +2,7 @@
 
 	GET /api/register/cus/one/:id
 
-type VEN struct {
+type CUS struct {
 	Id               string                               `json:"id"`
 	No               string                               `json:"no"`
 	Name             string                               `json:"name"`

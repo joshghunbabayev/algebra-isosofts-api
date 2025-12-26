@@ -1,0 +1,8 @@
+For archive and unarchive
+    PUT /api/register/fb/all/archive
+    PUT /api/register/fb/all/unarchive
+
+body: 
+{
+  "ids": ["id1", "id2", ......]
+}

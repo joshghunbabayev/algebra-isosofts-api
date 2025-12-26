@@ -1,0 +1,18 @@
+For create fbregister
+	POST    /api/register/fb/one
+
+body:
+var body struct {
+		JobNumber         string `json:"jobNumber"`
+		JobStartDate      string `json:"jobStartDate"`
+		JobCompletionDate string `json:"jobCompletionDate"`
+		Scope             string `json:"scope"`
+		CustomerId        string `json:"customerId"`
+		TypeOfFinding     string `json:"typeOfFinding"`
+		QGS               int8   `json:"qgs"`
+		Communication     int8   `json:"communication"`
+		OTD               int8   `json:"otd"`
+		Documentation     int8   `json:"documentation"`
+		HS                int8   `json:"hs"`
+		Environment       int8   `json:"environment"`
+	}

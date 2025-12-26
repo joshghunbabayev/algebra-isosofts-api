@@ -7,7 +7,7 @@
 
 array / icinde :
 
-type VEN struct {
+type CUS struct {
 	Id               string                               `json:"id"`
 	No               string                               `json:"no"`
 	Name             string                               `json:"name"`
