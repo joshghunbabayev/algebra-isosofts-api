@@ -85,6 +85,21 @@ func (*VENHandler) Create(c *gin.Context) {
 	c.IndentedJSON(201, gin.H{})
 }
 
+func (*VENHandler) Get(c *gin.Context) {
+	Id := c.Param("id")
+
+	var venModel registerModels.VENModel
+
+	ven, _ := venModel.GetById(Id)
+
+	if ven.IsEmpty() {
+		c.IndentedJSON(404, gin.H{})
+		return
+	}
+
+	c.IndentedJSON(200, ven)
+}
+
 func (*VENHandler) Update(c *gin.Context) {
 	Id := c.Param("id")
 

@@ -85,6 +85,21 @@ func (*CUSHandler) Create(c *gin.Context) {
 	c.IndentedJSON(201, gin.H{})
 }
 
+func (*CUSHandler) Get(c *gin.Context) {
+	Id := c.Param("id")
+
+	var cusModel registerModels.CUSModel
+
+	cus, _ := cusModel.GetById(Id)
+
+	if cus.IsEmpty() {
+		c.IndentedJSON(404, gin.H{})
+		return
+	}
+
+	c.IndentedJSON(200, cus)
+}
+
 func (*CUSHandler) Update(c *gin.Context) {
 	Id := c.Param("id")
 

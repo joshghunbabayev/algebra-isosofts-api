@@ -30,7 +30,7 @@ func (*VendorFeedbackModel) GetById(Id string) (registerComponentTypes.VendorFee
 	db := database.GetDatabase()
 	row := db.QueryRow(`
 			SELECT * 
-			FROM vendorFeedbacks
+			FROM vendorfeedbacks
 			WHERE id = ?
 		`,
 		Id,
@@ -75,7 +75,7 @@ func (*VendorFeedbackModel) GetAll(filters map[string]interface{}) ([]registerCo
 	}
 
 	query := fmt.Sprintf(`
-			SELECT * FROM vendorFeedbacks %s
+			SELECT * FROM vendorfeedbacks %s
 		`,
 		whereClause,
 	)
@@ -119,7 +119,7 @@ func (*VendorFeedbackModel) GetAll(filters map[string]interface{}) ([]registerCo
 func (*VendorFeedbackModel) Create(vendorFeedback registerComponentTypes.VendorFeedback) error {
 	db := database.GetDatabase()
 	_, err := db.Exec(`
-			INSERT INTO vendorFeedbacks ( 
+			INSERT INTO vendorfeedbacks ( 
 				"id",
 				"registerId",
 				"scope",
@@ -170,7 +170,7 @@ func (*VendorFeedbackModel) Update(Id string, fields map[string]interface{}) err
 
 	setClause = strings.TrimSuffix(setClause, ",")
 	query := fmt.Sprintf(`
-			UPDATE vendorFeedbacks 
+			UPDATE vendorfeedbacks 
 			SET %s 
 			WHERE "id" = ?
 		`,
