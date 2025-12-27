@@ -1,0 +1,28 @@
+1. For get all brregister from db
+
+	GET /api/register/br/all                    (active)
+	GET /api/register/br/all?status=active
+	GET /api/register/br/all?status=archived
+	GET /api/register/br/all?status=deleted
+
+array / icinde :
+
+type BR struct {
+	Id                     string                               `json:"id"`
+	No                     string                               `json:"no"`
+	Swot                   tableComponentTypes.DropDownListItem `json:"swot"`
+	Pestle                 tableComponentTypes.DropDownListItem `json:"pestle"`
+	InterestedParty        tableComponentTypes.DropDownListItem `json:"interestedParty"`
+	RiskOpportunity        string                               `json:"riskOpportunity"`
+	Objective              string                               `json:"objective"`
+	KPI                    string                               `json:"kpi"`
+	Process                tableComponentTypes.DropDownListItem `json:"process"`
+	ERMEOA                 string                               `json:"ermeoa"`
+	InitialRiskSeverity    int8                                 `json:"initialRiskSeverity"`
+	InitialRiskLikelyhood  int8                                 `json:"initialRiskLikelyhood"`
+	ResidualRiskSeverity   int8                                 `json:"residualRiskSeverity"`
+	ResidualRiskLikelyhood int8                                 `json:"residualRiskLikelyhood"`
+	DbStatus               string                               `json:"dbStatus"`
+	DbLastStatus           string                               `json:"-"`
+	Actions                []registerComponentTypes.Action      `json:"actions"`
+}
