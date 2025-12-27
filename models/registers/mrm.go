@@ -160,7 +160,7 @@ func (*MRMModel) Create(mrm registerTypes.MRM) error {
 				"process", 
 				"dbStatus",
 				"dbLastStatus"
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			) VALUES (?, ?, ?, ?, ?, ?, ?)
 		`,
 		mrm.Id,
 		mrm.No,
