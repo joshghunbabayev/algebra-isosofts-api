@@ -161,9 +161,10 @@ func (*EAModel) Create(ea registerTypes.EA) error {
 				"appraisalDate", 
 				"appraisalType", 
 				"tca", 
+				"skillsAppraisal", 
 				"dbStatus",
 				"dbLastStatus"
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
 		ea.Id,
 		ea.No,
