@@ -133,7 +133,7 @@ func (*FBModel) GetAll(filters map[string]interface{}) ([]registerTypes.FB, erro
 		var dropDownListItemModel tableComponentModels.DropDownListItemModel
 		var vendorFeedbackModel registerComponentModels.VendorFeedbackModel
 
-		err := rows.Scan(
+		rows.Scan(
 			&fb.Id,
 			&fb.No,
 			&fb.JobNumber,
@@ -156,8 +156,6 @@ func (*FBModel) GetAll(filters map[string]interface{}) ([]registerTypes.FB, erro
 		fb.VendorFeedbacks, _ = vendorFeedbackModel.GetAll(map[string]interface{}{
 			"registerId": fb.Id,
 		})
-
-		fmt.Println("errererer::: ", err)
 
 		fbs = append(fbs, fb)
 	}

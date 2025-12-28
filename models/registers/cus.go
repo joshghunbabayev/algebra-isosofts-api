@@ -72,6 +72,7 @@ func (*CUSModel) GetById(Id string) (registerTypes.CUS, error) {
 
 	var cus registerTypes.CUS
 	var dropDownListItemModel tableComponentModels.DropDownListItemModel
+	var cusModel CUSModel
 	var actionModel registerComponentModels.ActionModel
 
 	err := row.Scan(
@@ -85,12 +86,6 @@ func (*CUSModel) GetById(Id string) (registerTypes.CUS, error) {
 		&cus.RegistrationDate,
 		&cus.ReviewDate,
 		&cus.Actual,
-		&cus.QGS,
-		&cus.Communication,
-		&cus.OTD,
-		&cus.Documentation,
-		&cus.HS,
-		&cus.Environment,
 		&cus.DbStatus,
 		&cus.DbLastStatus,
 	)
@@ -100,6 +95,8 @@ func (*CUSModel) GetById(Id string) (registerTypes.CUS, error) {
 	cus.Actions, _ = actionModel.GetAll(map[string]interface{}{
 		"registerId": cus.Id,
 	})
+
+	cusModel.SetScores(cus.Id, &cus)
 
 	return cus, err
 }
@@ -135,6 +132,7 @@ func (*CUSModel) GetAll(filters map[string]interface{}) ([]registerTypes.CUS, er
 	for rows.Next() {
 		var cus registerTypes.CUS
 		var dropDownListItemModel tableComponentModels.DropDownListItemModel
+		var cusModel CUSModel
 		var actionModel registerComponentModels.ActionModel
 
 		rows.Scan(
@@ -148,12 +146,6 @@ func (*CUSModel) GetAll(filters map[string]interface{}) ([]registerTypes.CUS, er
 			&cus.RegistrationDate,
 			&cus.ReviewDate,
 			&cus.Actual,
-			&cus.QGS,
-			&cus.Communication,
-			&cus.OTD,
-			&cus.Documentation,
-			&cus.HS,
-			&cus.Environment,
 			&cus.DbStatus,
 			&cus.DbLastStatus,
 		)
@@ -163,6 +155,8 @@ func (*CUSModel) GetAll(filters map[string]interface{}) ([]registerTypes.CUS, er
 		cus.Actions, _ = actionModel.GetAll(map[string]interface{}{
 			"registerId": cus.Id,
 		})
+
+		cusModel.SetScores(cus.Id, &cus)
 
 		cuss = append(cuss, cus)
 	}
@@ -183,16 +177,10 @@ func (*CUSModel) Create(cus registerTypes.CUS) error {
 				"scope3", 
 				"registrationDate", 
 				"reviewDate", 
-				"actual", 
-				"qgs", 
-				"communication", 
-				"otd", 
-				"documentation", 
-				"hs", 
-				"environment", 
+				"actual",  
 				"dbStatus",
 				"dbLastStatus"
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
 		cus.Id,
 		cus.No,
@@ -204,12 +192,6 @@ func (*CUSModel) Create(cus registerTypes.CUS) error {
 		cus.RegistrationDate,
 		cus.ReviewDate,
 		cus.Actual,
-		0,
-		0,
-		0,
-		0,
-		0,
-		0,
 		cus.DbStatus,
 		cus.DbLastStatus,
 	)
@@ -249,19 +231,8 @@ func (*CUSModel) Update(Id string, fields map[string]interface{}) error {
 	return err
 }
 
-func (*CUSModel) UpdateScores(Id string) error {
+func (*CUSModel) SetScores(Id string, cus *registerTypes.CUS) error {
 	var fbModel FBModel
-
-	type Averages struct {
-		QGS           int
-		Communication int
-		OTD           int
-		Documentation int
-		HS            int
-		Environment   int
-	}
-
-	var averages Averages
 
 	fbs, err := fbModel.GetAll(map[string]interface{}{
 		"customerId": Id,
@@ -269,14 +240,12 @@ func (*CUSModel) UpdateScores(Id string) error {
 	})
 
 	if len(fbs) == 0 {
-		averages = Averages{
-			QGS:           0,
-			Communication: 0,
-			OTD:           0,
-			Documentation: 0,
-			HS:            0,
-			Environment:   0,
-		}
+		cus.QGS = 0
+		cus.Communication = 0
+		cus.OTD = 0
+		cus.Documentation = 0
+		cus.HS = 0
+		cus.Environment = 0
 	} else {
 		var sumQGS, sumCommunication, sumOTD, sumDocumentation, sumHS, sumEnvironment int
 
@@ -291,23 +260,13 @@ func (*CUSModel) UpdateScores(Id string) error {
 
 		count := float64(len(fbs))
 
-		averages = Averages{
-			QGS:           int(math.Round(float64(sumQGS) / count)),
-			Communication: int(math.Round(float64(sumCommunication) / count)),
-			OTD:           int(math.Round(float64(sumOTD) / count)),
-			Documentation: int(math.Round(float64(sumDocumentation) / count)),
-			HS:            int(math.Round(float64(sumHS) / count)),
-			Environment:   int(math.Round(float64(sumEnvironment) / count)),
-		}
+		cus.QGS = int8(math.Round(float64(sumQGS) / count))
+		cus.Communication = int8(math.Round(float64(sumCommunication) / count))
+		cus.OTD = int8(math.Round(float64(sumOTD) / count))
+		cus.Documentation = int8(math.Round(float64(sumDocumentation) / count))
+		cus.HS = int8(math.Round(float64(sumHS) / count))
+		cus.Environment = int8(math.Round(float64(sumEnvironment) / count))
 	}
-
-	fmt.Println(averages)
-
-	// TODO: averages dəyərlərini DB-də update et
-	// example:
-	// return cusModel.Update(Id, averages)
-
-	_ = averages // hələ istifadə etmədiyimiz üçün
 
 	return err
 }

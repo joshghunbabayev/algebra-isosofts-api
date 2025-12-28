@@ -1,0 +1,13 @@
+
+	GET /api/log/action/all                    (active)
+	GET /api/log/action/all?status=active
+	GET /api/log/action/all?status=archived
+	GET /api/log/action/all?status=deleted
+
+array / icinde :
+
+type Action struct {
+	Id      string                          `json:"id"`
+	No      string                          `json:"no"`
+	Actions []registerComponentTypes.Action `json:"actions"`
+}

@@ -92,7 +92,7 @@ func (*VendorFeedbackModel) GetAll(filters map[string]interface{}) ([]registerCo
 		var vendorFeedback registerComponentTypes.VendorFeedback
 		var dropDownListItemModel tableComponentModels.DropDownListItemModel
 
-		rows.Scan(
+		err := rows.Scan(
 			&vendorFeedback.Id,
 			&vendorFeedback.RegisterId,
 			&vendorFeedback.Scope.Id,
@@ -111,6 +111,8 @@ func (*VendorFeedbackModel) GetAll(filters map[string]interface{}) ([]registerCo
 		vendorFeedback.TypeOfFinding, _ = dropDownListItemModel.GetById(vendorFeedback.TypeOfFinding.Id)
 
 		vendorFeedbacks = append(vendorFeedbacks, vendorFeedback)
+
+		fmt.Println("errrrr:::::", err)
 	}
 
 	return vendorFeedbacks, nil

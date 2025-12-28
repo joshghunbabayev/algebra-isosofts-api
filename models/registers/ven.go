@@ -7,6 +7,7 @@ import (
 	"algebra-isosofts-api/modules"
 	registerTypes "algebra-isosofts-api/types/registers"
 	"fmt"
+	"math"
 	"strconv"
 	"strings"
 	"time"
@@ -71,6 +72,7 @@ func (*VENModel) GetById(Id string) (registerTypes.VEN, error) {
 
 	var ven registerTypes.VEN
 	var dropDownListItemModel tableComponentModels.DropDownListItemModel
+	var venModel VENModel
 	var actionModel registerComponentModels.ActionModel
 
 	err := row.Scan(
@@ -84,12 +86,6 @@ func (*VENModel) GetById(Id string) (registerTypes.VEN, error) {
 		&ven.RegistrationDate,
 		&ven.ReviewDate,
 		&ven.Approved,
-		&ven.QGS,
-		&ven.Communication,
-		&ven.OTD,
-		&ven.Documentation,
-		&ven.HS,
-		&ven.Environment,
 		&ven.DbStatus,
 		&ven.DbLastStatus,
 	)
@@ -99,6 +95,8 @@ func (*VENModel) GetById(Id string) (registerTypes.VEN, error) {
 	ven.Actions, _ = actionModel.GetAll(map[string]interface{}{
 		"registerId": ven.Id,
 	})
+
+	venModel.SetScores(ven.Id, &ven)
 
 	return ven, err
 }
@@ -134,6 +132,7 @@ func (*VENModel) GetAll(filters map[string]interface{}) ([]registerTypes.VEN, er
 	for rows.Next() {
 		var ven registerTypes.VEN
 		var dropDownListItemModel tableComponentModels.DropDownListItemModel
+		var venModel VENModel
 		var actionModel registerComponentModels.ActionModel
 
 		rows.Scan(
@@ -146,13 +145,6 @@ func (*VENModel) GetAll(filters map[string]interface{}) ([]registerTypes.VEN, er
 			&ven.Scope3.Id,
 			&ven.RegistrationDate,
 			&ven.ReviewDate,
-			&ven.Approved,
-			&ven.QGS,
-			&ven.Communication,
-			&ven.OTD,
-			&ven.Documentation,
-			&ven.HS,
-			&ven.Environment,
 			&ven.DbStatus,
 			&ven.DbLastStatus,
 		)
@@ -162,6 +154,8 @@ func (*VENModel) GetAll(filters map[string]interface{}) ([]registerTypes.VEN, er
 		ven.Actions, _ = actionModel.GetAll(map[string]interface{}{
 			"registerId": ven.Id,
 		})
+
+		venModel.SetScores(ven.Id, &ven)
 
 		vens = append(vens, ven)
 	}
@@ -183,15 +177,9 @@ func (*VENModel) Create(ven registerTypes.VEN) error {
 				"registrationDate", 
 				"reviewDate", 
 				"approved", 
-				"qgs", 
-				"communication", 
-				"otd", 
-				"documentation", 
-				"hs", 
-				"environment", 
 				"dbStatus",
 				"dbLastStatus"
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
 		ven.Id,
 		ven.No,
@@ -203,12 +191,6 @@ func (*VENModel) Create(ven registerTypes.VEN) error {
 		ven.RegistrationDate,
 		ven.ReviewDate,
 		ven.Approved,
-		0,
-		0,
-		0,
-		0,
-		0,
-		0,
 		ven.DbStatus,
 		ven.DbLastStatus,
 	)
@@ -245,5 +227,45 @@ func (*VENModel) Update(Id string, fields map[string]interface{}) error {
 
 	db := database.GetDatabase()
 	_, err := db.Exec(query, values...)
+	return err
+}
+
+func (*VENModel) SetScores(Id string, ven *registerTypes.VEN) error {
+	var vendorFeedbackModel registerComponentModels.VendorFeedbackModel
+
+	vendorFeedbacks, err := vendorFeedbackModel.GetAll(map[string]interface{}{
+		"vendorId": Id,
+		"dbStatus": "active",
+	})
+
+	if len(vendorFeedbacks) == 0 {
+		ven.QGS = 0
+		ven.Communication = 0
+		ven.OTD = 0
+		ven.Documentation = 0
+		ven.HS = 0
+		ven.Environment = 0
+	} else {
+		var sumQGS, sumCommunication, sumOTD, sumDocumentation, sumHS, sumEnvironment int
+
+		for _, vendorFeedback := range vendorFeedbacks {
+			sumQGS += int(vendorFeedback.QGS)
+			sumCommunication += int(vendorFeedback.Communication)
+			sumOTD += int(vendorFeedback.OTD)
+			sumDocumentation += int(vendorFeedback.Documentation)
+			sumHS += int(vendorFeedback.HS)
+			sumEnvironment += int(vendorFeedback.Environment)
+		}
+
+		count := float64(len(vendorFeedbacks))
+
+		ven.QGS = int8(math.Round(float64(sumQGS) / count))
+		ven.Communication = int8(math.Round(float64(sumCommunication) / count))
+		ven.OTD = int8(math.Round(float64(sumOTD) / count))
+		ven.Documentation = int8(math.Round(float64(sumDocumentation) / count))
+		ven.HS = int8(math.Round(float64(sumHS) / count))
+		ven.Environment = int8(math.Round(float64(sumEnvironment) / count))
+	}
+
 	return err
 }
