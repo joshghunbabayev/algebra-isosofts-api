@@ -7,6 +7,7 @@ import (
 	"algebra-isosofts-api/modules"
 	registerTypes "algebra-isosofts-api/types/registers"
 	"fmt"
+	"math"
 	"strconv"
 	"strings"
 	"time"
@@ -245,5 +246,68 @@ func (*CUSModel) Update(Id string, fields map[string]interface{}) error {
 
 	db := database.GetDatabase()
 	_, err := db.Exec(query, values...)
+	return err
+}
+
+func (*CUSModel) UpdateScores(Id string) error {
+	var fbModel FBModel
+
+	type Averages struct {
+		QGS           int
+		Communication int
+		OTD           int
+		Documentation int
+		HS            int
+		Environment   int
+	}
+
+	var averages Averages
+
+	fbs, err := fbModel.GetAll(map[string]interface{}{
+		"customerId": Id,
+		"dbStatus":   "active",
+	})
+
+	if len(fbs) == 0 {
+		averages = Averages{
+			QGS:           0,
+			Communication: 0,
+			OTD:           0,
+			Documentation: 0,
+			HS:            0,
+			Environment:   0,
+		}
+	} else {
+		var sumQGS, sumCommunication, sumOTD, sumDocumentation, sumHS, sumEnvironment int
+
+		for _, fb := range fbs {
+			sumQGS += int(fb.QGS)
+			sumCommunication += int(fb.Communication)
+			sumOTD += int(fb.OTD)
+			sumDocumentation += int(fb.Documentation)
+			sumHS += int(fb.HS)
+			sumEnvironment += int(fb.Environment)
+		}
+
+		count := float64(len(fbs))
+
+		averages = Averages{
+			QGS:           int(math.Round(float64(sumQGS) / count)),
+			Communication: int(math.Round(float64(sumCommunication) / count)),
+			OTD:           int(math.Round(float64(sumOTD) / count)),
+			Documentation: int(math.Round(float64(sumDocumentation) / count)),
+			HS:            int(math.Round(float64(sumHS) / count)),
+			Environment:   int(math.Round(float64(sumEnvironment) / count)),
+		}
+	}
+
+	fmt.Println(averages)
+
+	// TODO: averages dəyərlərini DB-də update et
+	// example:
+	// return cusModel.Update(Id, averages)
+
+	_ = averages // hələ istifadə etmədiyimiz üçün
+
 	return err
 }

@@ -1,0 +1,16 @@
+POST /api/register/component/vendorFeedback/one
+
+body
+
+var body struct {
+		RegisterId    string `json:"registerId"`
+		Scope         string `json:"scope"`
+		VendorId      string `json:"vendorId"`
+		TypeOfFinding string `json:"typeOfFinding"`
+		QGS           int8   `json:"qgs"`
+		Communication int8   `json:"communication"`
+		OTD           int8   `json:"otd"`
+		Documentation int8   `json:"documentation"`
+		HS            int8   `json:"hs"`
+		Environment   int8   `json:"environment"`
+	}
