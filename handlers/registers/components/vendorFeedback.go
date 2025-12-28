@@ -123,7 +123,6 @@ func (*VendorFeedbackHandler) Update(c *gin.Context) {
 	}
 
 	var body struct {
-		RegisterId    string `json:"registerId"`
 		Scope         string `json:"scope"`
 		VendorId      string `json:"vendorId"`
 		TypeOfFinding string `json:"typeOfFinding"`
@@ -151,7 +150,6 @@ func (*VendorFeedbackHandler) Update(c *gin.Context) {
 	}
 
 	vendorFeedbackModel.Update(Id, map[string]interface{}{
-		"registerId":    body.RegisterId,
 		"scope":         body.Scope,
 		"vendorId":      body.VendorId,
 		"typeOfFinding": body.TypeOfFinding,
