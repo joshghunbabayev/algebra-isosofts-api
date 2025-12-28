@@ -1,15 +1,15 @@
-package logTypes
+package dashboardTypes
 
 import (
 	registerComponentTypes "algebra-isosofts-api/types/registers/components"
 )
 
-type Action struct {
+type ActionLog struct {
 	Id      string                          `json:"id"`
 	No      string                          `json:"no"`
 	Actions []registerComponentTypes.Action `json:"actions"`
 }
 
-func (action Action) IsEmpty() bool {
-	return action.Id == ""
+func (actionLog ActionLog) IsEmpty() bool {
+	return actionLog.Id == ""
 }

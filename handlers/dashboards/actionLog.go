@@ -1,16 +1,16 @@
-package logHandlers
+package dashboardHandlers
 
 import (
 	registerModels "algebra-isosofts-api/models/registers"
-	logTypes "algebra-isosofts-api/types/logs"
+	dashboardTypes "algebra-isosofts-api/types/dashboards"
 
 	"github.com/gin-gonic/gin"
 )
 
-type ActionHandler struct {
+type ActionLogHandler struct {
 }
 
-func (*ActionHandler) GetAll(c *gin.Context) {
+func (*ActionLogHandler) GetAll(c *gin.Context) {
 	status := c.Query("status")
 
 	if status == "" {
@@ -167,7 +167,7 @@ func (*ActionHandler) GetAll(c *gin.Context) {
 
 	for _, br := range brs {
 		if br.Actions != nil {
-			regs = append(regs, logTypes.Action{
+			regs = append(regs, dashboardTypes.ActionLog{
 				Id:      br.Id,
 				No:      br.No,
 				Actions: br.Actions,
@@ -177,7 +177,7 @@ func (*ActionHandler) GetAll(c *gin.Context) {
 
 	for _, hsr := range hsrs {
 		if hsr.Actions != nil {
-			regs = append(regs, logTypes.Action{
+			regs = append(regs, dashboardTypes.ActionLog{
 				Id:      hsr.Id,
 				No:      hsr.No,
 				Actions: hsr.Actions,
@@ -187,7 +187,7 @@ func (*ActionHandler) GetAll(c *gin.Context) {
 
 	for _, leg := range legs {
 		if leg.Actions != nil {
-			regs = append(regs, logTypes.Action{
+			regs = append(regs, dashboardTypes.ActionLog{
 				Id:      leg.Id,
 				No:      leg.No,
 				Actions: leg.Actions,
@@ -197,7 +197,7 @@ func (*ActionHandler) GetAll(c *gin.Context) {
 
 	for _, eai := range eais {
 		if eai.Actions != nil {
-			regs = append(regs, logTypes.Action{
+			regs = append(regs, dashboardTypes.ActionLog{
 				Id:      eai.Id,
 				No:      eai.No,
 				Actions: eai.Actions,
@@ -207,7 +207,7 @@ func (*ActionHandler) GetAll(c *gin.Context) {
 
 	for _, ei := range eis {
 		if ei.Actions != nil {
-			regs = append(regs, logTypes.Action{
+			regs = append(regs, dashboardTypes.ActionLog{
 				Id:      ei.Id,
 				No:      ei.No,
 				Actions: ei.Actions,
@@ -217,7 +217,7 @@ func (*ActionHandler) GetAll(c *gin.Context) {
 
 	for _, tra := range tras {
 		if tra.Actions != nil {
-			regs = append(regs, logTypes.Action{
+			regs = append(regs, dashboardTypes.ActionLog{
 				Id:      tra.Id,
 				No:      tra.No,
 				Actions: tra.Actions,
@@ -227,7 +227,7 @@ func (*ActionHandler) GetAll(c *gin.Context) {
 
 	for _, doc := range docs {
 		if doc.Actions != nil {
-			regs = append(regs, logTypes.Action{
+			regs = append(regs, dashboardTypes.ActionLog{
 				Id:      doc.Id,
 				No:      doc.No,
 				Actions: doc.Actions,
@@ -237,7 +237,7 @@ func (*ActionHandler) GetAll(c *gin.Context) {
 
 	for _, ven := range vens {
 		if ven.Actions != nil {
-			regs = append(regs, logTypes.Action{
+			regs = append(regs, dashboardTypes.ActionLog{
 				Id:      ven.Id,
 				No:      ven.No,
 				Actions: ven.Actions,
@@ -247,7 +247,7 @@ func (*ActionHandler) GetAll(c *gin.Context) {
 
 	for _, cus := range cuss {
 		if cus.Actions != nil {
-			regs = append(regs, logTypes.Action{
+			regs = append(regs, dashboardTypes.ActionLog{
 				Id:      cus.Id,
 				No:      cus.No,
 				Actions: cus.Actions,
@@ -257,7 +257,7 @@ func (*ActionHandler) GetAll(c *gin.Context) {
 
 	for _, ea := range eas {
 		if ea.Actions != nil {
-			regs = append(regs, logTypes.Action{
+			regs = append(regs, dashboardTypes.ActionLog{
 				Id:      ea.Id,
 				No:      ea.No,
 				Actions: ea.Actions,
@@ -267,7 +267,7 @@ func (*ActionHandler) GetAll(c *gin.Context) {
 
 	for _, moc := range mocs {
 		if moc.Actions != nil {
-			regs = append(regs, logTypes.Action{
+			regs = append(regs, dashboardTypes.ActionLog{
 				Id:      moc.Id,
 				No:      moc.No,
 				Actions: moc.Actions,
@@ -277,7 +277,7 @@ func (*ActionHandler) GetAll(c *gin.Context) {
 
 	for _, fin := range fins {
 		if fin.Actions != nil {
-			regs = append(regs, logTypes.Action{
+			regs = append(regs, dashboardTypes.ActionLog{
 				Id:      fin.Id,
 				No:      fin.No,
 				Actions: fin.Actions,
@@ -287,7 +287,7 @@ func (*ActionHandler) GetAll(c *gin.Context) {
 
 	for _, mrm := range mrms {
 		if mrm.Actions != nil {
-			regs = append(regs, logTypes.Action{
+			regs = append(regs, dashboardTypes.ActionLog{
 				Id:      mrm.Id,
 				No:      mrm.No,
 				Actions: mrm.Actions,
@@ -297,7 +297,7 @@ func (*ActionHandler) GetAll(c *gin.Context) {
 
 	for _, aop := range aops {
 		if aop.Actions != nil {
-			regs = append(regs, logTypes.Action{
+			regs = append(regs, dashboardTypes.ActionLog{
 				Id:      aop.Id,
 				No:      aop.No,
 				Actions: aop.Actions,

@@ -1,8 +1,8 @@
 
-	GET /api/log/action/all                    (active)
-	GET /api/log/action/all?status=active
-	GET /api/log/action/all?status=archived
-	GET /api/log/action/all?status=deleted
+	GET /api/dashboard/actionLog/all                    (active)
+	GET /api/dashboard/actionLog/all?status=active
+	GET /api/dashboard/actionLog/all?status=archived
+	GET /api/dashboard/actionLog/all?status=deleted
 
 array / icinde :
 

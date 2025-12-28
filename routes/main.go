@@ -1,7 +1,7 @@
 package routes
 
 import (
-	logRoutes "algebra-isosofts-api/routes/logs"
+	dashboardRoutes "algebra-isosofts-api/routes/dashboards"
 	registerRoutes "algebra-isosofts-api/routes/registers"
 	tableComponentRoutes "algebra-isosofts-api/routes/tableComponents"
 
@@ -9,7 +9,7 @@ import (
 )
 
 func APIRoutes(rg *gin.RouterGroup) {
+	dashboardRoutes.MainRoutes(rg.Group("/dashboard"))
 	registerRoutes.MainRoutes(rg.Group("/register"))
-	logRoutes.MainRoutes(rg.Group("/log"))
 	tableComponentRoutes.MainRoutes(rg.Group("/tablecomponent"))
 }

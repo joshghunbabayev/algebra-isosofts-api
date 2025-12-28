@@ -1,7 +1,7 @@
-package logRoutes
+package dashboardRoutes
 
 import "github.com/gin-gonic/gin"
 
 func MainRoutes(rg *gin.RouterGroup) {
-	ActionRoutes(rg.Group("/action"))
+	ActionLogRoutes(rg.Group("/actionLog"))
 }
