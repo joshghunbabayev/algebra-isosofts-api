@@ -136,7 +136,7 @@ func (*VENModel) GetAll(filters map[string]interface{}) ([]registerTypes.VEN, er
 		var venModel VENModel
 		var actionModel registerComponentModels.ActionModel
 
-		rows.Scan(
+		err := rows.Scan(
 			&ven.Id,
 			&ven.No,
 			&ven.Name,
@@ -146,6 +146,7 @@ func (*VENModel) GetAll(filters map[string]interface{}) ([]registerTypes.VEN, er
 			&ven.Scope3.Id,
 			&ven.RegistrationDate,
 			&ven.ReviewDate,
+			&ven.Approved,
 			&ven.DbStatus,
 			&ven.DbLastStatus,
 		)
@@ -159,6 +160,7 @@ func (*VENModel) GetAll(filters map[string]interface{}) ([]registerTypes.VEN, er
 
 		venModel.SetScores(ven.Id, &ven)
 
+		fmt.Println(err)
 		vens = append(vens, ven)
 	}
 
