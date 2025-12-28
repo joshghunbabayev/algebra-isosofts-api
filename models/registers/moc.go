@@ -91,6 +91,7 @@ func (*MOCModel) GetById(Id string) (registerTypes.MOC, error) {
 	moc.Process, _ = dropDownListItemModel.GetById(moc.Process.Id)
 	moc.Actions, _ = actionModel.GetAll(map[string]interface{}{
 		"registerId": moc.Id,
+		"dbStatus":   "active",
 	})
 
 	return moc, err
@@ -147,6 +148,7 @@ func (*MOCModel) GetAll(filters map[string]interface{}) ([]registerTypes.MOC, er
 		moc.Process, _ = dropDownListItemModel.GetById(moc.Process.Id)
 		moc.Actions, _ = actionModel.GetAll(map[string]interface{}{
 			"registerId": moc.Id,
+			"dbStatus":   "active",
 		})
 
 		mocs = append(mocs, moc)

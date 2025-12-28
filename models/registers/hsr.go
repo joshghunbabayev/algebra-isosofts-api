@@ -94,6 +94,7 @@ func (*HSRModel) GetById(Id string) (registerTypes.HSR, error) {
 	hsr.AffectedPositions, _ = dropDownListItemModel.GetById(hsr.AffectedPositions.Id)
 	hsr.Actions, _ = actionModel.GetAll(map[string]interface{}{
 		"registerId": hsr.Id,
+		"dbStatus":   "active",
 	})
 
 	return hsr, err
@@ -153,6 +154,7 @@ func (*HSRModel) GetAll(filters map[string]interface{}) ([]registerTypes.HSR, er
 		hsr.AffectedPositions, _ = dropDownListItemModel.GetById(hsr.AffectedPositions.Id)
 		hsr.Actions, _ = actionModel.GetAll(map[string]interface{}{
 			"registerId": hsr.Id,
+			"dbStatus":   "active",
 		})
 
 		hsrs = append(hsrs, hsr)

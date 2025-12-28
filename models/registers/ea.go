@@ -87,6 +87,7 @@ func (*EAModel) GetById(Id string) (registerTypes.EA, error) {
 	)
 	ea.Actions, _ = actionModel.GetAll(map[string]interface{}{
 		"registerId": ea.Id,
+		"dbStatus":   "active",
 	})
 
 	return ea, err
@@ -140,6 +141,7 @@ func (*EAModel) GetAll(filters map[string]interface{}) ([]registerTypes.EA, erro
 		)
 		ea.Actions, _ = actionModel.GetAll(map[string]interface{}{
 			"registerId": ea.Id,
+			"dbStatus":   "active",
 		})
 
 		eas = append(eas, ea)

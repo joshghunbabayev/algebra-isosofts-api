@@ -94,6 +94,7 @@ func (*VENModel) GetById(Id string) (registerTypes.VEN, error) {
 	ven.Scope3, _ = dropDownListItemModel.GetById(ven.Scope3.Id)
 	ven.Actions, _ = actionModel.GetAll(map[string]interface{}{
 		"registerId": ven.Id,
+		"dbStatus":   "active",
 	})
 
 	venModel.SetScores(ven.Id, &ven)
@@ -153,6 +154,7 @@ func (*VENModel) GetAll(filters map[string]interface{}) ([]registerTypes.VEN, er
 		ven.Scope3, _ = dropDownListItemModel.GetById(ven.Scope3.Id)
 		ven.Actions, _ = actionModel.GetAll(map[string]interface{}{
 			"registerId": ven.Id,
+			"dbStatus":   "active",
 		})
 
 		venModel.SetScores(ven.Id, &ven)

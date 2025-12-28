@@ -97,6 +97,7 @@ func (*EAIModel) GetById(Id string) (registerTypes.EAI, error) {
 	eai.AffectedReceptors, _ = dropDownListItemModel.GetById(eai.AffectedReceptors.Id)
 	eai.Actions, _ = actionModel.GetAll(map[string]interface{}{
 		"registerId": eai.Id,
+		"dbStatus":   "active",
 	})
 
 	return eai, err
@@ -159,6 +160,7 @@ func (*EAIModel) GetAll(filters map[string]interface{}) ([]registerTypes.EAI, er
 		eai.AffectedReceptors, _ = dropDownListItemModel.GetById(eai.AffectedReceptors.Id)
 		eai.Actions, _ = actionModel.GetAll(map[string]interface{}{
 			"registerId": eai.Id,
+			"dbStatus":   "active",
 		})
 
 		eais = append(eais, eai)

@@ -96,6 +96,7 @@ func (*AOPModel) GetById(Id string) (registerTypes.AOP, error) {
 	aop.InspectionFrequency, _ = dropDownListItemModel.GetById(aop.InspectionFrequency.Id)
 	aop.Actions, _ = actionModel.GetAll(map[string]interface{}{
 		"registerId": aop.Id,
+		"dbStatus":   "active",
 	})
 
 	return aop, err
@@ -157,6 +158,7 @@ func (*AOPModel) GetAll(filters map[string]interface{}) ([]registerTypes.AOP, er
 		aop.InspectionFrequency, _ = dropDownListItemModel.GetById(aop.InspectionFrequency.Id)
 		aop.Actions, _ = actionModel.GetAll(map[string]interface{}{
 			"registerId": aop.Id,
+			"dbStatus":   "active",
 		})
 
 		aops = append(aops, aop)

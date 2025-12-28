@@ -93,6 +93,7 @@ func (*LEGModel) GetById(Id string) (registerTypes.LEG, error) {
 	leg.AffectedPositions, _ = dropDownListItemModel.GetById(leg.AffectedPositions.Id)
 	leg.Actions, _ = actionModel.GetAll(map[string]interface{}{
 		"registerId": leg.Id,
+		"dbStatus":   "active",
 	})
 
 	return leg, err
@@ -151,6 +152,7 @@ func (*LEGModel) GetAll(filters map[string]interface{}) ([]registerTypes.LEG, er
 		leg.AffectedPositions, _ = dropDownListItemModel.GetById(leg.AffectedPositions.Id)
 		leg.Actions, _ = actionModel.GetAll(map[string]interface{}{
 			"registerId": leg.Id,
+			"dbStatus":   "active",
 		})
 
 		legs = append(legs, leg)

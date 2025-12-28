@@ -86,6 +86,7 @@ func (*TRAModel) GetById(Id string) (registerTypes.TRA, error) {
 	)
 	tra.Actions, _ = actionModel.GetAll(map[string]interface{}{
 		"registerId": tra.Id,
+		"dbStatus":   "active",
 	})
 
 	return tra, err
@@ -138,6 +139,7 @@ func (*TRAModel) GetAll(filters map[string]interface{}) ([]registerTypes.TRA, er
 		)
 		tra.Actions, _ = actionModel.GetAll(map[string]interface{}{
 			"registerId": tra.Id,
+			"dbStatus":   "active",
 		})
 
 		tras = append(tras, tra)

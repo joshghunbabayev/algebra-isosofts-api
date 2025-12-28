@@ -95,6 +95,7 @@ func (*FBModel) GetById(Id string) (registerTypes.FB, error) {
 	fb.TypeOfFinding, _ = dropDownListItemModel.GetById(fb.TypeOfFinding.Id)
 	fb.VendorFeedbacks, _ = vendorFeedbackModel.GetAll(map[string]interface{}{
 		"registerId": fb.Id,
+		"dbStatus":   "active",
 	})
 
 	return fb, err
@@ -155,6 +156,7 @@ func (*FBModel) GetAll(filters map[string]interface{}) ([]registerTypes.FB, erro
 		fb.TypeOfFinding, _ = dropDownListItemModel.GetById(fb.TypeOfFinding.Id)
 		fb.VendorFeedbacks, _ = vendorFeedbackModel.GetAll(map[string]interface{}{
 			"registerId": fb.Id,
+			"dbStatus":   "active",
 		})
 
 		fbs = append(fbs, fb)

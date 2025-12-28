@@ -94,6 +94,7 @@ func (*CUSModel) GetById(Id string) (registerTypes.CUS, error) {
 	cus.Scope3, _ = dropDownListItemModel.GetById(cus.Scope3.Id)
 	cus.Actions, _ = actionModel.GetAll(map[string]interface{}{
 		"registerId": cus.Id,
+		"dbStatus":   "active",
 	})
 
 	cusModel.SetScores(cus.Id, &cus)
@@ -154,6 +155,7 @@ func (*CUSModel) GetAll(filters map[string]interface{}) ([]registerTypes.CUS, er
 		cus.Scope3, _ = dropDownListItemModel.GetById(cus.Scope3.Id)
 		cus.Actions, _ = actionModel.GetAll(map[string]interface{}{
 			"registerId": cus.Id,
+			"dbStatus":   "active",
 		})
 
 		cusModel.SetScores(cus.Id, &cus)

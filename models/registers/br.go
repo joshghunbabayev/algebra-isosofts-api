@@ -97,6 +97,7 @@ func (*BRModel) GetById(Id string) (registerTypes.BR, error) {
 	br.Process, _ = dropDownListItemModel.GetById(br.Process.Id)
 	br.Actions, _ = actionModel.GetAll(map[string]interface{}{
 		"registerId": br.Id,
+		"dbStatus":   "active",
 	})
 
 	return br, err
@@ -159,6 +160,7 @@ func (*BRModel) GetAll(filters map[string]interface{}) ([]registerTypes.BR, erro
 		br.Process, _ = dropDownListItemModel.GetById(br.Process.Id)
 		br.Actions, _ = actionModel.GetAll(map[string]interface{}{
 			"registerId": br.Id,
+			"dbStatus":   "active",
 		})
 
 		brs = append(brs, br)

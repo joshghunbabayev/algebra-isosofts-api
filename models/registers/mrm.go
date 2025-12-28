@@ -88,6 +88,7 @@ func (*MRMModel) GetById(Id string) (registerTypes.MRM, error) {
 	mrm.Process, _ = dropDownListItemModel.GetById(mrm.Process.Id)
 	mrm.Actions, _ = actionModel.GetAll(map[string]interface{}{
 		"registerId": mrm.Id,
+		"dbStatus":   "active",
 	})
 
 	return mrm, err
@@ -141,6 +142,7 @@ func (*MRMModel) GetAll(filters map[string]interface{}) ([]registerTypes.MRM, er
 		mrm.Process, _ = dropDownListItemModel.GetById(mrm.Process.Id)
 		mrm.Actions, _ = actionModel.GetAll(map[string]interface{}{
 			"registerId": mrm.Id,
+			"dbStatus":   "active",
 		})
 
 		mrms = append(mrms, mrm)

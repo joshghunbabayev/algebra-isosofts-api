@@ -123,6 +123,7 @@ func (*DOCModel) GetById(Id string) (registerTypes.DOC, error) {
 	doc.Type, _ = dropDownListItemModel.GetById(doc.Type.Id)
 	doc.Actions, _ = actionModel.GetAll(map[string]interface{}{
 		"registerId": doc.Id,
+		"dbStatus":   "active",
 	})
 
 	return doc, err
@@ -184,6 +185,7 @@ func (*DOCModel) GetAll(filters map[string]interface{}) ([]registerTypes.DOC, er
 		doc.Type, _ = dropDownListItemModel.GetById(doc.Type.Id)
 		doc.Actions, _ = actionModel.GetAll(map[string]interface{}{
 			"registerId": doc.Id,
+			"dbStatus":   "active",
 		})
 
 		docs = append(docs, doc)

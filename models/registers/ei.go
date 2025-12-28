@@ -89,6 +89,7 @@ func (*EIModel) GetById(Id string) (registerTypes.EI, error) {
 	ei.InspectionFrequency, _ = dropDownListItemModel.GetById(ei.InspectionFrequency.Id)
 	ei.Actions, _ = actionModel.GetAll(map[string]interface{}{
 		"registerId": ei.Id,
+		"dbStatus":   "active",
 	})
 
 	return ei, err
@@ -143,6 +144,7 @@ func (*EIModel) GetAll(filters map[string]interface{}) ([]registerTypes.EI, erro
 		ei.InspectionFrequency, _ = dropDownListItemModel.GetById(ei.InspectionFrequency.Id)
 		ei.Actions, _ = actionModel.GetAll(map[string]interface{}{
 			"registerId": ei.Id,
+			"dbStatus":   "active",
 		})
 
 		eis = append(eis, ei)

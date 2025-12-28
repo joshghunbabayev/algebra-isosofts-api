@@ -95,6 +95,7 @@ func (*FINModel) GetById(Id string) (registerTypes.FIN, error) {
 	fin.SourceOfFinding, _ = dropDownListItemModel.GetById(fin.SourceOfFinding.Id)
 	fin.Actions, _ = actionModel.GetAll(map[string]interface{}{
 		"registerId": fin.Id,
+		"dbStatus":   "active",
 	})
 
 	return fin, err
@@ -155,6 +156,7 @@ func (*FINModel) GetAll(filters map[string]interface{}) ([]registerTypes.FIN, er
 		fin.SourceOfFinding, _ = dropDownListItemModel.GetById(fin.SourceOfFinding.Id)
 		fin.Actions, _ = actionModel.GetAll(map[string]interface{}{
 			"registerId": fin.Id,
+			"dbStatus":   "active",
 		})
 
 		fins = append(fins, fin)
