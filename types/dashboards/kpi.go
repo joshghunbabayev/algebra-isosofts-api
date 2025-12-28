@@ -1,15 +1,28 @@
 package dashboardTypes
 
-import (
-	registerComponentTypes "algebra-isosofts-api/types/registers/components"
-)
-
 type KPI struct {
-	Id      string                          `json:"id"`
-	No      string                          `json:"no"`
-	Actions []registerComponentTypes.Action `json:"actions"`
-}
+	TotalActions int64 `json:"totalActions"`
 
-func (kpi KPI) IsEmpty() bool {
-	return kpi.Id == ""
+	Status struct {
+		Average float64          `json:"average"`
+		Counts  map[string]int64 `json:"counts"`
+	} `json:"status"`
+
+	VerificationStatus map[string]int64 `json:"verificationStatus"`
+	Confirmation       map[string]int64 `json:"confirmation"`
+
+	MonthlyProgress struct {
+		January   float64 `json:"january"`
+		February  float64 `json:"february"`
+		March     float64 `json:"march"`
+		April     float64 `json:"april"`
+		May       float64 `json:"may"`
+		June      float64 `json:"june"`
+		July      float64 `json:"july"`
+		August    float64 `json:"august"`
+		September float64 `json:"september"`
+		October   float64 `json:"october"`
+		November  float64 `json:"november"`
+		December  float64 `json:"december"`
+	} `json:"monthlyProgress"`
 }
