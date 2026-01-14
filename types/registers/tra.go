@@ -14,6 +14,7 @@ type TRA struct {
 	CLNumber         string                          `json:"clnumber"`
 	NCD              string                          `json:"ncd"`
 	CompetencyStatus int8                            `json:"competencyStatus"`
+	Effectiveness    string                          `json:"effectiveness"`
 	DbStatus         string                          `json:"dbStatus"`
 	DbLastStatus     string                          `json:"-"`
 	Actions          []registerComponentTypes.Action `json:"actions"`

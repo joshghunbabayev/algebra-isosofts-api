@@ -10,4 +10,5 @@ type TRA struct {
 	CLNumber         string                          `json:"clnumber"`
 	NCD              string                          `json:"ncd"`
 	CompetencyStatus int8                            `json:"competencyStatus"`
+	Effectiveness    string                          `json:"effectiveness"`
 }
