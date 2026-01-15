@@ -42,6 +42,8 @@ func (*ActionModel) GetById(Id string) (registerComponentTypes.Action, error) {
 	err := row.Scan(
 		&action.Id,
 		&action.RegisterId,
+		&action.RegisterType,
+		&action.No,
 		&action.Title,
 		&action.RaiseDate,
 		&action.Resources,
@@ -125,6 +127,8 @@ func (*ActionModel) GetAll(filters map[string]interface{}) ([]registerComponentT
 		rows.Scan(
 			&action.Id,
 			&action.RegisterId,
+			&action.RegisterType,
+			&action.No,
 			&action.Title,
 			&action.RaiseDate,
 			&action.Resources,
@@ -182,6 +186,8 @@ func (*ActionModel) Create(action registerComponentTypes.Action) error {
 			INSERT INTO actions ( 
 				"id",
 				"registerId",
+				"registerTyoe",
+				"no",
 				"title",
 				"raiseDate",
 				"resources",
@@ -208,10 +214,12 @@ func (*ActionModel) Create(action registerComponentTypes.Action) error {
 				"december",
 				"dbStatus",
 				"dbLastStatus"
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
 		action.Id,
 		action.RegisterId,
+		action.RegisterType,
+		action.No,
 		action.Title,
 		action.RaiseDate,
 		action.Resources,

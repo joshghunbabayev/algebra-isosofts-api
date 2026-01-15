@@ -45,6 +45,7 @@ func (*ActionHandler) GetAll(c *gin.Context) {
 func (*ActionHandler) Create(c *gin.Context) {
 	var body struct {
 		RegisterId         string `json:"registerId"`
+		RegisterType       string `json:"registerType"`
 		Title              string `json:"title"`
 		RaiseDate          string `json:"raiseDate"`
 		Resources          int64  `json:"resources"`
@@ -100,15 +101,19 @@ func (*ActionHandler) Create(c *gin.Context) {
 	// 	return
 	// }
 
+	var no string
+
 	var actionModel registerComponentModels.ActionModel
 
 	actionModel.Create(registerComponentTypes.Action{
-		Id:         actionModel.GenerateUniqueId(),
-		RegisterId: body.RegisterId,
-		Title:      body.Title,
-		RaiseDate:  body.RaiseDate,
-		Resources:  body.Resources,
-		Currency:   body.Currency,
+		Id:           actionModel.GenerateUniqueId(),
+		RegisterId:   body.RegisterId,
+		RegisterType: body.RegisterType,
+		No:           no,
+		Title:        body.Title,
+		RaiseDate:    body.RaiseDate,
+		Resources:    body.Resources,
+		Currency:     body.Currency,
 		RelativeFunction: tableComponentTypes.DropDownListItem{
 			Id: body.RelativeFunction,
 		},
