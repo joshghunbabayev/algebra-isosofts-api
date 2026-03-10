@@ -2,12 +2,15 @@ package registerRoutes
 
 import (
 	registerHandlers "algebra-isosofts-api/handlers/registers"
+	"algebra-isosofts-api/middlewares"
 
 	"github.com/gin-gonic/gin"
 )
 
 func VENRoutes(rg *gin.RouterGroup) {
 	var venHandler registerHandlers.VENHandler
+	rg.Use(middlewares.AccessMiddleware())
+
 	rg.GET("/all", venHandler.GetAll) // query: status
 	rg.POST("/one", venHandler.Create)
 	rg.GET("/one/:id", venHandler.Get)

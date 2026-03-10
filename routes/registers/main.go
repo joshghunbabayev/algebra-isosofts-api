@@ -8,31 +8,21 @@ import (
 )
 
 func MainRoutes(rg *gin.RouterGroup) {
-	// Bütün sorğular üçün Auth yoxlanılır
 	rg.Use(middlewares.AuthMiddleware())
-
-	// Komponentlər üçün AccessMiddleware lazım deyil (adətən oxumaq üçündür)
+	BRRoutes(rg.Group("/br"))
+	HSRRoutes(rg.Group("/hsr"))
+	LEGRoutes(rg.Group("/leg"))
+	EAIRoutes(rg.Group("/eai"))
+	EIRoutes(rg.Group("/ei"))
+	TRARoutes(rg.Group("/tra"))
+	DOCRoutes(rg.Group("/doc"))
+	VENRoutes(rg.Group("/ven"))
+	CUSRoutes(rg.Group("/cus"))
+	FBRoutes(rg.Group("/fb"))
+	EARoutes(rg.Group("/ea"))
+	MOCRoutes(rg.Group("/moc"))
+	FINRoutes(rg.Group("/fin"))
+	MRMRoutes(rg.Group("/mrm"))
+	AOPRoutes(rg.Group("/aop"))
 	registerComponentRoutes.MainComponentRoutes(rg.Group("/component"))
-
-	// İcazə (Access) yoxlanışı tələb olunan registerlər
-	rrg := rg.Group("")
-	rrg.Use(middlewares.AccessMiddleware())
-	{
-		// DİQQƏT: rg.Group yox, rrg.Group istifadə olunmalıdır!
-		BRRoutes(rrg.Group("/br"))
-		HSRRoutes(rrg.Group("/hsr"))
-		LEGRoutes(rrg.Group("/leg"))
-		EAIRoutes(rrg.Group("/eai"))
-		EIRoutes(rrg.Group("/ei"))
-		TRARoutes(rrg.Group("/tra"))
-		DOCRoutes(rrg.Group("/doc"))
-		VENRoutes(rrg.Group("/ven"))
-		CUSRoutes(rrg.Group("/cus"))
-		FBRoutes(rrg.Group("/fb"))
-		EARoutes(rrg.Group("/ea"))
-		MOCRoutes(rrg.Group("/moc"))
-		FINRoutes(rrg.Group("/fin"))
-		MRMRoutes(rrg.Group("/mrm"))
-		AOPRoutes(rrg.Group("/aop"))
-	}
 }

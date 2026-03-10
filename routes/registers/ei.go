@@ -2,12 +2,15 @@ package registerRoutes
 
 import (
 	registerHandlers "algebra-isosofts-api/handlers/registers"
+	"algebra-isosofts-api/middlewares"
 
 	"github.com/gin-gonic/gin"
 )
 
 func EIRoutes(rg *gin.RouterGroup) {
 	var eiHandler registerHandlers.EIHandler
+	rg.Use(middlewares.AccessMiddleware())
+
 	rg.GET("/all", eiHandler.GetAll) // query: status
 	rg.POST("/one", eiHandler.Create)
 	rg.PUT("/one/:id", eiHandler.Update)
