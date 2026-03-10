@@ -8,6 +8,7 @@ import (
 )
 
 func MainRoutes(rg *gin.RouterGroup) {
+	rg.Use(middlewares.AuthMiddleware())
 	rg.Use(middlewares.AccessMiddleware())
 	BRRoutes(rg.Group("/br"))
 	HSRRoutes(rg.Group("/hsr"))

@@ -8,5 +8,6 @@ import (
 
 func KPIRoutes(rg *gin.RouterGroup) {
 	var kpiHandler dashboardHandlers.KPIHandler
-	rg.GET("/all", kpiHandler.GetAll) // query: status
+	rg.GET("", kpiHandler.GetAll)
+	rg.POST("/:id", kpiHandler.Update)
 }
