@@ -9,7 +9,10 @@ import (
 
 func MainRoutes(rg *gin.RouterGroup) {
 	rg.Use(middlewares.AuthMiddleware())
-	rg.Use(middlewares.AccessMiddleware())
+	registerComponentRoutes.MainComponentRoutes(rg.Group("/component"))
+
+	rrg := rg.Group("")
+	rrg.Use(middlewares.AccessMiddleware())
 	BRRoutes(rg.Group("/br"))
 	HSRRoutes(rg.Group("/hsr"))
 	LEGRoutes(rg.Group("/leg"))
@@ -25,5 +28,4 @@ func MainRoutes(rg *gin.RouterGroup) {
 	FINRoutes(rg.Group("/fin"))
 	MRMRoutes(rg.Group("/mrm"))
 	AOPRoutes(rg.Group("/aop"))
-	registerComponentRoutes.MainComponentRoutes(rg.Group("/component"))
 }
