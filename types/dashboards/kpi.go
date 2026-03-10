@@ -3,7 +3,7 @@ package dashboardTypes
 type KPI struct {
 	Id           string `json:"id"`
 	CompanyId    string `json:"companyId"`
-	SNo          string `json:"sno"`
+	SNo          int8   `json:"sno"`
 	No           string `json:"no"`
 	Title        string `json:"title"`
 	Function     string `json:"function"`

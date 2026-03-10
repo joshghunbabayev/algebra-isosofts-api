@@ -37,7 +37,6 @@ func (*KPIModel) GetById(id string) (dashboardTypes.KPI, error) {
 		&kpi.Title,
 		&kpi.Function,
 		&kpi.LYKPI,
-		&kpi.ActualKPI,
 		&kpi.AnnualTarget,
 		&kpi.January,
 		&kpi.February,
@@ -89,7 +88,6 @@ func (*KPIModel) GetAll(filters map[string]interface{}) ([]dashboardTypes.KPI, e
 			&kpi.Title,
 			&kpi.Function,
 			&kpi.LYKPI,
-			&kpi.ActualKPI,
 			&kpi.AnnualTarget,
 			&kpi.January,
 			&kpi.February,
@@ -118,13 +116,13 @@ func (*KPIModel) Create(kpi dashboardTypes.KPI) error {
 	_, err := db.Exec(`
 			INSERT INTO kpis (
 				"id", "companyId", "sno", "no", "title", "function", 
-				"lykpi", "actualKPI", "annualTarget",
+				"lykpi", "annualTarget",
 				"january", "february", "march", "april", "may", "june",
 				"july", "august", "september", "october", "november", "december"
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
 		kpi.Id, kpi.CompanyId, kpi.SNo, kpi.No, kpi.Title, kpi.Function,
-		kpi.LYKPI, kpi.ActualKPI, kpi.AnnualTarget,
+		kpi.LYKPI, kpi.AnnualTarget,
 		kpi.January, kpi.February, kpi.March, kpi.April, kpi.May, kpi.June,
 		kpi.July, kpi.August, kpi.September, kpi.October, kpi.November, kpi.December,
 	)
@@ -189,7 +187,6 @@ func (*KPIModel) DuplicateDefaults(companyId string) error {
 			Title:        kpi.Title,
 			Function:     "",
 			LYKPI:        0,
-			ActualKPI:    0,
 			AnnualTarget: 0,
 			January:      0,
 			February:     0,

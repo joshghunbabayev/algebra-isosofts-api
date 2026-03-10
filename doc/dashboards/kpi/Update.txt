@@ -1,4 +1,4 @@
-For update brregister
+For update 
 	PUT    /api/dashboard/kpi/:id?token=
 
 body:
