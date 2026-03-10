@@ -73,6 +73,7 @@ func (*EAModel) GetById(Id string) (registerTypes.EA, error) {
 
 	err := row.Scan(
 		&ea.Id,
+		&ea.CompanyId,
 		&ea.No,
 		&ea.EmployeeName,
 		&ea.Position,
@@ -127,6 +128,7 @@ func (*EAModel) GetAll(filters map[string]interface{}) ([]registerTypes.EA, erro
 
 		rows.Scan(
 			&ea.Id,
+			&ea.CompanyId,
 			&ea.No,
 			&ea.EmployeeName,
 			&ea.Position,
@@ -155,6 +157,7 @@ func (*EAModel) Create(ea registerTypes.EA) error {
 	_, err := db.Exec(`
 			INSERT INTO earegisters ( 
 				"id",
+				"companyId",
 				"no",
 				"employeeName", 
 				"position", 
@@ -166,9 +169,10 @@ func (*EAModel) Create(ea registerTypes.EA) error {
 				"skillsAppraisal", 
 				"dbStatus",
 				"dbLastStatus"
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
 		ea.Id,
+		ea.CompanyId,
 		ea.No,
 		ea.EmployeeName,
 		ea.Position,

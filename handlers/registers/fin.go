@@ -1,6 +1,7 @@
 package registerHandlers
 
 import (
+	"algebra-isosofts-api/middlewares"
 	registerModels "algebra-isosofts-api/models/registers"
 	registerTypes "algebra-isosofts-api/types/registers"
 	tableComponentTypes "algebra-isosofts-api/types/tableComponents"
@@ -12,6 +13,7 @@ type FINHandler struct {
 }
 
 func (*FINHandler) GetAll(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	status := c.Query("status")
 
 	if status == "" {
@@ -21,7 +23,8 @@ func (*FINHandler) GetAll(c *gin.Context) {
 	var finModel registerModels.FINModel
 
 	fins, err := finModel.GetAll(map[string]interface{}{
-		"dbStatus": status,
+		"dbStatus":  status,
+		"companyId": account.CompanyId,
 	})
 
 	if err != nil {
@@ -33,6 +36,7 @@ func (*FINHandler) GetAll(c *gin.Context) {
 }
 
 func (*FINHandler) Create(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Issuer            string `json:"issuer"`
 		Process           string `json:"process"`
@@ -64,9 +68,10 @@ func (*FINHandler) Create(c *gin.Context) {
 	var finModel registerModels.FINModel
 
 	finModel.Create(registerTypes.FIN{
-		Id:     finModel.GenerateUniqueId(),
-		No:     finModel.GenerateUniqueNo(),
-		Issuer: body.Issuer,
+		Id:        finModel.GenerateUniqueId(),
+		CompanyId: account.CompanyId,
+		No:        finModel.GenerateUniqueNo(),
+		Issuer:    body.Issuer,
 		Process: tableComponentTypes.DropDownListItem{
 			Id: body.Process,
 		},
@@ -92,13 +97,14 @@ func (*FINHandler) Create(c *gin.Context) {
 }
 
 func (*FINHandler) Update(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	Id := c.Param("id")
 
 	var finModel registerModels.FINModel
 
 	currentFin, _ := finModel.GetById(Id)
 
-	if currentFin.IsEmpty() {
+	if currentFin.IsEmpty() || currentFin.CompanyId != account.CompanyId {
 		c.IndentedJSON(404, gin.H{})
 		return
 	}
@@ -148,6 +154,7 @@ func (*FINHandler) Update(c *gin.Context) {
 }
 
 func (*FINHandler) Archive(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -166,7 +173,7 @@ func (*FINHandler) Archive(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentFin, _ := finModel.GetById(Id)
-		if currentFin.IsEmpty() {
+		if currentFin.IsEmpty() || currentFin.CompanyId != account.CompanyId {
 			continue
 		}
 
@@ -184,6 +191,7 @@ func (*FINHandler) Archive(c *gin.Context) {
 }
 
 func (*FINHandler) Unarchive(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -202,7 +210,7 @@ func (*FINHandler) Unarchive(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentFin, _ := finModel.GetById(Id)
-		if currentFin.IsEmpty() {
+		if currentFin.IsEmpty() || currentFin.CompanyId != account.CompanyId {
 			continue
 		}
 
@@ -220,6 +228,7 @@ func (*FINHandler) Unarchive(c *gin.Context) {
 }
 
 func (*FINHandler) Delete(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -238,7 +247,7 @@ func (*FINHandler) Delete(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentFin, _ := finModel.GetById(Id)
-		if currentFin.IsEmpty() {
+		if currentFin.IsEmpty() || currentFin.CompanyId != account.CompanyId {
 			continue
 		}
 
@@ -256,6 +265,7 @@ func (*FINHandler) Delete(c *gin.Context) {
 }
 
 func (*FINHandler) Undelete(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -274,7 +284,7 @@ func (*FINHandler) Undelete(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentFin, _ := finModel.GetById(Id)
-		if currentFin.IsEmpty() {
+		if currentFin.IsEmpty() || currentFin.CompanyId != account.CompanyId {
 			continue
 		}
 

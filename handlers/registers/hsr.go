@@ -1,6 +1,7 @@
 package registerHandlers
 
 import (
+	"algebra-isosofts-api/middlewares"
 	registerModels "algebra-isosofts-api/models/registers"
 	registerTypes "algebra-isosofts-api/types/registers"
 	tableComponentTypes "algebra-isosofts-api/types/tableComponents"
@@ -12,6 +13,7 @@ type HSRHandler struct {
 }
 
 func (*HSRHandler) GetAll(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	status := c.Query("status")
 
 	if status == "" {
@@ -21,7 +23,8 @@ func (*HSRHandler) GetAll(c *gin.Context) {
 	var hsrModel registerModels.HSRModel
 
 	hsrs, err := hsrModel.GetAll(map[string]interface{}{
-		"dbStatus": status,
+		"dbStatus":  status,
+		"companyId": account.CompanyId,
 	})
 
 	if err != nil {
@@ -62,9 +65,12 @@ func (*HSRHandler) Create(c *gin.Context) {
 
 	var hsrModel registerModels.HSRModel
 
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
+
 	hsrModel.Create(registerTypes.HSR{
-		Id: hsrModel.GenerateUniqueId(),
-		No: hsrModel.GenerateUniqueNo(),
+		Id:        hsrModel.GenerateUniqueId(),
+		CompanyId: account.CompanyId,
+		No:        hsrModel.GenerateUniqueNo(),
 		Process: tableComponentTypes.DropDownListItem{
 			Id: body.Process,
 		},
@@ -90,13 +96,14 @@ func (*HSRHandler) Create(c *gin.Context) {
 }
 
 func (*HSRHandler) Update(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	Id := c.Param("id")
 
 	var hsrModel registerModels.HSRModel
 
 	currentHsr, _ := hsrModel.GetById(Id)
 
-	if currentHsr.IsEmpty() {
+	if currentHsr.IsEmpty() || currentHsr.CompanyId != account.CompanyId {
 		c.IndentedJSON(404, gin.H{})
 		return
 	}
@@ -144,6 +151,7 @@ func (*HSRHandler) Update(c *gin.Context) {
 }
 
 func (*HSRHandler) Archive(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -162,8 +170,9 @@ func (*HSRHandler) Archive(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentHsr, _ := hsrModel.GetById(Id)
-		if currentHsr.IsEmpty() {
-			continue
+		if currentHsr.IsEmpty() || currentHsr.CompanyId != account.CompanyId {
+			c.IndentedJSON(404, gin.H{})
+			return
 		}
 
 		if currentHsr.DbStatus != "active" {
@@ -180,6 +189,7 @@ func (*HSRHandler) Archive(c *gin.Context) {
 }
 
 func (*HSRHandler) Unarchive(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -198,8 +208,9 @@ func (*HSRHandler) Unarchive(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentHsr, _ := hsrModel.GetById(Id)
-		if currentHsr.IsEmpty() {
-			continue
+		if currentHsr.IsEmpty() || currentHsr.CompanyId != account.CompanyId {
+			c.IndentedJSON(404, gin.H{})
+			return
 		}
 
 		if currentHsr.DbStatus != "archived" {
@@ -216,6 +227,7 @@ func (*HSRHandler) Unarchive(c *gin.Context) {
 }
 
 func (*HSRHandler) Delete(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -234,8 +246,9 @@ func (*HSRHandler) Delete(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentHsr, _ := hsrModel.GetById(Id)
-		if currentHsr.IsEmpty() {
-			continue
+		if currentHsr.IsEmpty() || currentHsr.CompanyId != account.CompanyId {
+			c.IndentedJSON(404, gin.H{})
+			return
 		}
 
 		if currentHsr.DbStatus == "deleted" {
@@ -252,6 +265,7 @@ func (*HSRHandler) Delete(c *gin.Context) {
 }
 
 func (*HSRHandler) Undelete(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -270,8 +284,9 @@ func (*HSRHandler) Undelete(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentHsr, _ := hsrModel.GetById(Id)
-		if currentHsr.IsEmpty() {
-			continue
+		if currentHsr.IsEmpty() || currentHsr.CompanyId != account.CompanyId {
+			c.IndentedJSON(404, gin.H{})
+			return
 		}
 
 		if currentHsr.DbStatus != "deleted" {

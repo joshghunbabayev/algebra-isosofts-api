@@ -75,6 +75,7 @@ func (*FBModel) GetById(Id string) (registerTypes.FB, error) {
 
 	err := row.Scan(
 		&fb.Id,
+		&fb.CompanyId,
 		&fb.No,
 		&fb.JobNumber,
 		&fb.JobStartDate,
@@ -136,6 +137,7 @@ func (*FBModel) GetAll(filters map[string]interface{}) ([]registerTypes.FB, erro
 
 		rows.Scan(
 			&fb.Id,
+			&fb.CompanyId,
 			&fb.No,
 			&fb.JobNumber,
 			&fb.JobStartDate,
@@ -170,6 +172,7 @@ func (*FBModel) Create(fb registerTypes.FB) error {
 	_, err := db.Exec(`
 			INSERT INTO fbregisters ( 
 				"id",
+				"companyId",
 				"no",
 				"jobNumber",
 				"jobStartDate",
@@ -185,9 +188,10 @@ func (*FBModel) Create(fb registerTypes.FB) error {
 				"environment",
 				"dbStatus",
 				"dbLastStatus"
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
 		fb.Id,
+		fb.CompanyId,
 		fb.No,
 		fb.JobNumber,
 		fb.JobStartDate,

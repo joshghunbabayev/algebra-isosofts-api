@@ -75,6 +75,7 @@ func (*HSRModel) GetById(Id string) (registerTypes.HSR, error) {
 
 	err := row.Scan(
 		&hsr.Id,
+		&hsr.CompanyId,
 		&hsr.No,
 		&hsr.Process.Id,
 		&hsr.Hazard.Id,
@@ -135,6 +136,7 @@ func (*HSRModel) GetAll(filters map[string]interface{}) ([]registerTypes.HSR, er
 
 		rows.Scan(
 			&hsr.Id,
+			&hsr.CompanyId,
 			&hsr.No,
 			&hsr.Process.Id,
 			&hsr.Hazard.Id,
@@ -167,7 +169,8 @@ func (*HSRModel) Create(hsr registerTypes.HSR) error {
 	db := database.GetDatabase()
 	_, err := db.Exec(`
 			INSERT INTO hsrregisters ( 
-				"id",
+				"id",				
+				"companyId",
 				"no",
 				"process", 
 				"hazard", 
@@ -180,9 +183,10 @@ func (*HSRModel) Create(hsr registerTypes.HSR) error {
 				"residualRiskLikelyhood",
 				"dbStatus",
 				"dbLastStatus"
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
 		hsr.Id,
+		hsr.CompanyId,
 		hsr.No,
 		hsr.Process.Id,
 		hsr.Hazard.Id,

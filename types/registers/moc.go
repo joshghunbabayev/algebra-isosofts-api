@@ -7,6 +7,7 @@ import (
 
 type MOC struct {
 	Id                     string                               `json:"id"`
+	CompanyId              string                               `json:"companyId"`
 	No                     string                               `json:"no"`
 	Issuer                 string                               `json:"issuer"`
 	ReasonOfChange         string                               `json:"reasonOfChange"`

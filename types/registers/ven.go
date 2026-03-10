@@ -7,6 +7,7 @@ import (
 
 type VEN struct {
 	Id               string                               `json:"id"`
+	CompanyId        string                               `json:"companyId"`
 	No               string                               `json:"no"`
 	Name             string                               `json:"name"`
 	RegNumber        string                               `json:"regNumber"`

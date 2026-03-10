@@ -75,6 +75,7 @@ func (*EIModel) GetById(Id string) (registerTypes.EI, error) {
 
 	err := row.Scan(
 		&ei.Id,
+		&ei.CompanyId,
 		&ei.No,
 		&ei.Name,
 		&ei.SerialNumber,
@@ -130,6 +131,7 @@ func (*EIModel) GetAll(filters map[string]interface{}) ([]registerTypes.EI, erro
 
 		rows.Scan(
 			&ei.Id,
+			&ei.CompanyId,
 			&ei.No,
 			&ei.Name,
 			&ei.SerialNumber,
@@ -158,6 +160,7 @@ func (*EIModel) Create(ei registerTypes.EI) error {
 	_, err := db.Exec(`
 			INSERT INTO eiregisters ( 
 				"id",
+				"companyId",
 				"no",
 				"name",
 				"serialNumber",
@@ -168,9 +171,10 @@ func (*EIModel) Create(ei registerTypes.EI) error {
 				"safeToUse",
 				"dbStatus",
 				"dbLastStatus"
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
 		ei.Id,
+		ei.CompanyId,
 		ei.No,
 		ei.Name,
 		ei.SerialNumber,

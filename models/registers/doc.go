@@ -102,6 +102,7 @@ func (*DOCModel) GetById(Id string) (registerTypes.DOC, error) {
 
 	err := row.Scan(
 		&doc.Id,
+		&doc.CompanyId,
 		&doc.No,
 		&doc.Name,
 		&doc.Origin.Id,
@@ -164,6 +165,7 @@ func (*DOCModel) GetAll(filters map[string]interface{}) ([]registerTypes.DOC, er
 
 		rows.Scan(
 			&doc.Id,
+			&doc.CompanyId,
 			&doc.No,
 			&doc.Name,
 			&doc.Origin.Id,
@@ -199,6 +201,7 @@ func (*DOCModel) Create(doc registerTypes.DOC) error {
 	_, err := db.Exec(`
 			INSERT INTO docregisters ( 
 				"id",
+				"companyId",
 				"no",
 				"name", 
 				"origin", 
@@ -214,9 +217,10 @@ func (*DOCModel) Create(doc registerTypes.DOC) error {
 				"actual",
 				"dbStatus",
 				"dbLastStatus"
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
 		doc.Id,
+		doc.CompanyId,
 		doc.No,
 		doc.Name,
 		doc.Origin.Id,

@@ -77,6 +77,7 @@ func (*CUSModel) GetById(Id string) (registerTypes.CUS, error) {
 
 	err := row.Scan(
 		&cus.Id,
+		&cus.CompanyId,
 		&cus.No,
 		&cus.Name,
 		&cus.RegNumber,
@@ -138,6 +139,7 @@ func (*CUSModel) GetAll(filters map[string]interface{}) ([]registerTypes.CUS, er
 
 		rows.Scan(
 			&cus.Id,
+			&cus.CompanyId,
 			&cus.No,
 			&cus.Name,
 			&cus.RegNumber,
@@ -171,6 +173,7 @@ func (*CUSModel) Create(cus registerTypes.CUS) error {
 	_, err := db.Exec(`
 			INSERT INTO cusregisters ( 
 				"id",
+				"companyId",
 				"no",
 				"name", 
 				"regNumber", 
@@ -182,9 +185,10 @@ func (*CUSModel) Create(cus registerTypes.CUS) error {
 				"actual",  
 				"dbStatus",
 				"dbLastStatus"
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
 		cus.Id,
+		cus.CompanyId,
 		cus.No,
 		cus.Name,
 		cus.RegNumber,

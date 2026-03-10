@@ -77,6 +77,7 @@ func (*VENModel) GetById(Id string) (registerTypes.VEN, error) {
 
 	err := row.Scan(
 		&ven.Id,
+		&ven.CompanyId,
 		&ven.No,
 		&ven.Name,
 		&ven.RegNumber,
@@ -138,6 +139,7 @@ func (*VENModel) GetAll(filters map[string]interface{}) ([]registerTypes.VEN, er
 
 		err := rows.Scan(
 			&ven.Id,
+			&ven.CompanyId,
 			&ven.No,
 			&ven.Name,
 			&ven.RegNumber,
@@ -172,6 +174,7 @@ func (*VENModel) Create(ven registerTypes.VEN) error {
 	_, err := db.Exec(`
 			INSERT INTO venregisters ( 
 				"id",
+				"companyId",
 				"no",
 				"name", 
 				"regNumber", 
@@ -183,9 +186,10 @@ func (*VENModel) Create(ven registerTypes.VEN) error {
 				"approved", 
 				"dbStatus",
 				"dbLastStatus"
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
 		ven.Id,
+		ven.CompanyId,
 		ven.No,
 		ven.Name,
 		ven.RegNumber,

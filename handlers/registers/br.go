@@ -1,6 +1,7 @@
 package registerHandlers
 
 import (
+	"algebra-isosofts-api/middlewares"
 	registerModels "algebra-isosofts-api/models/registers"
 	registerTypes "algebra-isosofts-api/types/registers"
 	tableComponentTypes "algebra-isosofts-api/types/tableComponents"
@@ -12,6 +13,7 @@ type BRHandler struct {
 }
 
 func (*BRHandler) GetAll(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	status := c.Query("status")
 
 	if status == "" {
@@ -21,7 +23,8 @@ func (*BRHandler) GetAll(c *gin.Context) {
 	var brModel registerModels.BRModel
 
 	brs, err := brModel.GetAll(map[string]interface{}{
-		"dbStatus": status,
+		"dbStatus":  status,
+		"companyId": account.CompanyId,
 	})
 
 	if err != nil {
@@ -65,9 +68,12 @@ func (*BRHandler) Create(c *gin.Context) {
 
 	var brModel registerModels.BRModel
 
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
+
 	brModel.Create(registerTypes.BR{
-		Id: brModel.GenerateUniqueId(),
-		No: brModel.GenerateUniqueNo(),
+		Id:        brModel.GenerateUniqueId(),
+		CompanyId: account.CompanyId,
+		No:        brModel.GenerateUniqueNo(),
 		Swot: tableComponentTypes.DropDownListItem{
 			Id: body.Swot,
 		},
@@ -96,13 +102,14 @@ func (*BRHandler) Create(c *gin.Context) {
 }
 
 func (*BRHandler) Update(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	Id := c.Param("id")
 
 	var brModel registerModels.BRModel
 
 	currentBr, _ := brModel.GetById(Id)
 
-	if currentBr.IsEmpty() {
+	if currentBr.IsEmpty() || currentBr.CompanyId != account.CompanyId {
 		c.IndentedJSON(404, gin.H{})
 		return
 	}
@@ -156,6 +163,7 @@ func (*BRHandler) Update(c *gin.Context) {
 }
 
 func (*BRHandler) Archive(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -174,7 +182,7 @@ func (*BRHandler) Archive(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentBr, _ := brModel.GetById(Id)
-		if currentBr.IsEmpty() {
+		if currentBr.IsEmpty() || currentBr.CompanyId != account.CompanyId {
 			continue
 		}
 
@@ -192,6 +200,7 @@ func (*BRHandler) Archive(c *gin.Context) {
 }
 
 func (*BRHandler) Unarchive(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -210,7 +219,7 @@ func (*BRHandler) Unarchive(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentBr, _ := brModel.GetById(Id)
-		if currentBr.IsEmpty() {
+		if currentBr.IsEmpty() || currentBr.CompanyId != account.CompanyId {
 			continue
 		}
 
@@ -228,6 +237,7 @@ func (*BRHandler) Unarchive(c *gin.Context) {
 }
 
 func (*BRHandler) Delete(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -246,7 +256,7 @@ func (*BRHandler) Delete(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentBr, _ := brModel.GetById(Id)
-		if currentBr.IsEmpty() {
+		if currentBr.IsEmpty() || currentBr.CompanyId != account.CompanyId {
 			continue
 		}
 
@@ -264,6 +274,7 @@ func (*BRHandler) Delete(c *gin.Context) {
 }
 
 func (*BRHandler) Undelete(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -282,7 +293,7 @@ func (*BRHandler) Undelete(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentBr, _ := brModel.GetById(Id)
-		if currentBr.IsEmpty() {
+		if currentBr.IsEmpty() || currentBr.CompanyId != account.CompanyId {
 			continue
 		}
 

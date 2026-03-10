@@ -1,6 +1,7 @@
 package registerHandlers
 
 import (
+	"algebra-isosofts-api/middlewares"
 	registerModels "algebra-isosofts-api/models/registers"
 	registerTypes "algebra-isosofts-api/types/registers"
 	tableComponentTypes "algebra-isosofts-api/types/tableComponents"
@@ -12,6 +13,7 @@ type MRMHandler struct {
 }
 
 func (*MRMHandler) GetAll(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	status := c.Query("status")
 
 	if status == "" {
@@ -21,7 +23,8 @@ func (*MRMHandler) GetAll(c *gin.Context) {
 	var mrmModel registerModels.MRMModel
 
 	mrms, err := mrmModel.GetAll(map[string]interface{}{
-		"dbStatus": status,
+		"dbStatus":  status,
+		"companyId": account.CompanyId,
 	})
 
 	if err != nil {
@@ -56,9 +59,12 @@ func (*MRMHandler) Create(c *gin.Context) {
 
 	var mrmModel registerModels.MRMModel
 
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
+
 	mrmModel.Create(registerTypes.MRM{
-		Id: mrmModel.GenerateUniqueId(),
-		No: mrmModel.GenerateUniqueNo(),
+		Id:        mrmModel.GenerateUniqueId(),
+		CompanyId: account.CompanyId,
+		No:        mrmModel.GenerateUniqueNo(),
 		RISOS: tableComponentTypes.DropDownListItem{
 			Id: body.RISOS,
 		},
@@ -76,13 +82,14 @@ func (*MRMHandler) Create(c *gin.Context) {
 }
 
 func (*MRMHandler) Update(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	Id := c.Param("id")
 
 	var mrmModel registerModels.MRMModel
 
 	currentMrm, _ := mrmModel.GetById(Id)
 
-	if currentMrm.IsEmpty() {
+	if currentMrm.IsEmpty() || currentMrm.CompanyId != account.CompanyId {
 		c.IndentedJSON(404, gin.H{})
 		return
 	}
@@ -118,6 +125,7 @@ func (*MRMHandler) Update(c *gin.Context) {
 }
 
 func (*MRMHandler) Archive(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -136,7 +144,7 @@ func (*MRMHandler) Archive(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentMrm, _ := mrmModel.GetById(Id)
-		if currentMrm.IsEmpty() {
+		if currentMrm.IsEmpty() || currentMrm.CompanyId != account.CompanyId {
 			continue
 		}
 
@@ -154,6 +162,7 @@ func (*MRMHandler) Archive(c *gin.Context) {
 }
 
 func (*MRMHandler) Unarchive(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -172,7 +181,7 @@ func (*MRMHandler) Unarchive(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentMrm, _ := mrmModel.GetById(Id)
-		if currentMrm.IsEmpty() {
+		if currentMrm.IsEmpty() || currentMrm.CompanyId != account.CompanyId {
 			continue
 		}
 
@@ -190,6 +199,7 @@ func (*MRMHandler) Unarchive(c *gin.Context) {
 }
 
 func (*MRMHandler) Delete(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -208,7 +218,7 @@ func (*MRMHandler) Delete(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentMrm, _ := mrmModel.GetById(Id)
-		if currentMrm.IsEmpty() {
+		if currentMrm.IsEmpty() || currentMrm.CompanyId != account.CompanyId {
 			continue
 		}
 
@@ -226,6 +236,7 @@ func (*MRMHandler) Delete(c *gin.Context) {
 }
 
 func (*MRMHandler) Undelete(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -244,7 +255,7 @@ func (*MRMHandler) Undelete(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentMrm, _ := mrmModel.GetById(Id)
-		if currentMrm.IsEmpty() {
+		if currentMrm.IsEmpty() || currentMrm.CompanyId != account.CompanyId {
 			continue
 		}
 

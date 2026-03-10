@@ -7,6 +7,7 @@ import (
 
 type MRM struct {
 	Id           string                               `json:"id"`
+	CompanyId    string                               `json:"companyId"`
 	No           string                               `json:"no"`
 	RISOS        tableComponentTypes.DropDownListItem `json:"risos"`
 	Topic        tableComponentTypes.DropDownListItem `json:"topic"`

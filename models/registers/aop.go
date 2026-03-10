@@ -75,6 +75,7 @@ func (*AOPModel) GetById(Id string) (registerTypes.AOP, error) {
 
 	err := row.Scan(
 		&aop.Id,
+		&aop.CompanyId,
 		&aop.No,
 		&aop.ActivityDescription.Id,
 		&aop.AuditorInspector,
@@ -137,6 +138,7 @@ func (*AOPModel) GetAll(filters map[string]interface{}) ([]registerTypes.AOP, er
 
 		rows.Scan(
 			&aop.Id,
+			&aop.CompanyId,
 			&aop.No,
 			&aop.ActivityDescription.Id,
 			&aop.AuditorInspector,
@@ -172,6 +174,7 @@ func (*AOPModel) Create(aop registerTypes.AOP) error {
 	_, err := db.Exec(`
 			INSERT INTO aopregisters ( 
 				"id",
+				"companyId",
 				"no",
 				"activityDescription", 
 				"auditorInspector", 
@@ -186,9 +189,10 @@ func (*AOPModel) Create(aop registerTypes.AOP) error {
 				"auditStatus", 
 				"dbStatus",
 				"dbLastStatus"
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
 		aop.Id,
+		aop.CompanyId,
 		aop.No,
 		aop.ActivityDescription.Id,
 		aop.AuditorInspector,

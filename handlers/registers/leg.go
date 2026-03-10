@@ -1,6 +1,7 @@
 package registerHandlers
 
 import (
+	"algebra-isosofts-api/middlewares"
 	registerModels "algebra-isosofts-api/models/registers"
 	registerTypes "algebra-isosofts-api/types/registers"
 	tableComponentTypes "algebra-isosofts-api/types/tableComponents"
@@ -12,6 +13,7 @@ type LEGHandler struct {
 }
 
 func (*LEGHandler) GetAll(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	status := c.Query("status")
 
 	if status == "" {
@@ -21,7 +23,8 @@ func (*LEGHandler) GetAll(c *gin.Context) {
 	var legModel registerModels.LEGModel
 
 	legs, err := legModel.GetAll(map[string]interface{}{
-		"dbStatus": status,
+		"dbStatus":  status,
+		"companyId": account.CompanyId,
 	})
 
 	if err != nil {
@@ -63,9 +66,12 @@ func (*LEGHandler) Create(c *gin.Context) {
 
 	var legModel registerModels.LEGModel
 
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
+
 	legModel.Create(registerTypes.LEG{
-		Id: legModel.GenerateUniqueId(),
-		No: legModel.GenerateUniqueNo(),
+		Id:        legModel.GenerateUniqueId(),
+		CompanyId: account.CompanyId,
+		No:        legModel.GenerateUniqueNo(),
 		Process: tableComponentTypes.DropDownListItem{
 			Id: body.Process,
 		},
@@ -88,13 +94,14 @@ func (*LEGHandler) Create(c *gin.Context) {
 }
 
 func (*LEGHandler) Update(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	Id := c.Param("id")
 
 	var legModel registerModels.LEGModel
 
 	currentLeg, _ := legModel.GetById(Id)
 
-	if currentLeg.IsEmpty() {
+	if currentLeg.IsEmpty() || currentLeg.CompanyId != account.CompanyId {
 		c.IndentedJSON(404, gin.H{})
 		return
 	}
@@ -144,6 +151,7 @@ func (*LEGHandler) Update(c *gin.Context) {
 }
 
 func (*LEGHandler) Archive(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -162,7 +170,7 @@ func (*LEGHandler) Archive(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentLeg, _ := legModel.GetById(Id)
-		if currentLeg.IsEmpty() {
+		if currentLeg.IsEmpty() || currentLeg.CompanyId != account.CompanyId {
 			continue
 		}
 
@@ -180,6 +188,7 @@ func (*LEGHandler) Archive(c *gin.Context) {
 }
 
 func (*LEGHandler) Unarchive(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -198,7 +207,7 @@ func (*LEGHandler) Unarchive(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentLeg, _ := legModel.GetById(Id)
-		if currentLeg.IsEmpty() {
+		if currentLeg.IsEmpty() || currentLeg.CompanyId != account.CompanyId {
 			continue
 		}
 
@@ -216,6 +225,7 @@ func (*LEGHandler) Unarchive(c *gin.Context) {
 }
 
 func (*LEGHandler) Delete(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -234,7 +244,7 @@ func (*LEGHandler) Delete(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentLeg, _ := legModel.GetById(Id)
-		if currentLeg.IsEmpty() {
+		if currentLeg.IsEmpty() || currentLeg.CompanyId != account.CompanyId {
 			continue
 		}
 
@@ -252,6 +262,7 @@ func (*LEGHandler) Delete(c *gin.Context) {
 }
 
 func (*LEGHandler) Undelete(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -270,7 +281,7 @@ func (*LEGHandler) Undelete(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentLeg, _ := legModel.GetById(Id)
-		if currentLeg.IsEmpty() {
+		if currentLeg.IsEmpty() || currentLeg.CompanyId != account.CompanyId {
 			continue
 		}
 

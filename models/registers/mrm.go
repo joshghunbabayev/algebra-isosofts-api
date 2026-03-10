@@ -75,6 +75,7 @@ func (*MRMModel) GetById(Id string) (registerTypes.MRM, error) {
 
 	err := row.Scan(
 		&mrm.Id,
+		&mrm.CompanyId,
 		&mrm.No,
 		&mrm.RISOS.Id,
 		&mrm.Topic.Id,
@@ -129,6 +130,7 @@ func (*MRMModel) GetAll(filters map[string]interface{}) ([]registerTypes.MRM, er
 
 		rows.Scan(
 			&mrm.Id,
+			&mrm.CompanyId,
 			&mrm.No,
 			&mrm.RISOS.Id,
 			&mrm.Topic.Id,
@@ -156,15 +158,17 @@ func (*MRMModel) Create(mrm registerTypes.MRM) error {
 	_, err := db.Exec(`
 			INSERT INTO mrmregisters ( 
 				"id",
+				"companyId",
 				"no",
 				"risos", 
 				"topic", 
 				"process", 
 				"dbStatus",
 				"dbLastStatus"
-			) VALUES (?, ?, ?, ?, ?, ?, ?)
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
 		`,
 		mrm.Id,
+		mrm.CompanyId,
 		mrm.No,
 		mrm.RISOS.Id,
 		mrm.Topic.Id,

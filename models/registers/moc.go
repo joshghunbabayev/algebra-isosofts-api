@@ -75,6 +75,7 @@ func (*MOCModel) GetById(Id string) (registerTypes.MOC, error) {
 
 	err := row.Scan(
 		&moc.Id,
+		&moc.CompanyId,
 		&moc.No,
 		&moc.Issuer,
 		&moc.ReasonOfChange,
@@ -132,6 +133,7 @@ func (*MOCModel) GetAll(filters map[string]interface{}) ([]registerTypes.MOC, er
 
 		rows.Scan(
 			&moc.Id,
+			&moc.CompanyId,
 			&moc.No,
 			&moc.Issuer,
 			&moc.ReasonOfChange,
@@ -162,6 +164,7 @@ func (*MOCModel) Create(moc registerTypes.MOC) error {
 	_, err := db.Exec(`
 			INSERT INTO mocregisters ( 
 				"id",
+				"companyId",
 				"no",
 				"issuer", 
 				"reasonOfChange", 
@@ -174,9 +177,10 @@ func (*MOCModel) Create(moc registerTypes.MOC) error {
 				"residualRiskLikelyhood",
 				"dbStatus",
 				"dbLastStatus"
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
 		moc.Id,
+		moc.CompanyId,
 		moc.No,
 		moc.Issuer,
 		moc.ReasonOfChange,

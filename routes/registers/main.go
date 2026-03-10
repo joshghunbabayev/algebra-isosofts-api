@@ -1,12 +1,14 @@
 package registerRoutes
 
 import (
+	"algebra-isosofts-api/middlewares"
 	registerComponentRoutes "algebra-isosofts-api/routes/registers/components"
 
 	"github.com/gin-gonic/gin"
 )
 
 func MainRoutes(rg *gin.RouterGroup) {
+	rg.Use(middlewares.AccessMiddleware())
 	BRRoutes(rg.Group("/br"))
 	HSRRoutes(rg.Group("/hsr"))
 	LEGRoutes(rg.Group("/leg"))

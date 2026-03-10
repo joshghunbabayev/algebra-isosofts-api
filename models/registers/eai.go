@@ -75,6 +75,7 @@ func (*EAIModel) GetById(Id string) (registerTypes.EAI, error) {
 
 	err := row.Scan(
 		&eai.Id,
+		&eai.CompanyId,
 		&eai.No,
 		&eai.Process.Id,
 		&eai.Aspect.Id,
@@ -138,6 +139,7 @@ func (*EAIModel) GetAll(filters map[string]interface{}) ([]registerTypes.EAI, er
 
 		rows.Scan(
 			&eai.Id,
+			&eai.CompanyId,
 			&eai.No,
 			&eai.Process.Id,
 			&eai.Aspect.Id,
@@ -174,6 +176,7 @@ func (*EAIModel) Create(eai registerTypes.EAI) error {
 	_, err := db.Exec(`
 			INSERT INTO eairegisters ( 
 				"id",
+				"companyId",
 				"no",
 				"process",
 				"aspect",
@@ -190,9 +193,10 @@ func (*EAIModel) Create(eai registerTypes.EAI) error {
 				"rdosScale",
 				"dbStatus",
 				"dbLastStatus"
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
 		eai.Id,
+		eai.CompanyId,
 		eai.No,
 		eai.Process.Id,
 		eai.Aspect.Id,

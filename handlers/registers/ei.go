@@ -1,6 +1,7 @@
 package registerHandlers
 
 import (
+	"algebra-isosofts-api/middlewares"
 	registerModels "algebra-isosofts-api/models/registers"
 	registerTypes "algebra-isosofts-api/types/registers"
 	tableComponentTypes "algebra-isosofts-api/types/tableComponents"
@@ -12,6 +13,7 @@ type EIHandler struct {
 }
 
 func (*EIHandler) GetAll(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	status := c.Query("status")
 
 	if status == "" {
@@ -21,7 +23,8 @@ func (*EIHandler) GetAll(c *gin.Context) {
 	var eiModel registerModels.EIModel
 
 	eis, err := eiModel.GetAll(map[string]interface{}{
-		"dbStatus": status,
+		"dbStatus":  status,
+		"companyId": account.CompanyId,
 	})
 
 	if err != nil {
@@ -60,8 +63,11 @@ func (*EIHandler) Create(c *gin.Context) {
 
 	var eiModel registerModels.EIModel
 
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
+
 	eiModel.Create(registerTypes.EI{
 		Id:            eiModel.GenerateUniqueId(),
+		CompanyId:     account.CompanyId,
 		No:            eiModel.GenerateUniqueNo(),
 		Name:          body.Name,
 		SerialNumber:  body.SerialNumber,
@@ -80,13 +86,14 @@ func (*EIHandler) Create(c *gin.Context) {
 }
 
 func (*EIHandler) Update(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	Id := c.Param("id")
 
 	var eiModel registerModels.EIModel
 
 	currentEi, _ := eiModel.GetById(Id)
 
-	if currentEi.IsEmpty() {
+	if currentEi.IsEmpty() || currentEi.CompanyId != account.CompanyId {
 		c.IndentedJSON(404, gin.H{})
 		return
 	}
@@ -130,6 +137,7 @@ func (*EIHandler) Update(c *gin.Context) {
 }
 
 func (*EIHandler) Archive(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -148,7 +156,7 @@ func (*EIHandler) Archive(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentEi, _ := eiModel.GetById(Id)
-		if currentEi.IsEmpty() {
+		if currentEi.IsEmpty() || currentEi.CompanyId != account.CompanyId {
 			continue
 		}
 
@@ -166,6 +174,7 @@ func (*EIHandler) Archive(c *gin.Context) {
 }
 
 func (*EIHandler) Unarchive(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -184,7 +193,7 @@ func (*EIHandler) Unarchive(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentEi, _ := eiModel.GetById(Id)
-		if currentEi.IsEmpty() {
+		if currentEi.IsEmpty() || currentEi.CompanyId != account.CompanyId {
 			continue
 		}
 
@@ -202,6 +211,7 @@ func (*EIHandler) Unarchive(c *gin.Context) {
 }
 
 func (*EIHandler) Delete(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -220,7 +230,7 @@ func (*EIHandler) Delete(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentEi, _ := eiModel.GetById(Id)
-		if currentEi.IsEmpty() {
+		if currentEi.IsEmpty() || currentEi.CompanyId != account.CompanyId {
 			continue
 		}
 
@@ -238,6 +248,7 @@ func (*EIHandler) Delete(c *gin.Context) {
 }
 
 func (*EIHandler) Undelete(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -256,7 +267,7 @@ func (*EIHandler) Undelete(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentEi, _ := eiModel.GetById(Id)
-		if currentEi.IsEmpty() {
+		if currentEi.IsEmpty() || currentEi.CompanyId != account.CompanyId {
 			continue
 		}
 

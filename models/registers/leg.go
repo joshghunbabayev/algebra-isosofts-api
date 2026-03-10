@@ -75,6 +75,7 @@ func (*LEGModel) GetById(Id string) (registerTypes.LEG, error) {
 
 	err := row.Scan(
 		&leg.Id,
+		&leg.CompanyId,
 		&leg.No,
 		&leg.Process.Id,
 		&leg.Legislation,
@@ -134,6 +135,7 @@ func (*LEGModel) GetAll(filters map[string]interface{}) ([]registerTypes.LEG, er
 
 		rows.Scan(
 			&leg.Id,
+			&leg.CompanyId,
 			&leg.No,
 			&leg.Process.Id,
 			&leg.Legislation,
@@ -166,6 +168,7 @@ func (*LEGModel) Create(leg registerTypes.LEG) error {
 	_, err := db.Exec(`
 			INSERT INTO legregisters ( 
 				"id",
+				"companyId",
 				"no",
 				"process",
 				"legislation", 
@@ -179,9 +182,10 @@ func (*LEGModel) Create(leg registerTypes.LEG) error {
 				"residualRiskLikelyhood",
 				"dbStatus",
 				"dbLastStatus"
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
 		leg.Id,
+		leg.CompanyId,
 		leg.No,
 		leg.Process.Id,
 		leg.Legislation,

@@ -1,6 +1,7 @@
 package registerHandlers
 
 import (
+	"algebra-isosofts-api/middlewares"
 	registerModels "algebra-isosofts-api/models/registers"
 	registerTypes "algebra-isosofts-api/types/registers"
 	tableComponentTypes "algebra-isosofts-api/types/tableComponents"
@@ -12,6 +13,7 @@ type VENHandler struct {
 }
 
 func (*VENHandler) GetAll(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	status := c.Query("status")
 
 	if status == "" {
@@ -21,7 +23,8 @@ func (*VENHandler) GetAll(c *gin.Context) {
 	var venModel registerModels.VENModel
 
 	vens, err := venModel.GetAll(map[string]interface{}{
-		"dbStatus": status,
+		"dbStatus":  status,
+		"companyId": account.CompanyId,
 	})
 
 	if err != nil {
@@ -33,6 +36,7 @@ func (*VENHandler) GetAll(c *gin.Context) {
 }
 
 func (*VENHandler) Create(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Name             string `json:"name"`
 		RegNumber        string `json:"regNumber"`
@@ -63,6 +67,7 @@ func (*VENHandler) Create(c *gin.Context) {
 
 	venModel.Create(registerTypes.VEN{
 		Id:        venModel.GenerateUniqueId(),
+		CompanyId: account.CompanyId,
 		No:        venModel.GenerateUniqueNo(),
 		Name:      body.Name,
 		RegNumber: body.RegNumber,
@@ -86,13 +91,14 @@ func (*VENHandler) Create(c *gin.Context) {
 }
 
 func (*VENHandler) Get(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	Id := c.Param("id")
 
 	var venModel registerModels.VENModel
 
 	ven, _ := venModel.GetById(Id)
 
-	if ven.IsEmpty() {
+	if ven.IsEmpty() || ven.CompanyId != account.CompanyId {
 		c.IndentedJSON(404, gin.H{})
 		return
 	}
@@ -101,13 +107,14 @@ func (*VENHandler) Get(c *gin.Context) {
 }
 
 func (*VENHandler) Update(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	Id := c.Param("id")
 
 	var venModel registerModels.VENModel
 
 	currentVen, _ := venModel.GetById(Id)
 
-	if currentVen.IsEmpty() {
+	if currentVen.IsEmpty() || currentVen.CompanyId != account.CompanyId {
 		c.IndentedJSON(404, gin.H{})
 		return
 	}
@@ -153,6 +160,7 @@ func (*VENHandler) Update(c *gin.Context) {
 }
 
 func (*VENHandler) Archive(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -171,7 +179,7 @@ func (*VENHandler) Archive(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentVen, _ := venModel.GetById(Id)
-		if currentVen.IsEmpty() {
+		if currentVen.IsEmpty() || currentVen.CompanyId != account.CompanyId {
 			continue
 		}
 
@@ -189,6 +197,7 @@ func (*VENHandler) Archive(c *gin.Context) {
 }
 
 func (*VENHandler) Unarchive(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -207,7 +216,7 @@ func (*VENHandler) Unarchive(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentVen, _ := venModel.GetById(Id)
-		if currentVen.IsEmpty() {
+		if currentVen.IsEmpty() || currentVen.CompanyId != account.CompanyId {
 			continue
 		}
 
@@ -225,6 +234,7 @@ func (*VENHandler) Unarchive(c *gin.Context) {
 }
 
 func (*VENHandler) Delete(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -243,7 +253,7 @@ func (*VENHandler) Delete(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentVen, _ := venModel.GetById(Id)
-		if currentVen.IsEmpty() {
+		if currentVen.IsEmpty() || currentVen.CompanyId != account.CompanyId {
 			continue
 		}
 
@@ -261,6 +271,7 @@ func (*VENHandler) Delete(c *gin.Context) {
 }
 
 func (*VENHandler) Undelete(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -279,7 +290,7 @@ func (*VENHandler) Undelete(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentVen, _ := venModel.GetById(Id)
-		if currentVen.IsEmpty() {
+		if currentVen.IsEmpty() || currentVen.CompanyId != account.CompanyId {
 			continue
 		}
 

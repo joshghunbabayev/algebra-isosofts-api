@@ -7,6 +7,7 @@ import (
 
 type FB struct {
 	Id                string                                  `json:"id"`
+	CompanyId         string                                  `json:"companyId"`
 	No                string                                  `json:"no"`
 	JobNumber         string                                  `json:"jobNumber"`
 	JobStartDate      string                                  `json:"jobStartDate"`

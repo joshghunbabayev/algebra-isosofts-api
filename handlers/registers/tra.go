@@ -1,6 +1,7 @@
 package registerHandlers
 
 import (
+	"algebra-isosofts-api/middlewares"
 	registerModels "algebra-isosofts-api/models/registers"
 	registerTypes "algebra-isosofts-api/types/registers"
 
@@ -11,6 +12,7 @@ type TRAHandler struct {
 }
 
 func (*TRAHandler) GetAll(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	status := c.Query("status")
 
 	if status == "" {
@@ -20,7 +22,8 @@ func (*TRAHandler) GetAll(c *gin.Context) {
 	var traModel registerModels.TRAModel
 
 	tras, err := traModel.GetAll(map[string]interface{}{
-		"dbStatus": status,
+		"dbStatus":  status,
+		"companyId": account.CompanyId,
 	})
 
 	if err != nil {
@@ -60,8 +63,11 @@ func (*TRAHandler) Create(c *gin.Context) {
 
 	var traModel registerModels.TRAModel
 
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
+
 	traModel.Create(registerTypes.TRA{
 		Id:               traModel.GenerateUniqueId(),
+		CompanyId:        account.CompanyId,
 		No:               traModel.GenerateUniqueNo(),
 		EmployeeName:     body.EmployeeName,
 		Position:         body.Position,
@@ -79,13 +85,14 @@ func (*TRAHandler) Create(c *gin.Context) {
 }
 
 func (*TRAHandler) Update(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	Id := c.Param("id")
 
 	var traModel registerModels.TRAModel
 
 	currentTra, _ := traModel.GetById(Id)
 
-	if currentTra.IsEmpty() {
+	if currentTra.IsEmpty() || currentTra.CompanyId != account.CompanyId {
 		c.IndentedJSON(404, gin.H{})
 		return
 	}
@@ -131,6 +138,7 @@ func (*TRAHandler) Update(c *gin.Context) {
 }
 
 func (*TRAHandler) Archive(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -149,7 +157,7 @@ func (*TRAHandler) Archive(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentTra, _ := traModel.GetById(Id)
-		if currentTra.IsEmpty() {
+		if currentTra.IsEmpty() || currentTra.CompanyId != account.CompanyId {
 			continue
 		}
 
@@ -167,6 +175,7 @@ func (*TRAHandler) Archive(c *gin.Context) {
 }
 
 func (*TRAHandler) Unarchive(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -185,7 +194,7 @@ func (*TRAHandler) Unarchive(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentTra, _ := traModel.GetById(Id)
-		if currentTra.IsEmpty() {
+		if currentTra.IsEmpty() || currentTra.CompanyId != account.CompanyId {
 			continue
 		}
 
@@ -203,6 +212,7 @@ func (*TRAHandler) Unarchive(c *gin.Context) {
 }
 
 func (*TRAHandler) Delete(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -221,7 +231,7 @@ func (*TRAHandler) Delete(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentTra, _ := traModel.GetById(Id)
-		if currentTra.IsEmpty() {
+		if currentTra.IsEmpty() || currentTra.CompanyId != account.CompanyId {
 			continue
 		}
 
@@ -239,6 +249,7 @@ func (*TRAHandler) Delete(c *gin.Context) {
 }
 
 func (*TRAHandler) Undelete(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -257,7 +268,7 @@ func (*TRAHandler) Undelete(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentTra, _ := traModel.GetById(Id)
-		if currentTra.IsEmpty() {
+		if currentTra.IsEmpty() || currentTra.CompanyId != account.CompanyId {
 			continue
 		}
 

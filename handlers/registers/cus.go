@@ -1,6 +1,7 @@
 package registerHandlers
 
 import (
+	"algebra-isosofts-api/middlewares"
 	registerModels "algebra-isosofts-api/models/registers"
 	registerTypes "algebra-isosofts-api/types/registers"
 	tableComponentTypes "algebra-isosofts-api/types/tableComponents"
@@ -12,6 +13,7 @@ type CUSHandler struct {
 }
 
 func (*CUSHandler) GetAll(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	status := c.Query("status")
 
 	if status == "" {
@@ -21,7 +23,8 @@ func (*CUSHandler) GetAll(c *gin.Context) {
 	var cusModel registerModels.CUSModel
 
 	cuss, err := cusModel.GetAll(map[string]interface{}{
-		"dbStatus": status,
+		"dbStatus":  status,
+		"companyId": account.CompanyId,
 	})
 
 	if err != nil {
@@ -33,6 +36,7 @@ func (*CUSHandler) GetAll(c *gin.Context) {
 }
 
 func (*CUSHandler) Create(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Name             string `json:"name"`
 		RegNumber        string `json:"regNumber"`
@@ -63,6 +67,7 @@ func (*CUSHandler) Create(c *gin.Context) {
 
 	cusModel.Create(registerTypes.CUS{
 		Id:        cusModel.GenerateUniqueId(),
+		CompanyId: account.CompanyId,
 		No:        cusModel.GenerateUniqueNo(),
 		Name:      body.Name,
 		RegNumber: body.RegNumber,
@@ -86,13 +91,14 @@ func (*CUSHandler) Create(c *gin.Context) {
 }
 
 func (*CUSHandler) Get(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	Id := c.Param("id")
 
 	var cusModel registerModels.CUSModel
 
 	cus, _ := cusModel.GetById(Id)
 
-	if cus.IsEmpty() {
+	if cus.IsEmpty() || cus.CompanyId != account.CompanyId {
 		c.IndentedJSON(404, gin.H{})
 		return
 	}
@@ -101,13 +107,14 @@ func (*CUSHandler) Get(c *gin.Context) {
 }
 
 func (*CUSHandler) Update(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	Id := c.Param("id")
 
 	var cusModel registerModels.CUSModel
 
 	currentCus, _ := cusModel.GetById(Id)
 
-	if currentCus.IsEmpty() {
+	if currentCus.IsEmpty() || currentCus.CompanyId != account.CompanyId {
 		c.IndentedJSON(404, gin.H{})
 		return
 	}
@@ -153,6 +160,7 @@ func (*CUSHandler) Update(c *gin.Context) {
 }
 
 func (*CUSHandler) Archive(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -171,7 +179,7 @@ func (*CUSHandler) Archive(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentCus, _ := cusModel.GetById(Id)
-		if currentCus.IsEmpty() {
+		if currentCus.IsEmpty() || currentCus.CompanyId != account.CompanyId {
 			continue
 		}
 
@@ -189,6 +197,7 @@ func (*CUSHandler) Archive(c *gin.Context) {
 }
 
 func (*CUSHandler) Unarchive(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -207,7 +216,7 @@ func (*CUSHandler) Unarchive(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentCus, _ := cusModel.GetById(Id)
-		if currentCus.IsEmpty() {
+		if currentCus.IsEmpty() || currentCus.CompanyId != account.CompanyId {
 			continue
 		}
 
@@ -225,6 +234,7 @@ func (*CUSHandler) Unarchive(c *gin.Context) {
 }
 
 func (*CUSHandler) Delete(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -243,7 +253,7 @@ func (*CUSHandler) Delete(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentCus, _ := cusModel.GetById(Id)
-		if currentCus.IsEmpty() {
+		if currentCus.IsEmpty() || currentCus.CompanyId != account.CompanyId {
 			continue
 		}
 
@@ -261,6 +271,7 @@ func (*CUSHandler) Delete(c *gin.Context) {
 }
 
 func (*CUSHandler) Undelete(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -279,7 +290,7 @@ func (*CUSHandler) Undelete(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentCus, _ := cusModel.GetById(Id)
-		if currentCus.IsEmpty() {
+		if currentCus.IsEmpty() || currentCus.CompanyId != account.CompanyId {
 			continue
 		}
 

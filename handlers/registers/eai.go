@@ -1,6 +1,7 @@
 package registerHandlers
 
 import (
+	"algebra-isosofts-api/middlewares"
 	registerModels "algebra-isosofts-api/models/registers"
 	registerTypes "algebra-isosofts-api/types/registers"
 	tableComponentTypes "algebra-isosofts-api/types/tableComponents"
@@ -12,6 +13,7 @@ type EAIHandler struct {
 }
 
 func (*EAIHandler) GetAll(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	status := c.Query("status")
 
 	if status == "" {
@@ -21,7 +23,8 @@ func (*EAIHandler) GetAll(c *gin.Context) {
 	var eaiModel registerModels.EAIModel
 
 	eais, err := eaiModel.GetAll(map[string]interface{}{
-		"dbStatus": status,
+		"dbStatus":  status,
+		"companyId": account.CompanyId,
 	})
 
 	if err != nil {
@@ -66,9 +69,12 @@ func (*EAIHandler) Create(c *gin.Context) {
 
 	var eaiModel registerModels.EAIModel
 
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
+
 	eaiModel.Create(registerTypes.EAI{
-		Id: eaiModel.GenerateUniqueId(),
-		No: eaiModel.GenerateUniqueNo(),
+		Id:        eaiModel.GenerateUniqueId(),
+		CompanyId: account.CompanyId,
+		No:        eaiModel.GenerateUniqueNo(),
 		Process: tableComponentTypes.DropDownListItem{
 			Id: body.Process,
 		},
@@ -96,13 +102,14 @@ func (*EAIHandler) Create(c *gin.Context) {
 }
 
 func (*EAIHandler) Update(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	Id := c.Param("id")
 
 	var eaiModel registerModels.EAIModel
 
 	currentEai, _ := eaiModel.GetById(Id)
 
-	if currentEai.IsEmpty() {
+	if currentEai.IsEmpty() || currentEai.CompanyId != account.CompanyId {
 		c.IndentedJSON(404, gin.H{})
 		return
 	}
@@ -158,6 +165,7 @@ func (*EAIHandler) Update(c *gin.Context) {
 }
 
 func (*EAIHandler) Archive(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -176,7 +184,7 @@ func (*EAIHandler) Archive(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentEai, _ := eaiModel.GetById(Id)
-		if currentEai.IsEmpty() {
+		if currentEai.IsEmpty() || currentEai.CompanyId != account.CompanyId {
 			continue
 		}
 
@@ -194,6 +202,7 @@ func (*EAIHandler) Archive(c *gin.Context) {
 }
 
 func (*EAIHandler) Unarchive(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -212,7 +221,7 @@ func (*EAIHandler) Unarchive(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentEai, _ := eaiModel.GetById(Id)
-		if currentEai.IsEmpty() {
+		if currentEai.IsEmpty() || currentEai.CompanyId != account.CompanyId {
 			continue
 		}
 
@@ -230,6 +239,7 @@ func (*EAIHandler) Unarchive(c *gin.Context) {
 }
 
 func (*EAIHandler) Delete(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -248,7 +258,7 @@ func (*EAIHandler) Delete(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentEai, _ := eaiModel.GetById(Id)
-		if currentEai.IsEmpty() {
+		if currentEai.IsEmpty() || currentEai.CompanyId != account.CompanyId {
 			continue
 		}
 
@@ -266,6 +276,7 @@ func (*EAIHandler) Delete(c *gin.Context) {
 }
 
 func (*EAIHandler) Undelete(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -284,7 +295,7 @@ func (*EAIHandler) Undelete(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentEai, _ := eaiModel.GetById(Id)
-		if currentEai.IsEmpty() {
+		if currentEai.IsEmpty() || currentEai.CompanyId != account.CompanyId {
 			continue
 		}
 

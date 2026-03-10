@@ -7,6 +7,7 @@ import (
 
 type AOP struct {
 	Id                  string                               `json:"id"`
+	CompanyId           string                               `json:"companyId"`
 	No                  string                               `json:"no"`
 	ActivityDescription tableComponentTypes.DropDownListItem `json:"activityDescription"`
 	AuditorInspector    string                               `json:"auditorInspector"`

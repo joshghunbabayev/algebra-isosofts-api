@@ -1,6 +1,7 @@
 package registerHandlers
 
 import (
+	"algebra-isosofts-api/middlewares"
 	registerModels "algebra-isosofts-api/models/registers"
 	registerTypes "algebra-isosofts-api/types/registers"
 	tableComponentTypes "algebra-isosofts-api/types/tableComponents"
@@ -12,6 +13,7 @@ type FBHandler struct {
 }
 
 func (*FBHandler) GetAll(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	status := c.Query("status")
 
 	if status == "" {
@@ -21,7 +23,8 @@ func (*FBHandler) GetAll(c *gin.Context) {
 	var fbModel registerModels.FBModel
 
 	fbs, err := fbModel.GetAll(map[string]interface{}{
-		"dbStatus": status,
+		"dbStatus":  status,
+		"companyId": account.CompanyId,
 	})
 
 	if err != nil {
@@ -33,6 +36,7 @@ func (*FBHandler) GetAll(c *gin.Context) {
 }
 
 func (*FBHandler) Create(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		JobNumber         string `json:"jobNumber"`
 		JobStartDate      string `json:"jobStartDate"`
@@ -67,6 +71,7 @@ func (*FBHandler) Create(c *gin.Context) {
 
 	fbModel.Create(registerTypes.FB{
 		Id:                fbModel.GenerateUniqueId(),
+		CompanyId:         account.CompanyId,
 		No:                fbModel.GenerateUniqueNo(),
 		JobNumber:         body.JobNumber,
 		JobStartDate:      body.JobStartDate,
@@ -92,13 +97,14 @@ func (*FBHandler) Create(c *gin.Context) {
 }
 
 func (*FBHandler) Update(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	Id := c.Param("id")
 
 	var fbModel registerModels.FBModel
 
 	currentFb, _ := fbModel.GetById(Id)
 
-	if currentFb.IsEmpty() {
+	if currentFb.IsEmpty() || currentFb.CompanyId != account.CompanyId {
 		c.IndentedJSON(404, gin.H{})
 		return
 	}
@@ -152,6 +158,7 @@ func (*FBHandler) Update(c *gin.Context) {
 }
 
 func (*FBHandler) Archive(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -170,7 +177,7 @@ func (*FBHandler) Archive(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentFb, _ := fbModel.GetById(Id)
-		if currentFb.IsEmpty() {
+		if currentFb.IsEmpty() || currentFb.CompanyId != account.CompanyId {
 			continue
 		}
 
@@ -188,6 +195,7 @@ func (*FBHandler) Archive(c *gin.Context) {
 }
 
 func (*FBHandler) Unarchive(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -206,7 +214,7 @@ func (*FBHandler) Unarchive(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentFb, _ := fbModel.GetById(Id)
-		if currentFb.IsEmpty() {
+		if currentFb.IsEmpty() || currentFb.CompanyId != account.CompanyId {
 			continue
 		}
 
@@ -224,6 +232,7 @@ func (*FBHandler) Unarchive(c *gin.Context) {
 }
 
 func (*FBHandler) Delete(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -242,7 +251,7 @@ func (*FBHandler) Delete(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentFb, _ := fbModel.GetById(Id)
-		if currentFb.IsEmpty() {
+		if currentFb.IsEmpty() || currentFb.CompanyId != account.CompanyId {
 			continue
 		}
 
@@ -260,6 +269,7 @@ func (*FBHandler) Delete(c *gin.Context) {
 }
 
 func (*FBHandler) Undelete(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -278,7 +288,7 @@ func (*FBHandler) Undelete(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentFb, _ := fbModel.GetById(Id)
-		if currentFb.IsEmpty() {
+		if currentFb.IsEmpty() || currentFb.CompanyId != account.CompanyId {
 			continue
 		}
 

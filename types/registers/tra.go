@@ -6,6 +6,7 @@ import (
 
 type TRA struct {
 	Id               string                          `json:"id"`
+	CompanyId        string                          `json:"companyId"`
 	No               string                          `json:"no"`
 	EmployeeName     string                          `json:"employeeName"`
 	Position         string                          `json:"position"`

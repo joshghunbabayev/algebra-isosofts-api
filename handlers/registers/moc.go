@@ -1,6 +1,7 @@
 package registerHandlers
 
 import (
+	"algebra-isosofts-api/middlewares"
 	registerModels "algebra-isosofts-api/models/registers"
 	registerTypes "algebra-isosofts-api/types/registers"
 	tableComponentTypes "algebra-isosofts-api/types/tableComponents"
@@ -12,6 +13,7 @@ type MOCHandler struct {
 }
 
 func (*MOCHandler) GetAll(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	status := c.Query("status")
 
 	if status == "" {
@@ -21,7 +23,8 @@ func (*MOCHandler) GetAll(c *gin.Context) {
 	var mocModel registerModels.MOCModel
 
 	mocs, err := mocModel.GetAll(map[string]interface{}{
-		"dbStatus": status,
+		"dbStatus":  status,
+		"companyId": account.CompanyId,
 	})
 
 	if err != nil {
@@ -33,6 +36,7 @@ func (*MOCHandler) GetAll(c *gin.Context) {
 }
 
 func (*MOCHandler) Create(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Issuer                 string `json:"issuer"`
 		ReasonOfChange         string `json:"reasonOfChange"`
@@ -64,6 +68,7 @@ func (*MOCHandler) Create(c *gin.Context) {
 
 	mocModel.Create(registerTypes.MOC{
 		Id:             mocModel.GenerateUniqueId(),
+		CompanyId:      account.CompanyId,
 		No:             mocModel.GenerateUniqueNo(),
 		Issuer:         body.Issuer,
 		ReasonOfChange: body.ReasonOfChange,
@@ -84,13 +89,14 @@ func (*MOCHandler) Create(c *gin.Context) {
 }
 
 func (*MOCHandler) Update(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	Id := c.Param("id")
 
 	var mocModel registerModels.MOCModel
 
 	currentMoc, _ := mocModel.GetById(Id)
 
-	if currentMoc.IsEmpty() {
+	if currentMoc.IsEmpty() || currentMoc.CompanyId != account.CompanyId {
 		c.IndentedJSON(404, gin.H{})
 		return
 	}
@@ -138,6 +144,7 @@ func (*MOCHandler) Update(c *gin.Context) {
 }
 
 func (*MOCHandler) Archive(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -156,7 +163,7 @@ func (*MOCHandler) Archive(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentMoc, _ := mocModel.GetById(Id)
-		if currentMoc.IsEmpty() {
+		if currentMoc.IsEmpty() || currentMoc.CompanyId != account.CompanyId {
 			continue
 		}
 
@@ -174,6 +181,7 @@ func (*MOCHandler) Archive(c *gin.Context) {
 }
 
 func (*MOCHandler) Unarchive(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -192,7 +200,7 @@ func (*MOCHandler) Unarchive(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentMoc, _ := mocModel.GetById(Id)
-		if currentMoc.IsEmpty() {
+		if currentMoc.IsEmpty() || currentMoc.CompanyId != account.CompanyId {
 			continue
 		}
 
@@ -210,6 +218,7 @@ func (*MOCHandler) Unarchive(c *gin.Context) {
 }
 
 func (*MOCHandler) Delete(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -228,7 +237,7 @@ func (*MOCHandler) Delete(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentMoc, _ := mocModel.GetById(Id)
-		if currentMoc.IsEmpty() {
+		if currentMoc.IsEmpty() || currentMoc.CompanyId != account.CompanyId {
 			continue
 		}
 
@@ -246,6 +255,7 @@ func (*MOCHandler) Delete(c *gin.Context) {
 }
 
 func (*MOCHandler) Undelete(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -264,7 +274,7 @@ func (*MOCHandler) Undelete(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentMoc, _ := mocModel.GetById(Id)
-		if currentMoc.IsEmpty() {
+		if currentMoc.IsEmpty() || currentMoc.CompanyId != account.CompanyId {
 			continue
 		}
 

@@ -75,6 +75,7 @@ func (*FINModel) GetById(Id string) (registerTypes.FIN, error) {
 
 	err := row.Scan(
 		&fin.Id,
+		&fin.CompanyId,
 		&fin.No,
 		&fin.Issuer,
 		&fin.Process.Id,
@@ -136,6 +137,7 @@ func (*FINModel) GetAll(filters map[string]interface{}) ([]registerTypes.FIN, er
 
 		rows.Scan(
 			&fin.Id,
+			&fin.CompanyId,
 			&fin.No,
 			&fin.Issuer,
 			&fin.Process.Id,
@@ -170,6 +172,7 @@ func (*FINModel) Create(fin registerTypes.FIN) error {
 	_, err := db.Exec(`
 			INSERT INTO finregisters ( 
 				"id",
+				"companyId",
 				"no",
 				"issuer", 
 				"process", 
@@ -183,9 +186,10 @@ func (*FINModel) Create(fin registerTypes.FIN) error {
 				"rootCauses", 
 				"dbStatus",
 				"dbLastStatus"
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
 		fin.Id,
+		fin.CompanyId,
 		fin.No,
 		fin.Issuer,
 		fin.Process.Id,

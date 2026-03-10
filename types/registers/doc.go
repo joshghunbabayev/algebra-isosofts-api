@@ -7,6 +7,7 @@ import (
 
 type DOC struct {
 	Id                string                               `json:"id"`
+	CompanyId         string                               `json:"companyId"`
 	No                string                               `json:"no"`
 	Name              string                               `json:"name"`
 	Origin            tableComponentTypes.DropDownListItem `json:"origin"`

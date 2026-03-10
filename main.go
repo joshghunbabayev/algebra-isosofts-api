@@ -1,6 +1,7 @@
 package main
 
 import (
+	"algebra-isosofts-api/middlewares"
 	tableComponentModels "algebra-isosofts-api/models/tableComponents"
 	"algebra-isosofts-api/routes"
 	"os"
@@ -19,6 +20,7 @@ func main() {
 	r := gin.Default()
 	r.Use(cors.Default())
 	r.RedirectTrailingSlash = false
+	r.Use(middlewares.AuthMiddleware())
 	routes.APIRoutes(r.Group("/api"))
 
 	r.GET("/reddli", func(c *gin.Context) {

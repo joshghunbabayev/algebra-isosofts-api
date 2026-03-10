@@ -1,6 +1,7 @@
 package registerHandlers
 
 import (
+	"algebra-isosofts-api/middlewares"
 	registerModels "algebra-isosofts-api/models/registers"
 	registerTypes "algebra-isosofts-api/types/registers"
 	tableComponentTypes "algebra-isosofts-api/types/tableComponents"
@@ -12,6 +13,7 @@ type AOPHandler struct {
 }
 
 func (*AOPHandler) GetAll(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	status := c.Query("status")
 
 	if status == "" {
@@ -21,7 +23,8 @@ func (*AOPHandler) GetAll(c *gin.Context) {
 	var aopModel registerModels.AOPModel
 
 	aops, err := aopModel.GetAll(map[string]interface{}{
-		"dbStatus": status,
+		"dbStatus":  status,
+		"companyId": account.CompanyId,
 	})
 
 	if err != nil {
@@ -33,6 +36,7 @@ func (*AOPHandler) GetAll(c *gin.Context) {
 }
 
 func (*AOPHandler) Create(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		ActivityDescription string `json:"activityDescription"`
 		AuditorInspector    string `json:"auditorInspector"`
@@ -65,8 +69,9 @@ func (*AOPHandler) Create(c *gin.Context) {
 	var aopModel registerModels.AOPModel
 
 	aopModel.Create(registerTypes.AOP{
-		Id: aopModel.GenerateUniqueId(),
-		No: aopModel.GenerateUniqueNo(),
+		Id:        aopModel.GenerateUniqueId(),
+		CompanyId: account.CompanyId,
+		No:        aopModel.GenerateUniqueNo(),
 		ActivityDescription: tableComponentTypes.DropDownListItem{
 			Id: body.ActivityDescription,
 		},
@@ -94,13 +99,14 @@ func (*AOPHandler) Create(c *gin.Context) {
 }
 
 func (*AOPHandler) Update(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	Id := c.Param("id")
 
 	var aopModel registerModels.AOPModel
 
 	currentAop, _ := aopModel.GetById(Id)
 
-	if currentAop.IsEmpty() {
+	if currentAop.IsEmpty() || currentAop.CompanyId != account.CompanyId {
 		c.IndentedJSON(404, gin.H{})
 		return
 	}
@@ -152,6 +158,7 @@ func (*AOPHandler) Update(c *gin.Context) {
 }
 
 func (*AOPHandler) Archive(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -170,7 +177,7 @@ func (*AOPHandler) Archive(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentAop, _ := aopModel.GetById(Id)
-		if currentAop.IsEmpty() {
+		if currentAop.IsEmpty() || currentAop.CompanyId != account.CompanyId {
 			continue
 		}
 
@@ -188,6 +195,7 @@ func (*AOPHandler) Archive(c *gin.Context) {
 }
 
 func (*AOPHandler) Unarchive(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -206,7 +214,7 @@ func (*AOPHandler) Unarchive(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentAop, _ := aopModel.GetById(Id)
-		if currentAop.IsEmpty() {
+		if currentAop.IsEmpty() || currentAop.CompanyId != account.CompanyId {
 			continue
 		}
 
@@ -224,6 +232,7 @@ func (*AOPHandler) Unarchive(c *gin.Context) {
 }
 
 func (*AOPHandler) Delete(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -242,7 +251,7 @@ func (*AOPHandler) Delete(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentAop, _ := aopModel.GetById(Id)
-		if currentAop.IsEmpty() {
+		if currentAop.IsEmpty() || currentAop.CompanyId != account.CompanyId {
 			continue
 		}
 
@@ -260,6 +269,7 @@ func (*AOPHandler) Delete(c *gin.Context) {
 }
 
 func (*AOPHandler) Undelete(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -278,7 +288,7 @@ func (*AOPHandler) Undelete(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentAop, _ := aopModel.GetById(Id)
-		if currentAop.IsEmpty() {
+		if currentAop.IsEmpty() || currentAop.CompanyId != account.CompanyId {
 			continue
 		}
 

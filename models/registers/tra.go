@@ -73,6 +73,7 @@ func (*TRAModel) GetById(Id string) (registerTypes.TRA, error) {
 
 	err := row.Scan(
 		&tra.Id,
+		&tra.CompanyId,
 		&tra.No,
 		&tra.EmployeeName,
 		&tra.Position,
@@ -127,6 +128,7 @@ func (*TRAModel) GetAll(filters map[string]interface{}) ([]registerTypes.TRA, er
 
 		rows.Scan(
 			&tra.Id,
+			&tra.CompanyId,
 			&tra.No,
 			&tra.EmployeeName,
 			&tra.Position,
@@ -155,6 +157,7 @@ func (*TRAModel) Create(tra registerTypes.TRA) error {
 	_, err := db.Exec(`
 			INSERT INTO traregisters ( 
 				"id",
+				"companyId",
 				"no",
 				"employeeName",
 				"position",
@@ -166,9 +169,10 @@ func (*TRAModel) Create(tra registerTypes.TRA) error {
 				"effectiveness",
 				"dbStatus",
 				"dbLastStatus"
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
 		tra.Id,
+		tra.CompanyId,
 		tra.No,
 		tra.EmployeeName,
 		tra.Position,

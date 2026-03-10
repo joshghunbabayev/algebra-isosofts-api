@@ -75,6 +75,7 @@ func (*BRModel) GetById(Id string) (registerTypes.BR, error) {
 
 	err := row.Scan(
 		&br.Id,
+		&br.CompanyId,
 		&br.No,
 		&br.Swot.Id,
 		&br.Pestle.Id,
@@ -138,6 +139,7 @@ func (*BRModel) GetAll(filters map[string]interface{}) ([]registerTypes.BR, erro
 
 		rows.Scan(
 			&br.Id,
+			&br.CompanyId,
 			&br.No,
 			&br.Swot.Id,
 			&br.Pestle.Id,
@@ -174,6 +176,7 @@ func (*BRModel) Create(br registerTypes.BR) error {
 	_, err := db.Exec(`
 			INSERT INTO brregisters ( 
 				"id",
+				"companyId",
 				"no",
 				"swot", 
 				"pestle", 
@@ -189,9 +192,10 @@ func (*BRModel) Create(br registerTypes.BR) error {
 				"residualRiskLikelyhood",
 				"dbStatus",
 				"dbLastStatus"
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
 		br.Id,
+		br.CompanyId,
 		br.No,
 		br.Swot.Id,
 		br.Pestle.Id,

@@ -7,6 +7,7 @@ import (
 
 type LEG struct {
 	Id                     string                               `json:"id"`
+	CompanyId              string                               `json:"companyId"`
 	No                     string                               `json:"no"`
 	Process                tableComponentTypes.DropDownListItem `json:"process"`
 	Legislation            string                               `json:"legislation"`

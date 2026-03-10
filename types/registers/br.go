@@ -7,6 +7,7 @@ import (
 
 type BR struct {
 	Id                     string                               `json:"id"`
+	CompanyId              string                               `json:"companyId"`
 	No                     string                               `json:"no"`
 	Swot                   tableComponentTypes.DropDownListItem `json:"swot"`
 	Pestle                 tableComponentTypes.DropDownListItem `json:"pestle"`

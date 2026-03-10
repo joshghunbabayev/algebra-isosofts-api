@@ -1,6 +1,7 @@
 package registerHandlers
 
 import (
+	"algebra-isosofts-api/middlewares"
 	registerModels "algebra-isosofts-api/models/registers"
 	tableComponentModels "algebra-isosofts-api/models/tableComponents"
 	registerTypes "algebra-isosofts-api/types/registers"
@@ -13,6 +14,7 @@ type DOCHandler struct {
 }
 
 func (*DOCHandler) GetAll(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	status := c.Query("status")
 
 	if status == "" {
@@ -22,7 +24,8 @@ func (*DOCHandler) GetAll(c *gin.Context) {
 	var docModel registerModels.DOCModel
 
 	docs, err := docModel.GetAll(map[string]interface{}{
-		"dbStatus": status,
+		"dbStatus":  status,
+		"companyId": account.CompanyId,
 	})
 
 	if err != nil {
@@ -77,10 +80,13 @@ func (*DOCHandler) Create(c *gin.Context) {
 		number = body.Number
 	}
 
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
+
 	docModel.Create(registerTypes.DOC{
-		Id:   docModel.GenerateUniqueId(),
-		No:   docModel.GenerateUniqueNo(),
-		Name: body.Name,
+		Id:        docModel.GenerateUniqueId(),
+		CompanyId: account.CompanyId,
+		No:        docModel.GenerateUniqueNo(),
+		Name:      body.Name,
 		Origin: tableComponentTypes.DropDownListItem{
 			Id: body.Origin,
 		},
@@ -106,13 +112,14 @@ func (*DOCHandler) Create(c *gin.Context) {
 }
 
 func (*DOCHandler) Update(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	Id := c.Param("id")
 
 	var docModel registerModels.DOCModel
 
 	currentDoc, _ := docModel.GetById(Id)
 
-	if currentDoc.IsEmpty() {
+	if currentDoc.IsEmpty() || currentDoc.CompanyId != account.CompanyId {
 		c.IndentedJSON(404, gin.H{})
 		return
 	}
@@ -178,6 +185,7 @@ func (*DOCHandler) Update(c *gin.Context) {
 }
 
 func (*DOCHandler) Archive(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -196,7 +204,7 @@ func (*DOCHandler) Archive(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentDoc, _ := docModel.GetById(Id)
-		if currentDoc.IsEmpty() {
+		if currentDoc.IsEmpty() || currentDoc.CompanyId != account.CompanyId {
 			continue
 		}
 
@@ -214,6 +222,7 @@ func (*DOCHandler) Archive(c *gin.Context) {
 }
 
 func (*DOCHandler) Unarchive(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -232,7 +241,7 @@ func (*DOCHandler) Unarchive(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentDoc, _ := docModel.GetById(Id)
-		if currentDoc.IsEmpty() {
+		if currentDoc.IsEmpty() || currentDoc.CompanyId != account.CompanyId {
 			continue
 		}
 
@@ -250,6 +259,7 @@ func (*DOCHandler) Unarchive(c *gin.Context) {
 }
 
 func (*DOCHandler) Delete(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -268,7 +278,7 @@ func (*DOCHandler) Delete(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentDoc, _ := docModel.GetById(Id)
-		if currentDoc.IsEmpty() {
+		if currentDoc.IsEmpty() || currentDoc.CompanyId != account.CompanyId {
 			continue
 		}
 
@@ -286,6 +296,7 @@ func (*DOCHandler) Delete(c *gin.Context) {
 }
 
 func (*DOCHandler) Undelete(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Ids []string `json:"ids"`
 	}
@@ -304,7 +315,7 @@ func (*DOCHandler) Undelete(c *gin.Context) {
 
 	for _, Id := range body.Ids {
 		currentDoc, _ := docModel.GetById(Id)
-		if currentDoc.IsEmpty() {
+		if currentDoc.IsEmpty() || currentDoc.CompanyId != account.CompanyId {
 			continue
 		}
 
