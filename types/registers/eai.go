@@ -13,7 +13,7 @@ type EAI struct {
 	Aspect            tableComponentTypes.DropDownListItem `json:"aspect"`
 	Impact            string                               `json:"impact"`
 	AffectedReceptors tableComponentTypes.DropDownListItem `json:"affectedReceptors"`
-	ExistingControls  string                               `json:"existingControls"`
+	ECM               string                               `json:"ecm"`
 	IDOSProbability   int8                                 `json:"idosProbability"`
 	IDOSSeverity      int8                                 `json:"idosSeverity"`
 	IDOSDuration      int8                                 `json:"idosDuration"`

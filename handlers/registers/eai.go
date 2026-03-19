@@ -41,7 +41,7 @@ func (*EAIHandler) Create(c *gin.Context) {
 		Aspect            string `json:"aspect"`
 		Impact            string `json:"impact"`
 		AffectedReceptors string `json:"affectedReceptors"`
-		ExistingControls  string `json:"existingControls"`
+		ECM               string `json:"ecm"`
 		IDOSProbability   int8   `json:"idosProbability"`
 		IDOSSeverity      int8   `json:"idosSeverity"`
 		IDOSDuration      int8   `json:"idosDuration"`
@@ -85,17 +85,17 @@ func (*EAIHandler) Create(c *gin.Context) {
 		AffectedReceptors: tableComponentTypes.DropDownListItem{
 			Id: body.AffectedReceptors,
 		},
-		ExistingControls: body.ExistingControls,
-		IDOSProbability:  body.IDOSProbability,
-		IDOSSeverity:     body.IDOSSeverity,
-		IDOSDuration:     body.IDOSDuration,
-		IDOSScale:        body.IDOSScale,
-		RDOSProbability:  body.RDOSProbability,
-		RDOSSeverity:     body.RDOSSeverity,
-		RDOSDuration:     body.RDOSDuration,
-		RDOSScale:        body.RDOSScale,
-		DbStatus:         "active",
-		DbLastStatus:     "active",
+		ECM:             body.ECM,
+		IDOSProbability: body.IDOSProbability,
+		IDOSSeverity:    body.IDOSSeverity,
+		IDOSDuration:    body.IDOSDuration,
+		IDOSScale:       body.IDOSScale,
+		RDOSProbability: body.RDOSProbability,
+		RDOSSeverity:    body.RDOSSeverity,
+		RDOSDuration:    body.RDOSDuration,
+		RDOSScale:       body.RDOSScale,
+		DbStatus:        "active",
+		DbLastStatus:    "active",
 	})
 
 	c.IndentedJSON(201, gin.H{})
@@ -119,7 +119,7 @@ func (*EAIHandler) Update(c *gin.Context) {
 		Aspect            string `json:"aspect"`
 		Impact            string `json:"impact"`
 		AffectedReceptors string `json:"affectedReceptors"`
-		ExistingControls  string `json:"existingControls"`
+		ECM               string `json:"ecm"`
 		IDOSProbability   int8   `json:"idosProbability"`
 		IDOSSeverity      int8   `json:"idosSeverity"`
 		IDOSDuration      int8   `json:"idosDuration"`
@@ -150,7 +150,7 @@ func (*EAIHandler) Update(c *gin.Context) {
 		"aspect":            body.Aspect,
 		"impact":            body.Impact,
 		"affectedReceptors": body.AffectedReceptors,
-		"existingControls":  body.ExistingControls,
+		"ecm":               body.ECM,
 		"idosProbability":   body.IDOSProbability,
 		"idosSeverity":      body.IDOSSeverity,
 		"idosDuration":      body.IDOSDuration,
