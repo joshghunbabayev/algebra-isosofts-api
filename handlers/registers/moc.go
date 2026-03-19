@@ -44,9 +44,9 @@ func (*MOCHandler) Create(c *gin.Context) {
 		Action                 string `json:"action"`
 		Risks                  string `json:"risks"`
 		InitialRiskSeverity    int8   `json:"initialRiskSeverity"`
-		InitialRiskLikelyhood  int8   `json:"initialRiskLikelyhood"`
+		InitialRiskLikelihood  int8   `json:"initialRiskLikelihood"`
 		ResidualRiskSeverity   int8   `json:"residualRiskSeverity"`
-		ResidualRiskLikelyhood int8   `json:"residualRiskLikelyhood"`
+		ResidualRiskLikelihood int8   `json:"residualRiskLikelihood"`
 	}
 
 	var errs = make(map[string]interface{})
@@ -78,9 +78,9 @@ func (*MOCHandler) Create(c *gin.Context) {
 		Action:                 body.Action,
 		Risks:                  body.Risks,
 		InitialRiskSeverity:    body.InitialRiskSeverity,
-		InitialRiskLikelyhood:  body.InitialRiskLikelyhood,
+		InitialRiskLikelihood:  body.InitialRiskLikelihood,
 		ResidualRiskSeverity:   body.ResidualRiskSeverity,
-		ResidualRiskLikelyhood: body.ResidualRiskLikelyhood,
+		ResidualRiskLikelihood: body.ResidualRiskLikelihood,
 		DbStatus:               "active",
 		DbLastStatus:           "active",
 	})
@@ -108,9 +108,9 @@ func (*MOCHandler) Update(c *gin.Context) {
 		Action                 string `json:"action"`
 		Risks                  string `json:"risks"`
 		InitialRiskSeverity    int8   `json:"initialRiskSeverity"`
-		InitialRiskLikelyhood  int8   `json:"initialRiskLikelyhood"`
+		InitialRiskLikelihood  int8   `json:"initialRiskLikelihood"`
 		ResidualRiskSeverity   int8   `json:"residualRiskSeverity"`
-		ResidualRiskLikelyhood int8   `json:"residualRiskLikelyhood"`
+		ResidualRiskLikelihood int8   `json:"residualRiskLikelihood"`
 	}
 
 	var errs = make(map[string]interface{})
@@ -135,9 +135,9 @@ func (*MOCHandler) Update(c *gin.Context) {
 		"action":                 body.Action,
 		"risks":                  body.Risks,
 		"initialRiskSeverity":    body.InitialRiskSeverity,
-		"initialRiskLikelyhood":  body.InitialRiskLikelyhood,
+		"initialRiskLikelihood":  body.InitialRiskLikelihood,
 		"residualRiskSeverity":   body.ResidualRiskSeverity,
-		"residualRiskLikelyhood": body.ResidualRiskLikelyhood,
+		"residualRiskLikelihood": body.ResidualRiskLikelihood,
 	})
 
 	c.JSON(200, gin.H{})

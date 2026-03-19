@@ -83,9 +83,9 @@ func (*HSRModel) GetById(Id string) (registerTypes.HSR, error) {
 		&hsr.AffectedPositions.Id,
 		&hsr.ERMA,
 		&hsr.InitialRiskSeverity,
-		&hsr.InitialRiskLikelyhood,
+		&hsr.InitialRiskLikelihood,
 		&hsr.ResidualRiskSeverity,
-		&hsr.ResidualRiskLikelyhood,
+		&hsr.ResidualRiskLikelihood,
 		&hsr.DbStatus,
 		&hsr.DbLastStatus,
 	)
@@ -144,9 +144,9 @@ func (*HSRModel) GetAll(filters map[string]interface{}) ([]registerTypes.HSR, er
 			&hsr.AffectedPositions.Id,
 			&hsr.ERMA,
 			&hsr.InitialRiskSeverity,
-			&hsr.InitialRiskLikelyhood,
+			&hsr.InitialRiskLikelihood,
 			&hsr.ResidualRiskSeverity,
-			&hsr.ResidualRiskLikelyhood,
+			&hsr.ResidualRiskLikelihood,
 			&hsr.DbStatus,
 			&hsr.DbLastStatus,
 		)
@@ -178,9 +178,9 @@ func (*HSRModel) Create(hsr registerTypes.HSR) error {
 				"affectedPositions",
 				"erma",
 				"initialRiskSeverity", 
-				"initialRiskLikelyhood", 
+				"initialRiskLikelihood", 
 				"residualRiskSeverity", 
-				"residualRiskLikelyhood",
+				"residualRiskLikelihood",
 				"dbStatus",
 				"dbLastStatus"
 			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -194,9 +194,9 @@ func (*HSRModel) Create(hsr registerTypes.HSR) error {
 		hsr.AffectedPositions.Id,
 		hsr.ERMA,
 		hsr.InitialRiskSeverity,
-		hsr.InitialRiskLikelyhood,
+		hsr.InitialRiskLikelihood,
 		hsr.ResidualRiskSeverity,
-		hsr.ResidualRiskLikelyhood,
+		hsr.ResidualRiskLikelihood,
 		hsr.DbStatus,
 		hsr.DbLastStatus,
 	)

@@ -86,9 +86,9 @@ func (*BRModel) GetById(Id string) (registerTypes.BR, error) {
 		&br.Process.Id,
 		&br.ERMEOA,
 		&br.InitialRiskSeverity,
-		&br.InitialRiskLikelyhood,
+		&br.InitialRiskLikelihood,
 		&br.ResidualRiskSeverity,
-		&br.ResidualRiskLikelyhood,
+		&br.ResidualRiskLikelihood,
 		&br.DbStatus,
 		&br.DbLastStatus,
 	)
@@ -150,9 +150,9 @@ func (*BRModel) GetAll(filters map[string]interface{}) ([]registerTypes.BR, erro
 			&br.Process.Id,
 			&br.ERMEOA,
 			&br.InitialRiskSeverity,
-			&br.InitialRiskLikelyhood,
+			&br.InitialRiskLikelihood,
 			&br.ResidualRiskSeverity,
-			&br.ResidualRiskLikelyhood,
+			&br.ResidualRiskLikelihood,
 			&br.DbStatus,
 			&br.DbLastStatus,
 		)
@@ -187,9 +187,9 @@ func (*BRModel) Create(br registerTypes.BR) error {
 				"process", 
 				"ermeoa", 
 				"initialRiskSeverity", 
-				"initialRiskLikelyhood", 
+				"initialRiskLikelihood", 
 				"residualRiskSeverity", 
-				"residualRiskLikelyhood",
+				"residualRiskLikelihood",
 				"dbStatus",
 				"dbLastStatus"
 			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -206,9 +206,9 @@ func (*BRModel) Create(br registerTypes.BR) error {
 		br.Process.Id,
 		br.ERMEOA,
 		br.InitialRiskSeverity,
-		br.InitialRiskLikelyhood,
+		br.InitialRiskLikelihood,
 		br.ResidualRiskSeverity,
-		br.ResidualRiskLikelyhood,
+		br.ResidualRiskLikelihood,
 		br.DbStatus,
 		br.DbLastStatus,
 	)

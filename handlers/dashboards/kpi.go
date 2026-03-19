@@ -41,7 +41,7 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 
 			for _, br := range brs {
 				fmt.Println(br)
-				if br.ResidualRiskSeverity*br.ResidualRiskLikelyhood >= 12 {
+				if br.ResidualRiskSeverity*br.ResidualRiskLikelihood >= 12 {
 					calculatedValue++
 				}
 			}

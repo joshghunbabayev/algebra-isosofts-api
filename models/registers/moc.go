@@ -83,9 +83,9 @@ func (*MOCModel) GetById(Id string) (registerTypes.MOC, error) {
 		&moc.Action,
 		&moc.Risks,
 		&moc.InitialRiskSeverity,
-		&moc.InitialRiskLikelyhood,
+		&moc.InitialRiskLikelihood,
 		&moc.ResidualRiskSeverity,
-		&moc.ResidualRiskLikelyhood,
+		&moc.ResidualRiskLikelihood,
 		&moc.DbStatus,
 		&moc.DbLastStatus,
 	)
@@ -141,9 +141,9 @@ func (*MOCModel) GetAll(filters map[string]interface{}) ([]registerTypes.MOC, er
 			&moc.Action,
 			&moc.Risks,
 			&moc.InitialRiskSeverity,
-			&moc.InitialRiskLikelyhood,
+			&moc.InitialRiskLikelihood,
 			&moc.ResidualRiskSeverity,
-			&moc.ResidualRiskLikelyhood,
+			&moc.ResidualRiskLikelihood,
 			&moc.DbStatus,
 			&moc.DbLastStatus,
 		)
@@ -172,9 +172,9 @@ func (*MOCModel) Create(moc registerTypes.MOC) error {
 				"action", 
 				"risks", 
 				"initialRiskSeverity", 
-				"initialRiskLikelyhood", 
+				"initialRiskLikelihood", 
 				"residualRiskSeverity", 
-				"residualRiskLikelyhood",
+				"residualRiskLikelihood",
 				"dbStatus",
 				"dbLastStatus"
 			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -188,9 +188,9 @@ func (*MOCModel) Create(moc registerTypes.MOC) error {
 		moc.Action,
 		moc.Risks,
 		moc.InitialRiskSeverity,
-		moc.InitialRiskLikelyhood,
+		moc.InitialRiskLikelihood,
 		moc.ResidualRiskSeverity,
-		moc.ResidualRiskLikelyhood,
+		moc.ResidualRiskLikelihood,
 		moc.DbStatus,
 		moc.DbLastStatus,
 	)

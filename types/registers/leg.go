@@ -16,9 +16,9 @@ type LEG struct {
 	RiskOfViolation        string                               `json:"riskOfViolation"`
 	AffectedPositions      tableComponentTypes.DropDownListItem `json:"affectedPositions"`
 	InitialRiskSeverity    int8                                 `json:"initialRiskSeverity"`
-	InitialRiskLikelyhood  int8                                 `json:"initialRiskLikelyhood"`
+	InitialRiskLikelihood  int8                                 `json:"initialRiskLikelihood"`
 	ResidualRiskSeverity   int8                                 `json:"residualRiskSeverity"`
-	ResidualRiskLikelyhood int8                                 `json:"residualRiskLikelyhood"`
+	ResidualRiskLikelihood int8                                 `json:"residualRiskLikelihood"`
 	DbStatus               string                               `json:"dbStatus"`
 	DbLastStatus           string                               `json:"-"`
 	Actions                []registerComponentTypes.Action      `json:"actions"`
