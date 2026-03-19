@@ -16,7 +16,7 @@ type BR struct {
 	Objective              string                               `json:"objective"`
 	KPI                    string                               `json:"kpi"`
 	Process                tableComponentTypes.DropDownListItem `json:"process"`
-	ERMEOA                 string                               `json:"ermeoa"`
+	ECM                    string                               `json:"ecm"`
 	InitialRiskSeverity    int8                                 `json:"initialRiskSeverity"`
 	InitialRiskLikelihood  int8                                 `json:"initialRiskLikelihood"`
 	ResidualRiskSeverity   int8                                 `json:"residualRiskSeverity"`

@@ -9,7 +9,7 @@ type Action struct {
 	No                 string                               `json:"no"`
 	Title              string                               `json:"title"`
 	RaiseDate          string                               `json:"raiseDate"`
-	Resources          int64                                `json:"resources"`
+	Resources          string                               `json:"resources"`
 	Currency           string                               `json:"currency"`
 	RelativeFunction   tableComponentTypes.DropDownListItem `json:"relativeFunction"`
 	Responsible        tableComponentTypes.DropDownListItem `json:"responsible"`

@@ -44,7 +44,7 @@ func (*BRHandler) Create(c *gin.Context) {
 		Objective              string `json:"objective"`
 		KPI                    string `json:"kpi"`
 		Process                string `json:"process"`
-		ERMEOA                 string `json:"ermeoa"`
+		ECM                    string `json:"ecm"`
 		InitialRiskSeverity    int8   `json:"initialRiskSeverity"`
 		InitialRiskLikelihood  int8   `json:"initialRiskLikelihood"`
 		ResidualRiskSeverity   int8   `json:"residualRiskSeverity"`
@@ -89,7 +89,7 @@ func (*BRHandler) Create(c *gin.Context) {
 		Process: tableComponentTypes.DropDownListItem{
 			Id: body.Process,
 		},
-		ERMEOA:                 body.ERMEOA,
+		ECM:                    body.ECM,
 		InitialRiskSeverity:    body.InitialRiskSeverity,
 		InitialRiskLikelihood:  body.InitialRiskLikelihood,
 		ResidualRiskSeverity:   body.ResidualRiskSeverity,
@@ -122,7 +122,7 @@ func (*BRHandler) Update(c *gin.Context) {
 		Objective              string `json:"objective"`
 		KPI                    string `json:"kpi"`
 		Process                string `json:"process"`
-		ERMEOA                 string `json:"ermeoa"`
+		ECM                    string `json:"ecm"`
 		InitialRiskSeverity    int8   `json:"initialRiskSeverity"`
 		InitialRiskLikelihood  int8   `json:"initialRiskLikelihood"`
 		ResidualRiskSeverity   int8   `json:"residualRiskSeverity"`
@@ -152,7 +152,7 @@ func (*BRHandler) Update(c *gin.Context) {
 		"objective":              body.Objective,
 		"kpi":                    body.KPI,
 		"process":                body.Process,
-		"ermeoa":                 body.ERMEOA,
+		"ecm":                    body.ECM,
 		"initialRiskSeverity":    body.InitialRiskSeverity,
 		"initialRiskLikelihood":  body.InitialRiskLikelihood,
 		"residualRiskSeverity":   body.ResidualRiskSeverity,
