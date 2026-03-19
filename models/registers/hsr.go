@@ -84,6 +84,7 @@ func (*HSRModel) GetById(Id string) (registerTypes.HSR, error) {
 		&hsr.ERMA,
 		&hsr.InitialRiskSeverity,
 		&hsr.InitialRiskLikelihood,
+		&hsr.ACM,
 		&hsr.ResidualRiskSeverity,
 		&hsr.ResidualRiskLikelihood,
 		&hsr.DbStatus,
@@ -145,6 +146,7 @@ func (*HSRModel) GetAll(filters map[string]interface{}) ([]registerTypes.HSR, er
 			&hsr.ERMA,
 			&hsr.InitialRiskSeverity,
 			&hsr.InitialRiskLikelihood,
+			&hsr.ACM,
 			&hsr.ResidualRiskSeverity,
 			&hsr.ResidualRiskLikelihood,
 			&hsr.DbStatus,
@@ -179,11 +181,12 @@ func (*HSRModel) Create(hsr registerTypes.HSR) error {
 				"erma",
 				"initialRiskSeverity", 
 				"initialRiskLikelihood", 
+				"acm", 
 				"residualRiskSeverity", 
 				"residualRiskLikelihood",
 				"dbStatus",
 				"dbLastStatus"
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
 		hsr.Id,
 		hsr.CompanyId,
@@ -195,6 +198,7 @@ func (*HSRModel) Create(hsr registerTypes.HSR) error {
 		hsr.ERMA,
 		hsr.InitialRiskSeverity,
 		hsr.InitialRiskLikelihood,
+		hsr.ACM,
 		hsr.ResidualRiskSeverity,
 		hsr.ResidualRiskLikelihood,
 		hsr.DbStatus,

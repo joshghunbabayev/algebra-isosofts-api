@@ -17,9 +17,10 @@ type BR struct {
 	Objective              string                               `json:"objective"`
 	KPI                    string                               `json:"kpi"`
 	Process                tableComponentTypes.DropDownListItem `json:"process"`
-	ECM                 string                               `json:"ecm"`
+	ECM                    string                               `json:"ecm"`
 	InitialRiskSeverity    int8                                 `json:"initialRiskSeverity"`
 	InitialRiskLikelihood  int8                                 `json:"initialRiskLikelihood"`
+	ACM                    string                               `json:"acm"`
 	ResidualRiskSeverity   int8                                 `json:"residualRiskSeverity"`
 	ResidualRiskLikelihood int8                                 `json:"residualRiskLikelihood"`
 	DbStatus               string                               `json:"dbStatus"`

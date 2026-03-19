@@ -47,6 +47,7 @@ func (*BRHandler) Create(c *gin.Context) {
 		ECM                    string `json:"ecm"`
 		InitialRiskSeverity    int8   `json:"initialRiskSeverity"`
 		InitialRiskLikelihood  int8   `json:"initialRiskLikelihood"`
+		ACM                    string `json:"acm"`
 		ResidualRiskSeverity   int8   `json:"residualRiskSeverity"`
 		ResidualRiskLikelihood int8   `json:"residualRiskLikelihood"`
 	}
@@ -92,6 +93,7 @@ func (*BRHandler) Create(c *gin.Context) {
 		ECM:                    body.ECM,
 		InitialRiskSeverity:    body.InitialRiskSeverity,
 		InitialRiskLikelihood:  body.InitialRiskLikelihood,
+		ACM:                    body.ACM,
 		ResidualRiskSeverity:   body.ResidualRiskSeverity,
 		ResidualRiskLikelihood: body.ResidualRiskLikelihood,
 		DbStatus:               "active",
@@ -125,6 +127,7 @@ func (*BRHandler) Update(c *gin.Context) {
 		ECM                    string `json:"ecm"`
 		InitialRiskSeverity    int8   `json:"initialRiskSeverity"`
 		InitialRiskLikelihood  int8   `json:"initialRiskLikelihood"`
+		ACM                    string `json:"acm"`
 		ResidualRiskSeverity   int8   `json:"residualRiskSeverity"`
 		ResidualRiskLikelihood int8   `json:"residualRiskLikelihood"`
 	}
@@ -155,6 +158,7 @@ func (*BRHandler) Update(c *gin.Context) {
 		"ecm":                    body.ECM,
 		"initialRiskSeverity":    body.InitialRiskSeverity,
 		"initialRiskLikelihood":  body.InitialRiskLikelihood,
+		"acm":                    body.ACM,
 		"residualRiskSeverity":   body.ResidualRiskSeverity,
 		"residualRiskLikelihood": body.ResidualRiskLikelihood,
 	})

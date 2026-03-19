@@ -45,6 +45,7 @@ func (*MOCHandler) Create(c *gin.Context) {
 		Risks                  string `json:"risks"`
 		InitialRiskSeverity    int8   `json:"initialRiskSeverity"`
 		InitialRiskLikelihood  int8   `json:"initialRiskLikelihood"`
+		ACM                    string `json:"acm"`
 		ResidualRiskSeverity   int8   `json:"residualRiskSeverity"`
 		ResidualRiskLikelihood int8   `json:"residualRiskLikelihood"`
 	}
@@ -79,6 +80,7 @@ func (*MOCHandler) Create(c *gin.Context) {
 		Risks:                  body.Risks,
 		InitialRiskSeverity:    body.InitialRiskSeverity,
 		InitialRiskLikelihood:  body.InitialRiskLikelihood,
+		ACM:                    body.ACM,
 		ResidualRiskSeverity:   body.ResidualRiskSeverity,
 		ResidualRiskLikelihood: body.ResidualRiskLikelihood,
 		DbStatus:               "active",
@@ -109,6 +111,7 @@ func (*MOCHandler) Update(c *gin.Context) {
 		Risks                  string `json:"risks"`
 		InitialRiskSeverity    int8   `json:"initialRiskSeverity"`
 		InitialRiskLikelihood  int8   `json:"initialRiskLikelihood"`
+		ACM                    string `json:"acm"`
 		ResidualRiskSeverity   int8   `json:"residualRiskSeverity"`
 		ResidualRiskLikelihood int8   `json:"residualRiskLikelihood"`
 	}
@@ -136,6 +139,7 @@ func (*MOCHandler) Update(c *gin.Context) {
 		"risks":                  body.Risks,
 		"initialRiskSeverity":    body.InitialRiskSeverity,
 		"initialRiskLikelihood":  body.InitialRiskLikelihood,
+		"acm":                    body.ACM,
 		"residualRiskSeverity":   body.ResidualRiskSeverity,
 		"residualRiskLikelihood": body.ResidualRiskLikelihood,
 	})

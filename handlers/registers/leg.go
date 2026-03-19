@@ -45,6 +45,7 @@ func (*LEGHandler) Create(c *gin.Context) {
 		AffectedPositions      string `json:"affectedPositions"`
 		InitialRiskSeverity    int8   `json:"initialRiskSeverity"`
 		InitialRiskLikelihood  int8   `json:"initialRiskLikelihood"`
+		ACM                    string `json:"acm"`
 		ResidualRiskSeverity   int8   `json:"residualRiskSeverity"`
 		ResidualRiskLikelihood int8   `json:"residualRiskLikelihood"`
 	}
@@ -84,6 +85,7 @@ func (*LEGHandler) Create(c *gin.Context) {
 		},
 		InitialRiskSeverity:    body.InitialRiskSeverity,
 		InitialRiskLikelihood:  body.InitialRiskLikelihood,
+		ACM:                    body.ACM,
 		ResidualRiskSeverity:   body.ResidualRiskSeverity,
 		ResidualRiskLikelihood: body.ResidualRiskLikelihood,
 		DbStatus:               "active",
@@ -115,6 +117,7 @@ func (*LEGHandler) Update(c *gin.Context) {
 		AffectedPositions      string `json:"affectedPositions"`
 		InitialRiskSeverity    int8   `json:"initialRiskSeverity"`
 		InitialRiskLikelihood  int8   `json:"initialRiskLikelihood"`
+		ACM                    string `json:"acm"`
 		ResidualRiskSeverity   int8   `json:"residualRiskSeverity"`
 		ResidualRiskLikelihood int8   `json:"residualRiskLikelihood"`
 	}
@@ -143,6 +146,7 @@ func (*LEGHandler) Update(c *gin.Context) {
 		"affectedPositions":      body.AffectedPositions,
 		"initialRiskSeverity":    body.InitialRiskSeverity,
 		"initialRiskLikelihood":  body.InitialRiskLikelihood,
+		"acm":                    body.ACM,
 		"residualRiskSeverity":   body.ResidualRiskSeverity,
 		"residualRiskLikelihood": body.ResidualRiskLikelihood,
 	})

@@ -19,6 +19,7 @@ type BR struct {
 	ECM                    string                               `json:"ecm"`
 	InitialRiskSeverity    int8                                 `json:"initialRiskSeverity"`
 	InitialRiskLikelihood  int8                                 `json:"initialRiskLikelihood"`
+	ACM                    string                               `json:"acm"`
 	ResidualRiskSeverity   int8                                 `json:"residualRiskSeverity"`
 	ResidualRiskLikelihood int8                                 `json:"residualRiskLikelihood"`
 	DbStatus               string                               `json:"dbStatus"`
