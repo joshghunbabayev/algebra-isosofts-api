@@ -43,6 +43,7 @@ func (*LEGHandler) Create(c *gin.Context) {
 		Requirement            string `json:"requirement"`
 		RiskOfViolation        string `json:"riskOfViolation"`
 		AffectedPositions      string `json:"affectedPositions"`
+		ECM                    string `json:"ecm"`
 		InitialRiskSeverity    int8   `json:"initialRiskSeverity"`
 		InitialRiskLikelihood  int8   `json:"initialRiskLikelihood"`
 		ACM                    string `json:"acm"`
@@ -83,6 +84,7 @@ func (*LEGHandler) Create(c *gin.Context) {
 		AffectedPositions: tableComponentTypes.DropDownListItem{
 			Id: body.AffectedPositions,
 		},
+		ECM:                    body.ECM,
 		InitialRiskSeverity:    body.InitialRiskSeverity,
 		InitialRiskLikelihood:  body.InitialRiskLikelihood,
 		ACM:                    body.ACM,
@@ -115,6 +117,7 @@ func (*LEGHandler) Update(c *gin.Context) {
 		Requirement            string `json:"requirement"`
 		RiskOfViolation        string `json:"riskOfViolation"`
 		AffectedPositions      string `json:"affectedPositions"`
+		ECM                    string `json:"ecm"`
 		InitialRiskSeverity    int8   `json:"initialRiskSeverity"`
 		InitialRiskLikelihood  int8   `json:"initialRiskLikelihood"`
 		ACM                    string `json:"acm"`
@@ -144,6 +147,7 @@ func (*LEGHandler) Update(c *gin.Context) {
 		"requirement":            body.Requirement,
 		"riskOfViolation":        body.RiskOfViolation,
 		"affectedPositions":      body.AffectedPositions,
+		"ecm":                    body.ECM,
 		"initialRiskSeverity":    body.InitialRiskSeverity,
 		"initialRiskLikelihood":  body.InitialRiskLikelihood,
 		"acm":                    body.ACM,
