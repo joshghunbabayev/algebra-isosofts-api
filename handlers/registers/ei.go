@@ -43,7 +43,7 @@ func (*EIHandler) Create(c *gin.Context) {
 		InspectionFrequency string `json:"inspectionFrequency"`
 		ICD                 string `json:"icd"`
 		NVCD                string `json:"nvcd"`
-		SafeToUse           int8   `json:"safeToUse"`
+		EIS                 int8   `json:"eis"`
 	}
 
 	var errs = make(map[string]interface{})
@@ -77,7 +77,7 @@ func (*EIHandler) Create(c *gin.Context) {
 		},
 		ICD:          body.ICD,
 		NVCD:         body.NVCD,
-		SafeToUse:    body.SafeToUse,
+		EIS:          body.EIS,
 		DbStatus:     "active",
 		DbLastStatus: "active",
 	})
@@ -105,7 +105,7 @@ func (*EIHandler) Update(c *gin.Context) {
 		InspectionFrequency string `json:"inspectionFrequency"`
 		ICD                 string `json:"icd"`
 		NVCD                string `json:"nvcd"`
-		SafeToUse           int8   `json:"safeToUse"`
+		EIS                 int8   `json:"eis"`
 	}
 
 	var errs = make(map[string]interface{})
@@ -130,7 +130,7 @@ func (*EIHandler) Update(c *gin.Context) {
 		"inspectionFrequency": body.InspectionFrequency,
 		"icd":                 body.ICD,
 		"nvcd":                body.NVCD,
-		"safeToUse":           body.SafeToUse,
+		"eis":                 body.EIS,
 	})
 
 	c.JSON(200, gin.H{})

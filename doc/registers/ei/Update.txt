@@ -9,5 +9,5 @@ type EI struct {
 	InspectionFrequency tableComponentTypes.DropDownListItem `json:"inspectionFrequency"`
 	ICD                 string                               `json:"icd"`
 	NVCD                string                               `json:"nvcd"`
-	SafeToUse           int8                                 `json:"safeToUse"`
+	EIS           int8                                 `json:"eis"`
 }
