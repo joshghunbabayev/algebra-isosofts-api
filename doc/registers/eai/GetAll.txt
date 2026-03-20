@@ -18,6 +18,7 @@ type EAI struct {
 	IDOSSeverity     int8                                 `json:"idosSeverity"`
 	IDOSDuration     int8                                 `json:"idosDuration"`
 	IDOSScale        int8                                 `json:"idosScale"`
+	ACM              string                               `json:"acm"`
 	RDOSProbability  int8                                 `json:"rdosProbability"`
 	RDOSSeverity     int8                                 `json:"rdosSeverity"`
 	RDOSDuration     int8                                 `json:"rdosDuration"`

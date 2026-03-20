@@ -46,6 +46,7 @@ func (*EAIHandler) Create(c *gin.Context) {
 		IDOSSeverity      int8   `json:"idosSeverity"`
 		IDOSDuration      int8   `json:"idosDuration"`
 		IDOSScale         int8   `json:"idosScale"`
+		ACM               string `json:"acm"`
 		RDOSProbability   int8   `json:"rdosProbability"`
 		RDOSSeverity      int8   `json:"rdosSeverity"`
 		RDOSDuration      int8   `json:"rdosDuration"`
@@ -90,6 +91,7 @@ func (*EAIHandler) Create(c *gin.Context) {
 		IDOSSeverity:    body.IDOSSeverity,
 		IDOSDuration:    body.IDOSDuration,
 		IDOSScale:       body.IDOSScale,
+		ACM:             body.ACM,
 		RDOSProbability: body.RDOSProbability,
 		RDOSSeverity:    body.RDOSSeverity,
 		RDOSDuration:    body.RDOSDuration,
@@ -124,6 +126,7 @@ func (*EAIHandler) Update(c *gin.Context) {
 		IDOSSeverity      int8   `json:"idosSeverity"`
 		IDOSDuration      int8   `json:"idosDuration"`
 		IDOSScale         int8   `json:"idosScale"`
+		ACM               string `json:"acm"`
 		RDOSProbability   int8   `json:"rdosProbability"`
 		RDOSSeverity      int8   `json:"rdosSeverity"`
 		RDOSDuration      int8   `json:"rdosDuration"`
@@ -155,6 +158,7 @@ func (*EAIHandler) Update(c *gin.Context) {
 		"idosSeverity":      body.IDOSSeverity,
 		"idosDuration":      body.IDOSDuration,
 		"idosScale":         body.IDOSScale,
+		"acm":               body.ACM,
 		"rdosProbability":   body.RDOSProbability,
 		"rdosSeverity":      body.RDOSSeverity,
 		"rdosDuration":      body.RDOSDuration,
