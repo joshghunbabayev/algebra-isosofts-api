@@ -42,7 +42,7 @@ func (*LEGModel) GenerateUniqueNo() string {
 		ORDER BY "no" DESC 
 		LIMIT 1
 		`,
-		"LEGR/"+year+"/%",
+		"LGR/"+year+"/%",
 	).Scan(&lastNo)
 
 	var nextNumber int
@@ -55,7 +55,7 @@ func (*LEGModel) GenerateUniqueNo() string {
 		nextNumber = num + 1
 	}
 
-	newNo := fmt.Sprintf("LEGR/%s/%04d", year, nextNumber)
+	newNo := fmt.Sprintf("LGR/%s/%04d", year, nextNumber)
 	return newNo
 }
 

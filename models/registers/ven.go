@@ -43,7 +43,7 @@ func (*VENModel) GenerateUniqueNo() string {
 		ORDER BY "no" DESC 
 		LIMIT 1
 		`,
-		"VENR/"+year+"/%",
+		"VNR/"+year+"/%",
 	).Scan(&lastNo)
 
 	var nextNumber int
@@ -56,7 +56,7 @@ func (*VENModel) GenerateUniqueNo() string {
 		nextNumber = num + 1
 	}
 
-	newNo := fmt.Sprintf("VENR/%s/%04d", year, nextNumber)
+	newNo := fmt.Sprintf("VNR/%s/%04d", year, nextNumber)
 	return newNo
 }
 
@@ -85,7 +85,7 @@ func (*VENModel) GetById(Id string) (registerTypes.VEN, error) {
 		&ven.Scope2.Id,
 		&ven.Scope3.Id,
 		&ven.RegistrationDate,
-		&ven.ReviewDate,
+		&ven.NRD,
 		&ven.Approved,
 		&ven.DbStatus,
 		&ven.DbLastStatus,
@@ -147,7 +147,7 @@ func (*VENModel) GetAll(filters map[string]interface{}) ([]registerTypes.VEN, er
 			&ven.Scope2.Id,
 			&ven.Scope3.Id,
 			&ven.RegistrationDate,
-			&ven.ReviewDate,
+			&ven.NRD,
 			&ven.Approved,
 			&ven.DbStatus,
 			&ven.DbLastStatus,
@@ -182,7 +182,7 @@ func (*VENModel) Create(ven registerTypes.VEN) error {
 				"scope2", 
 				"scope3", 
 				"registrationDate", 
-				"reviewDate", 
+				"nrd", 
 				"approved", 
 				"dbStatus",
 				"dbLastStatus"
@@ -197,7 +197,7 @@ func (*VENModel) Create(ven registerTypes.VEN) error {
 		ven.Scope2.Id,
 		ven.Scope3.Id,
 		ven.RegistrationDate,
-		ven.ReviewDate,
+		ven.NRD,
 		ven.Approved,
 		ven.DbStatus,
 		ven.DbLastStatus,

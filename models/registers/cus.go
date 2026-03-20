@@ -43,7 +43,7 @@ func (*CUSModel) GenerateUniqueNo() string {
 		ORDER BY "no" DESC 
 		LIMIT 1
 		`,
-		"CUSR/"+year+"/%",
+		"CSR/"+year+"/%",
 	).Scan(&lastNo)
 
 	var nextNumber int
@@ -56,7 +56,7 @@ func (*CUSModel) GenerateUniqueNo() string {
 		nextNumber = num + 1
 	}
 
-	newNo := fmt.Sprintf("CUSR/%s/%04d", year, nextNumber)
+	newNo := fmt.Sprintf("CSR/%s/%04d", year, nextNumber)
 	return newNo
 }
 

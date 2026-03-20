@@ -42,7 +42,7 @@ func (*AOPModel) GenerateUniqueNo() string {
 		ORDER BY "no" DESC 
 		LIMIT 1
 		`,
-		"AOPR/"+year+"/%",
+		"AOR/"+year+"/%",
 	).Scan(&lastNo)
 
 	var nextNumber int
@@ -55,7 +55,7 @@ func (*AOPModel) GenerateUniqueNo() string {
 		nextNumber = num + 1
 	}
 
-	newNo := fmt.Sprintf("AOPR/%s/%04d", year, nextNumber)
+	newNo := fmt.Sprintf("AOR/%s/%04d", year, nextNumber)
 	return newNo
 }
 

@@ -42,7 +42,7 @@ func (*MOCModel) GenerateUniqueNo() string {
 		ORDER BY "no" DESC 
 		LIMIT 1
 		`,
-		"MOCR/"+year+"/%",
+		"MOC/"+year+"/%",
 	).Scan(&lastNo)
 
 	var nextNumber int
@@ -55,7 +55,7 @@ func (*MOCModel) GenerateUniqueNo() string {
 		nextNumber = num + 1
 	}
 
-	newNo := fmt.Sprintf("MOCR/%s/%04d", year, nextNumber)
+	newNo := fmt.Sprintf("MOC/%s/%04d", year, nextNumber)
 	return newNo
 }
 

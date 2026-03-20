@@ -42,7 +42,7 @@ func (*HSRModel) GenerateUniqueNo() string {
 		ORDER BY "no" DESC 
 		LIMIT 1
 		`,
-		"HSRR/"+year+"/%",
+		"HSR/"+year+"/%",
 	).Scan(&lastNo)
 
 	var nextNumber int
@@ -55,7 +55,7 @@ func (*HSRModel) GenerateUniqueNo() string {
 		nextNumber = num + 1
 	}
 
-	newNo := fmt.Sprintf("HSRR/%s/%04d", year, nextNumber)
+	newNo := fmt.Sprintf("HSR/%s/%04d", year, nextNumber)
 	return newNo
 }
 

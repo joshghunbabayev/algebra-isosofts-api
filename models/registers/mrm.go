@@ -42,7 +42,7 @@ func (*MRMModel) GenerateUniqueNo() string {
 		ORDER BY "no" DESC 
 		LIMIT 1
 		`,
-		"MRMR/"+year+"/%",
+		"MRM/"+year+"/%",
 	).Scan(&lastNo)
 
 	var nextNumber int
@@ -55,7 +55,7 @@ func (*MRMModel) GenerateUniqueNo() string {
 		nextNumber = num + 1
 	}
 
-	newNo := fmt.Sprintf("MRMR/%s/%04d", year, nextNumber)
+	newNo := fmt.Sprintf("MRM/%s/%04d", year, nextNumber)
 	return newNo
 }
 
