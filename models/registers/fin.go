@@ -42,7 +42,7 @@ func (*FINModel) GenerateUniqueNo() string {
 		ORDER BY "no" DESC 
 		LIMIT 1
 		`,
-		"FINR/"+year+"/%",
+		"FNR/"+year+"/%",
 	).Scan(&lastNo)
 
 	var nextNumber int
@@ -55,7 +55,7 @@ func (*FINModel) GenerateUniqueNo() string {
 		nextNumber = num + 1
 	}
 
-	newNo := fmt.Sprintf("FINR/%s/%04d", year, nextNumber)
+	newNo := fmt.Sprintf("FNR/%s/%04d", year, nextNumber)
 	return newNo
 }
 
