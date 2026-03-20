@@ -5,7 +5,7 @@ body:
 type TRA struct {
 	EmployeeName     string                          `json:"employeeName"`
 	Position         string                          `json:"position"`
-	CLName           string                          `json:"clname"`
+	TCLN           string                          `json:"tcln"`
 	TCLID            string                          `json:"nvcd"`
 	CLNumber         string                          `json:"clnumber"`
 	NCD              string                          `json:"ncd"`

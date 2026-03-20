@@ -12,7 +12,7 @@ type TRA struct {
 	No               string                          `json:"no"`
 	EmployeeName     string                          `json:"employeeName"`
 	Position         string                          `json:"position"`
-	CLName           string                          `json:"clname"`
+	TCLN           string                          `json:"tcln"`
 	TCLID            string                          `json:"nvcd"`
 	CLNumber         string                          `json:"clnumber"`
 	NCD              string                          `json:"ncd"`

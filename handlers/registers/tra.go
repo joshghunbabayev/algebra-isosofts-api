@@ -38,7 +38,7 @@ func (*TRAHandler) Create(c *gin.Context) {
 	var body struct {
 		EmployeeName     string `json:"employeeName"`
 		Position         string `json:"position"`
-		CLName           string `json:"clname"`
+		TCLN             string `json:"tcln"`
 		TCLID            string `json:"nvcd"`
 		CLNumber         string `json:"clnumber"`
 		NCD              string `json:"ncd"`
@@ -71,7 +71,7 @@ func (*TRAHandler) Create(c *gin.Context) {
 		No:               traModel.GenerateUniqueNo(),
 		EmployeeName:     body.EmployeeName,
 		Position:         body.Position,
-		CLName:           body.CLName,
+		TCLN:             body.TCLN,
 		TCLID:            body.TCLID,
 		CLNumber:         body.CLNumber,
 		NCD:              body.NCD,
@@ -100,7 +100,7 @@ func (*TRAHandler) Update(c *gin.Context) {
 	var body struct {
 		EmployeeName     string `json:"employeeName"`
 		Position         string `json:"position"`
-		CLName           string `json:"clname"`
+		TCLN             string `json:"tcln"`
 		TCLID            string `json:"nvcd"`
 		CLNumber         string `json:"clnumber"`
 		NCD              string `json:"ncd"`
@@ -126,7 +126,7 @@ func (*TRAHandler) Update(c *gin.Context) {
 	traModel.Update(Id, map[string]interface{}{
 		"employeeName":     body.EmployeeName,
 		"position":         body.Position,
-		"clname":           body.CLName,
+		"tcln":             body.TCLN,
 		"nvcd":             body.TCLID,
 		"clnumber":         body.CLNumber,
 		"ncd":              body.NCD,
