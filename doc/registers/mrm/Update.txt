@@ -3,7 +3,7 @@ For update mrmregister
 
 body:
 type MRM struct {
-	RISOS        tableComponentTypes.DropDownListItem `json:"risos"`
 	Topic        tableComponentTypes.DropDownListItem `json:"topic"`
+	RISOS        string                               `json:"risos"`
 	Process      tableComponentTypes.DropDownListItem `json:"process"`
 }

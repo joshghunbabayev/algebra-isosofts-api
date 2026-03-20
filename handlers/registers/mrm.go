@@ -37,8 +37,8 @@ func (*MRMHandler) GetAll(c *gin.Context) {
 
 func (*MRMHandler) Create(c *gin.Context) {
 	var body struct {
-		RISOS   string `json:"risos"`
 		Topic   string `json:"topic"`
+		RISOS   string `json:"risos"`
 		Process string `json:"process"`
 	}
 
@@ -65,12 +65,10 @@ func (*MRMHandler) Create(c *gin.Context) {
 		Id:        mrmModel.GenerateUniqueId(),
 		CompanyId: account.CompanyId,
 		No:        mrmModel.GenerateUniqueNo(),
-		RISOS: tableComponentTypes.DropDownListItem{
-			Id: body.RISOS,
-		},
 		Topic: tableComponentTypes.DropDownListItem{
 			Id: body.Topic,
 		},
+		RISOS: body.RISOS,
 		Process: tableComponentTypes.DropDownListItem{
 			Id: body.Process,
 		},
@@ -95,8 +93,8 @@ func (*MRMHandler) Update(c *gin.Context) {
 	}
 
 	var body struct {
-		RISOS   string `json:"risos"`
 		Topic   string `json:"topic"`
+		RISOS   string `json:"risos"`
 		Process string `json:"process"`
 	}
 
@@ -116,8 +114,8 @@ func (*MRMHandler) Update(c *gin.Context) {
 	}
 
 	mrmModel.Update(Id, map[string]interface{}{
-		"risos":   body.RISOS,
 		"topic":   body.Topic,
+		"risos":   body.RISOS,
 		"process": body.Process,
 	})
 

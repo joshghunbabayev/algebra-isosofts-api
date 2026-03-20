@@ -9,8 +9,8 @@ type MRM struct {
 	Id           string                               `json:"id"`
 	CompanyId    string                               `json:"companyId"`
 	No           string                               `json:"no"`
-	RISOS        tableComponentTypes.DropDownListItem `json:"risos"`
 	Topic        tableComponentTypes.DropDownListItem `json:"topic"`
+	RISOS        string                               `json:"risos"`
 	Process      tableComponentTypes.DropDownListItem `json:"process"`
 	DbStatus     string                               `json:"dbStatus"`
 	DbLastStatus string                               `json:"-"`

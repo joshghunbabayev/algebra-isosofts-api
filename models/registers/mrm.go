@@ -77,13 +77,12 @@ func (*MRMModel) GetById(Id string) (registerTypes.MRM, error) {
 		&mrm.Id,
 		&mrm.CompanyId,
 		&mrm.No,
-		&mrm.RISOS.Id,
 		&mrm.Topic.Id,
+		&mrm.RISOS,
 		&mrm.Process.Id,
 		&mrm.DbStatus,
 		&mrm.DbLastStatus,
 	)
-	mrm.RISOS, _ = dropDownListItemModel.GetById(mrm.RISOS.Id)
 	mrm.Topic, _ = dropDownListItemModel.GetById(mrm.Topic.Id)
 	mrm.Process, _ = dropDownListItemModel.GetById(mrm.Process.Id)
 	mrm.Process, _ = dropDownListItemModel.GetById(mrm.Process.Id)
@@ -132,13 +131,12 @@ func (*MRMModel) GetAll(filters map[string]interface{}) ([]registerTypes.MRM, er
 			&mrm.Id,
 			&mrm.CompanyId,
 			&mrm.No,
-			&mrm.RISOS.Id,
 			&mrm.Topic.Id,
+			&mrm.RISOS,
 			&mrm.Process.Id,
 			&mrm.DbStatus,
 			&mrm.DbLastStatus,
 		)
-		mrm.RISOS, _ = dropDownListItemModel.GetById(mrm.RISOS.Id)
 		mrm.Topic, _ = dropDownListItemModel.GetById(mrm.Topic.Id)
 		mrm.Process, _ = dropDownListItemModel.GetById(mrm.Process.Id)
 		mrm.Process, _ = dropDownListItemModel.GetById(mrm.Process.Id)
@@ -160,8 +158,8 @@ func (*MRMModel) Create(mrm registerTypes.MRM) error {
 				"id",
 				"companyId",
 				"no",
-				"risos", 
 				"topic", 
+				"risos", 
 				"process", 
 				"dbStatus",
 				"dbLastStatus"
@@ -170,8 +168,8 @@ func (*MRMModel) Create(mrm registerTypes.MRM) error {
 		mrm.Id,
 		mrm.CompanyId,
 		mrm.No,
-		mrm.RISOS.Id,
 		mrm.Topic.Id,
+		mrm.RISOS,
 		mrm.Process.Id,
 		mrm.DbStatus,
 		mrm.DbLastStatus,
