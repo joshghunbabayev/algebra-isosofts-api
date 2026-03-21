@@ -5,6 +5,7 @@ body:
 var body struct {
 		Issuer            string `json:"issuer"`
 	FindingDate       string                               `json:"findingDate"`
+	JobNumber         string                               `json:"jobNumber"`
 		Process           string `json:"process"`
 		CategoryOfFinding string `json:"categoryOfFinding"`
 		TypeOfFinding     string `json:"typeOfFinding"`
