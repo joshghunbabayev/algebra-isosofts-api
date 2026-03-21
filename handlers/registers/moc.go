@@ -41,7 +41,7 @@ func (*MOCHandler) Create(c *gin.Context) {
 		Issuer                 string `json:"issuer"`
 		ReasonOfChange         string `json:"reasonOfChange"`
 		Process                string `json:"process"`
-		Action                 string `json:"action"`
+		ChangeDescription      string `json:"changeDescription"`
 		Risks                  string `json:"risks"`
 		InitialRiskSeverity    int8   `json:"initialRiskSeverity"`
 		InitialRiskLikelihood  int8   `json:"initialRiskLikelihood"`
@@ -76,7 +76,7 @@ func (*MOCHandler) Create(c *gin.Context) {
 		Process: tableComponentTypes.DropDownListItem{
 			Id: body.Process,
 		},
-		Action:                 body.Action,
+		ChangeDescription:      body.ChangeDescription,
 		Risks:                  body.Risks,
 		InitialRiskSeverity:    body.InitialRiskSeverity,
 		InitialRiskLikelihood:  body.InitialRiskLikelihood,
@@ -107,7 +107,7 @@ func (*MOCHandler) Update(c *gin.Context) {
 		Issuer                 string `json:"issuer"`
 		ReasonOfChange         string `json:"reasonOfChange"`
 		Process                string `json:"process"`
-		Action                 string `json:"action"`
+		ChangeDescription      string `json:"changeDescription"`
 		Risks                  string `json:"risks"`
 		InitialRiskSeverity    int8   `json:"initialRiskSeverity"`
 		InitialRiskLikelihood  int8   `json:"initialRiskLikelihood"`
@@ -135,7 +135,7 @@ func (*MOCHandler) Update(c *gin.Context) {
 		"issuer":                 body.Issuer,
 		"reasonOfChange":         body.ReasonOfChange,
 		"process":                body.Process,
-		"action":                 body.Action,
+		"changeDescription":      body.ChangeDescription,
 		"risks":                  body.Risks,
 		"initialRiskSeverity":    body.InitialRiskSeverity,
 		"initialRiskLikelihood":  body.InitialRiskLikelihood,

@@ -12,7 +12,7 @@ type MOC struct {
 	Issuer                 string                               `json:"issuer"`
 	ReasonOfChange         string                               `json:"reasonOfChange"`
 	Process                tableComponentTypes.DropDownListItem `json:"process"`
-	Action                 string                               `json:"action"`
+	ChangeDescription      string                               `json:"changeDescription"`
 	Risks                  string                               `json:"risks"`
 	InitialRiskSeverity    int8                                 `json:"initialRiskSeverity"`
 	InitialRiskLikelihood  int8                                 `json:"initialRiskLikelihood"`
