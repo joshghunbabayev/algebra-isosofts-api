@@ -14,6 +14,7 @@ type MOC struct {
 	Process                tableComponentTypes.DropDownListItem `json:"process"`
 	ChangeDescription      string                               `json:"changeDescription"`
 	Risks                  string                               `json:"risks"`
+	Approval               int8                                 `json:"approval"`
 	InitialRiskSeverity    int8                                 `json:"initialRiskSeverity"`
 	InitialRiskLikelihood  int8                                 `json:"initialRiskLikelihood"`
 	ACM                    string                               `json:"acm"`

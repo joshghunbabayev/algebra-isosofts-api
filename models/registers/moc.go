@@ -82,6 +82,7 @@ func (*MOCModel) GetById(Id string) (registerTypes.MOC, error) {
 		&moc.Process.Id,
 		&moc.ChangeDescription,
 		&moc.Risks,
+		&moc.Approval,
 		&moc.InitialRiskSeverity,
 		&moc.InitialRiskLikelihood,
 		&moc.ACM,
@@ -141,6 +142,7 @@ func (*MOCModel) GetAll(filters map[string]interface{}) ([]registerTypes.MOC, er
 			&moc.Process.Id,
 			&moc.ChangeDescription,
 			&moc.Risks,
+			&moc.Approval,
 			&moc.InitialRiskSeverity,
 			&moc.InitialRiskLikelihood,
 			&moc.ACM,
@@ -173,6 +175,7 @@ func (*MOCModel) Create(moc registerTypes.MOC) error {
 				"process", 
 				"changeDescription", 
 				"risks", 
+				"approval", 
 				"initialRiskSeverity", 
 				"initialRiskLikelihood", 
 				"acm", 
@@ -180,7 +183,7 @@ func (*MOCModel) Create(moc registerTypes.MOC) error {
 				"residualRiskLikelihood",
 				"dbStatus",
 				"dbLastStatus"
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
 		moc.Id,
 		moc.CompanyId,
@@ -190,6 +193,7 @@ func (*MOCModel) Create(moc registerTypes.MOC) error {
 		moc.Process.Id,
 		moc.ChangeDescription,
 		moc.Risks,
+		moc.Approval,
 		moc.InitialRiskSeverity,
 		moc.InitialRiskLikelihood,
 		moc.ACM,

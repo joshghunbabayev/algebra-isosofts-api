@@ -43,6 +43,7 @@ func (*MOCHandler) Create(c *gin.Context) {
 		Process                string `json:"process"`
 		ChangeDescription      string `json:"changeDescription"`
 		Risks                  string `json:"risks"`
+		Approval               int8   `json:"approval"`
 		InitialRiskSeverity    int8   `json:"initialRiskSeverity"`
 		InitialRiskLikelihood  int8   `json:"initialRiskLikelihood"`
 		ACM                    string `json:"acm"`
@@ -78,6 +79,7 @@ func (*MOCHandler) Create(c *gin.Context) {
 		},
 		ChangeDescription:      body.ChangeDescription,
 		Risks:                  body.Risks,
+		Approval:               body.Approval,
 		InitialRiskSeverity:    body.InitialRiskSeverity,
 		InitialRiskLikelihood:  body.InitialRiskLikelihood,
 		ACM:                    body.ACM,
@@ -109,6 +111,7 @@ func (*MOCHandler) Update(c *gin.Context) {
 		Process                string `json:"process"`
 		ChangeDescription      string `json:"changeDescription"`
 		Risks                  string `json:"risks"`
+		Approval               int8   `json:"approval"`
 		InitialRiskSeverity    int8   `json:"initialRiskSeverity"`
 		InitialRiskLikelihood  int8   `json:"initialRiskLikelihood"`
 		ACM                    string `json:"acm"`
@@ -137,6 +140,7 @@ func (*MOCHandler) Update(c *gin.Context) {
 		"process":                body.Process,
 		"changeDescription":      body.ChangeDescription,
 		"risks":                  body.Risks,
+		"approval":               body.Approval,
 		"initialRiskSeverity":    body.InitialRiskSeverity,
 		"initialRiskLikelihood":  body.InitialRiskLikelihood,
 		"acm":                    body.ACM,
