@@ -16,10 +16,10 @@ type AOP struct {
 	ReviewedProcess     tableComponentTypes.DropDownListItem `json:"reviewedProcess"`
 	RTIC                string                               `json:"rtic"`
 	Frequency           string                               `json:"frequency"`
-	AuditDate           string                               `json:"AuditDate"`
+	AOADate             string                               `json:"aoaDate"`
 	InspectionFrequency tableComponentTypes.DropDownListItem `json:"inspectionFrequency"`
-	NextAuditDate       string                               `json:"nextAuditDate"`
-	AuditStatus         string                               `json:"auditStatus"`
+	NextAoaDate         string                               `json:"nextAoaDate"`
+	AOAStatus           string                               `json:"aoaStatus"`
 	DbStatus            string                               `json:"dbStatus"`
 	DbLastStatus        string                               `json:"-"`
 	Actions             []registerComponentTypes.Action      `json:"actions"`

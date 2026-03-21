@@ -45,10 +45,10 @@ func (*AOPHandler) Create(c *gin.Context) {
 		ReviewedProcess     string `json:"reviewedProcess"`
 		RTIC                string `json:"rtic"`
 		Frequency           string `json:"frequency"`
-		AuditDate           string `json:"auditDate"`
+		AOADate             string `json:"aoaDate"`
 		InspectionFrequency string `json:"inspectionFrequency"`
-		NextAuditDate       string `json:"nextAuditDate"`
-		AuditStatus         string `json:"auditStatus"`
+		NextAoaDate         string `json:"nextAoaDate"`
+		AOAStatus           string `json:"aoaStatus"`
 	}
 
 	var errs = make(map[string]interface{})
@@ -85,14 +85,14 @@ func (*AOPHandler) Create(c *gin.Context) {
 		},
 		RTIC:      body.RTIC,
 		Frequency: body.Frequency,
-		AuditDate: body.AuditDate,
+		AOADate:   body.AOADate,
 		InspectionFrequency: tableComponentTypes.DropDownListItem{
 			Id: body.InspectionFrequency,
 		},
-		NextAuditDate: body.NextAuditDate,
-		AuditStatus:   body.AuditStatus,
-		DbStatus:      "active",
-		DbLastStatus:  "active",
+		NextAoaDate:  body.NextAoaDate,
+		AOAStatus:    body.AOAStatus,
+		DbStatus:     "active",
+		DbLastStatus: "active",
 	})
 
 	c.IndentedJSON(201, gin.H{})
@@ -119,10 +119,10 @@ func (*AOPHandler) Update(c *gin.Context) {
 		ReviewedProcess     string `json:"reviewedProcess"`
 		RTIC                string `json:"rtic"`
 		Frequency           string `json:"frequency"`
-		AuditDate           string `json:"auditDate"`
+		AOADate             string `json:"aoaDate"`
 		InspectionFrequency string `json:"inspectionFrequency"`
-		NextAuditDate       string `json:"nextAuditDate"`
-		AuditStatus         string `json:"auditStatus"`
+		NextAoaDate         string `json:"nextAoaDate"`
+		AOAStatus           string `json:"aoaStatus"`
 	}
 
 	var errs = make(map[string]interface{})
@@ -148,10 +148,10 @@ func (*AOPHandler) Update(c *gin.Context) {
 		"reviewedProcess":     body.ReviewedProcess,
 		"rtic":                body.RTIC,
 		"frequency":           body.Frequency,
-		"auditDate":           body.AuditDate,
+		"aoaDate":             body.AOADate,
 		"inspectionFrequency": body.InspectionFrequency,
-		"nextAuditDate":       body.NextAuditDate,
-		"auditStatus":         body.AuditStatus,
+		"nextAoaDate":         body.NextAoaDate,
+		"aoaStatus":           body.AOAStatus,
 	})
 
 	c.JSON(200, gin.H{})
