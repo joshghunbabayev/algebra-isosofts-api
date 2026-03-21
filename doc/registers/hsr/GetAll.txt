@@ -14,7 +14,7 @@ type HSR struct {
 	Hazard                 tableComponentTypes.DropDownListItem `json:"hazard"`
 	Risk                   tableComponentTypes.DropDownListItem `json:"risk"`
 	AffectedPositions      tableComponentTypes.DropDownListItem `json:"affectedPositions"`
-	ERMA                   string                               `json:"erma"`
+	ECM                   string                               `json:"ecm"`
 	InitialRiskSeverity    int8                                 `json:"initialRiskSeverity"`
 	InitialRiskLikelihood  int8                                 `json:"initialRiskLikelihood"`
 	ACM                    string                               `json:"acm"`

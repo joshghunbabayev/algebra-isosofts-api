@@ -41,7 +41,7 @@ func (*HSRHandler) Create(c *gin.Context) {
 		Hazard                 string `json:"hazard"`
 		Risk                   string `json:"risk"`
 		AffectedPositions      string `json:"affectedPositions"`
-		ERMA                   string `json:"erma"`
+		ECM                    string `json:"ecm"`
 		InitialRiskSeverity    int8   `json:"initialRiskSeverity"`
 		InitialRiskLikelihood  int8   `json:"initialRiskLikelihood"`
 		ACM                    string `json:"acm"`
@@ -84,7 +84,7 @@ func (*HSRHandler) Create(c *gin.Context) {
 		AffectedPositions: tableComponentTypes.DropDownListItem{
 			Id: body.AffectedPositions,
 		},
-		ERMA:                   body.ERMA,
+		ECM:                    body.ECM,
 		InitialRiskSeverity:    body.InitialRiskSeverity,
 		InitialRiskLikelihood:  body.InitialRiskLikelihood,
 		ACM:                    body.ACM,
@@ -115,7 +115,7 @@ func (*HSRHandler) Update(c *gin.Context) {
 		Hazard                 string `json:"hazard"`
 		Risk                   string `json:"risk"`
 		AffectedPositions      string `json:"affectedPositions"`
-		ERMA                   string `json:"erma"`
+		ECM                    string `json:"ecm"`
 		InitialRiskSeverity    int8   `json:"initialRiskSeverity"`
 		InitialRiskLikelihood  int8   `json:"initialRiskLikelihood"`
 		ACM                    string `json:"acm"`
@@ -143,7 +143,7 @@ func (*HSRHandler) Update(c *gin.Context) {
 		"hazard":                 body.Hazard,
 		"risk":                   body.Risk,
 		"affectedPositions":      body.AffectedPositions,
-		"erma":                   body.ERMA,
+		"ecm":                    body.ECM,
 		"initialRiskSeverity":    body.InitialRiskSeverity,
 		"initialRiskLikelihood":  body.InitialRiskLikelihood,
 		"acm":                    body.ACM,
