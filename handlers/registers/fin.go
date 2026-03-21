@@ -39,6 +39,7 @@ func (*FINHandler) Create(c *gin.Context) {
 	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Issuer            string `json:"issuer"`
+		FindingDate       string `json:"findingDate"`
 		Process           string `json:"process"`
 		CategoryOfFinding string `json:"categoryOfFinding"`
 		TypeOfFinding     string `json:"typeOfFinding"`
@@ -68,10 +69,11 @@ func (*FINHandler) Create(c *gin.Context) {
 	var finModel registerModels.FINModel
 
 	finModel.Create(registerTypes.FIN{
-		Id:        finModel.GenerateUniqueId(),
-		CompanyId: account.CompanyId,
-		No:        finModel.GenerateUniqueNo(),
-		Issuer:    body.Issuer,
+		Id:          finModel.GenerateUniqueId(),
+		CompanyId:   account.CompanyId,
+		No:          finModel.GenerateUniqueNo(),
+		Issuer:      body.Issuer,
+		FindingDate: body.FindingDate,
 		Process: tableComponentTypes.DropDownListItem{
 			Id: body.Process,
 		},
@@ -111,6 +113,7 @@ func (*FINHandler) Update(c *gin.Context) {
 
 	var body struct {
 		Issuer            string `json:"issuer"`
+		FindingDate       string `json:"findingDate"`
 		Process           string `json:"process"`
 		CategoryOfFinding string `json:"categoryOfFinding"`
 		TypeOfFinding     string `json:"typeOfFinding"`
@@ -139,6 +142,7 @@ func (*FINHandler) Update(c *gin.Context) {
 
 	finModel.Update(Id, map[string]interface{}{
 		"issuer":            body.Issuer,
+		"findingDate":       body.FindingDate,
 		"process":           body.Process,
 		"categoryOfFinding": body.CategoryOfFinding,
 		"typeOfFinding":     body.TypeOfFinding,

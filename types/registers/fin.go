@@ -10,6 +10,7 @@ type FIN struct {
 	CompanyId         string                               `json:"companyId"`
 	No                string                               `json:"no"`
 	Issuer            string                               `json:"issuer"`
+	FindingDate       string                               `json:"findingDate"`
 	Process           tableComponentTypes.DropDownListItem `json:"process"`
 	CategoryOfFinding tableComponentTypes.DropDownListItem `json:"categoryOfFinding"`
 	TypeOfFinding     tableComponentTypes.DropDownListItem `json:"typeOfFinding"`

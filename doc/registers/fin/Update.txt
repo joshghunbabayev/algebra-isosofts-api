@@ -4,6 +4,7 @@ For update finregister
 body:
 var body struct {
 		Issuer            string `json:"issuer"`
+	FindingDate       string                               `json:"findingDate"`
 		Process           string `json:"process"`
 		CategoryOfFinding string `json:"categoryOfFinding"`
 		TypeOfFinding     string `json:"typeOfFinding"`

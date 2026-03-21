@@ -78,6 +78,7 @@ func (*FINModel) GetById(Id string) (registerTypes.FIN, error) {
 		&fin.CompanyId,
 		&fin.No,
 		&fin.Issuer,
+		&fin.FindingDate,
 		&fin.Process.Id,
 		&fin.CategoryOfFinding.Id,
 		&fin.TypeOfFinding.Id,
@@ -140,6 +141,7 @@ func (*FINModel) GetAll(filters map[string]interface{}) ([]registerTypes.FIN, er
 			&fin.CompanyId,
 			&fin.No,
 			&fin.Issuer,
+			&fin.FindingDate,
 			&fin.Process.Id,
 			&fin.CategoryOfFinding.Id,
 			&fin.TypeOfFinding.Id,
@@ -175,6 +177,7 @@ func (*FINModel) Create(fin registerTypes.FIN) error {
 				"companyId",
 				"no",
 				"issuer", 
+				"findingDate", 
 				"process", 
 				"categoryOfFinding", 
 				"typeOfFinding", 
@@ -186,12 +189,13 @@ func (*FINModel) Create(fin registerTypes.FIN) error {
 				"rootCauses", 
 				"dbStatus",
 				"dbLastStatus"
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
 		fin.Id,
 		fin.CompanyId,
 		fin.No,
 		fin.Issuer,
+		fin.FindingDate,
 		fin.Process.Id,
 		fin.CategoryOfFinding.Id,
 		fin.TypeOfFinding.Id,
