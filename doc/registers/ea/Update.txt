@@ -8,7 +8,9 @@ type EA struct {
 	LineManager     string                          `json:"lineManager"`
 	ESD             string                          `json:"esd"`
 	AppraisalDate   string                          `json:"appraisalDate"`
+	NextAppraisalDate string                               `json:"nextAppraisalDate"`
 	AppraisalType   string                          `json:"appraisalType"`
 	TCA             string                          `json:"tca"`
 	SkillsAppraisal string                          `json:"skillsAppraisal"`
+	EVS               int8                                 `json:"evs"`
 }

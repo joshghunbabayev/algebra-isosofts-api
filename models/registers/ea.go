@@ -82,9 +82,11 @@ func (*EAModel) GetById(Id string) (registerTypes.EA, error) {
 		&ea.LineManager,
 		&ea.ESD,
 		&ea.AppraisalDate,
+		&ea.NextAppraisalDate,
 		&ea.AppraisalType.Id,
 		&ea.TCA,
 		&ea.SkillsAppraisal,
+		&ea.EVS,
 		&ea.DbStatus,
 		&ea.DbLastStatus,
 	)
@@ -139,9 +141,11 @@ func (*EAModel) GetAll(filters map[string]interface{}) ([]registerTypes.EA, erro
 			&ea.LineManager,
 			&ea.ESD,
 			&ea.AppraisalDate,
+			&ea.NextAppraisalDate,
 			&ea.AppraisalType.Id,
 			&ea.TCA,
 			&ea.SkillsAppraisal,
+			&ea.EVS,
 			&ea.DbStatus,
 			&ea.DbLastStatus,
 		)
@@ -169,12 +173,14 @@ func (*EAModel) Create(ea registerTypes.EA) error {
 				"lineManager", 
 				"esd", 
 				"appraisalDate", 
+				"nextAppraisalDate", 
 				"appraisalType", 
 				"tca", 
 				"skillsAppraisal", 
+				"evs", 
 				"dbStatus",
 				"dbLastStatus"
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
 		ea.Id,
 		ea.CompanyId,
@@ -184,9 +190,11 @@ func (*EAModel) Create(ea registerTypes.EA) error {
 		ea.LineManager,
 		ea.ESD,
 		ea.AppraisalDate,
+		ea.NextAppraisalDate,
 		ea.AppraisalType.Id,
 		ea.TCA,
 		ea.SkillsAppraisal,
+		ea.EVS,
 		ea.DbStatus,
 		ea.DbLastStatus,
 	)

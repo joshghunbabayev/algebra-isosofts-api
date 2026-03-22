@@ -38,14 +38,16 @@ func (*EAHandler) GetAll(c *gin.Context) {
 func (*EAHandler) Create(c *gin.Context) {
 	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
-		EmployeeName    string `json:"employeeName"`
-		Position        string `json:"position"`
-		LineManager     string `json:"lineManager"`
-		ESD             string `json:"esd"`
-		AppraisalDate   string `json:"appraisalDate"`
-		AppraisalType   string `json:"appraisalType"`
-		TCA             string `json:"tca"`
-		SkillsAppraisal string `json:"skillsAppraisal"`
+		EmployeeName      string `json:"employeeName"`
+		Position          string `json:"position"`
+		LineManager       string `json:"lineManager"`
+		ESD               string `json:"esd"`
+		AppraisalDate     string `json:"appraisalDate"`
+		NextAppraisalDate string `json:"nextAppraisalDate"`
+		AppraisalType     string `json:"appraisalType"`
+		TCA               string `json:"tca"`
+		SkillsAppraisal   string `json:"skillsAppraisal"`
+		EVS               int8   `json:"evs"`
 	}
 
 	var errs = make(map[string]interface{})
@@ -66,19 +68,21 @@ func (*EAHandler) Create(c *gin.Context) {
 	var eaModel registerModels.EAModel
 
 	eaModel.Create(registerTypes.EA{
-		Id:            eaModel.GenerateUniqueId(),
-		CompanyId:     account.CompanyId,
-		No:            eaModel.GenerateUniqueNo(),
-		EmployeeName:  body.EmployeeName,
-		Position:      body.Position,
-		LineManager:   body.LineManager,
-		ESD:           body.ESD,
-		AppraisalDate: body.AppraisalDate,
+		Id:                eaModel.GenerateUniqueId(),
+		CompanyId:         account.CompanyId,
+		No:                eaModel.GenerateUniqueNo(),
+		EmployeeName:      body.EmployeeName,
+		Position:          body.Position,
+		LineManager:       body.LineManager,
+		ESD:               body.ESD,
+		AppraisalDate:     body.AppraisalDate,
+		NextAppraisalDate: body.NextAppraisalDate,
 		AppraisalType: tableComponentTypes.DropDownListItem{
 			Id: body.AppraisalType,
 		},
 		TCA:             body.TCA,
 		SkillsAppraisal: body.SkillsAppraisal,
+		EVS:             body.EVS,
 		DbStatus:        "active",
 		DbLastStatus:    "active",
 	})
@@ -100,14 +104,16 @@ func (*EAHandler) Update(c *gin.Context) {
 	}
 
 	var body struct {
-		EmployeeName    string `json:"employeeName"`
-		Position        string `json:"position"`
-		LineManager     string `json:"lineManager"`
-		ESD             string `json:"esd"`
-		AppraisalDate   string `json:"appraisalDate"`
-		AppraisalType   string `json:"appraisalType"`
-		TCA             string `json:"tca"`
-		SkillsAppraisal string `json:"skillsAppraisal"`
+		EmployeeName      string `json:"employeeName"`
+		Position          string `json:"position"`
+		LineManager       string `json:"lineManager"`
+		ESD               string `json:"esd"`
+		AppraisalDate     string `json:"appraisalDate"`
+		NextAppraisalDate string `json:"nextAppraisalDate"`
+		AppraisalType     string `json:"appraisalType"`
+		TCA               string `json:"tca"`
+		SkillsAppraisal   string `json:"skillsAppraisal"`
+		EVS               int8   `json:"evs"`
 	}
 
 	var errs = make(map[string]interface{})
@@ -126,14 +132,16 @@ func (*EAHandler) Update(c *gin.Context) {
 	}
 
 	eaModel.Update(Id, map[string]interface{}{
-		"employeeName":    body.EmployeeName,
-		"position":        body.Position,
-		"lineManager":     body.LineManager,
-		"esd":             body.ESD,
-		"appraisalDate":   body.AppraisalDate,
-		"appraisalType":   body.AppraisalType,
-		"tca":             body.TCA,
-		"skillsAppraisal": body.SkillsAppraisal,
+		"employeeName":      body.EmployeeName,
+		"position":          body.Position,
+		"lineManager":       body.LineManager,
+		"esd":               body.ESD,
+		"appraisalDate":     body.AppraisalDate,
+		"nextAppraisalDate": body.NextAppraisalDate,
+		"appraisalType":     body.AppraisalType,
+		"tca":               body.TCA,
+		"skillsAppraisal":   body.SkillsAppraisal,
+		"evs":               body.EVS,
 	})
 
 	c.JSON(200, gin.H{})
