@@ -50,6 +50,7 @@ func (*FINHandler) Create(c *gin.Context) {
 		Description       string `json:"description"`
 		ContainmentAction string `json:"containmentAction"`
 		RootCauses        string `json:"rootCauses"`
+		FindingStatus     string `json:"findingStatus"`
 	}
 
 	var errs = make(map[string]interface{})
@@ -93,8 +94,11 @@ func (*FINHandler) Create(c *gin.Context) {
 		Description:       body.Description,
 		ContainmentAction: body.ContainmentAction,
 		RootCauses:        body.RootCauses,
-		DbStatus:          "active",
-		DbLastStatus:      "active",
+		FindingStatus: tableComponentTypes.DropDownListItem{
+			Id: body.FindingStatus,
+		},
+		DbStatus:     "active",
+		DbLastStatus: "active",
 	})
 
 	c.IndentedJSON(201, gin.H{})
@@ -126,6 +130,7 @@ func (*FINHandler) Update(c *gin.Context) {
 		Description       string `json:"description"`
 		ContainmentAction string `json:"containmentAction"`
 		RootCauses        string `json:"rootCauses"`
+		FindingStatus     string `json:"findingStatus"`
 	}
 
 	var errs = make(map[string]interface{})
@@ -156,6 +161,7 @@ func (*FINHandler) Update(c *gin.Context) {
 		"description":       body.Description,
 		"containmentAction": body.ContainmentAction,
 		"rootCauses":        body.RootCauses,
+		"findingStatus":     body.FindingStatus,
 	})
 
 	c.JSON(200, gin.H{})

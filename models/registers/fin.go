@@ -89,6 +89,7 @@ func (*FINModel) GetById(Id string) (registerTypes.FIN, error) {
 		&fin.Description,
 		&fin.ContainmentAction,
 		&fin.RootCauses,
+		&fin.FindingStatus.Id,
 		&fin.DbStatus,
 		&fin.DbLastStatus,
 	)
@@ -96,6 +97,7 @@ func (*FINModel) GetById(Id string) (registerTypes.FIN, error) {
 	fin.CategoryOfFinding, _ = dropDownListItemModel.GetById(fin.CategoryOfFinding.Id)
 	fin.TypeOfFinding, _ = dropDownListItemModel.GetById(fin.TypeOfFinding.Id)
 	fin.SourceOfFinding, _ = dropDownListItemModel.GetById(fin.SourceOfFinding.Id)
+	fin.FindingStatus, _ = dropDownListItemModel.GetById(fin.FindingStatus.Id)
 	fin.Actions, _ = actionModel.GetAll(map[string]interface{}{
 		"registerId": fin.Id,
 		"dbStatus":   "active",
@@ -153,6 +155,7 @@ func (*FINModel) GetAll(filters map[string]interface{}) ([]registerTypes.FIN, er
 			&fin.Description,
 			&fin.ContainmentAction,
 			&fin.RootCauses,
+			&fin.FindingStatus.Id,
 			&fin.DbStatus,
 			&fin.DbLastStatus,
 		)
@@ -160,6 +163,7 @@ func (*FINModel) GetAll(filters map[string]interface{}) ([]registerTypes.FIN, er
 		fin.CategoryOfFinding, _ = dropDownListItemModel.GetById(fin.CategoryOfFinding.Id)
 		fin.TypeOfFinding, _ = dropDownListItemModel.GetById(fin.TypeOfFinding.Id)
 		fin.SourceOfFinding, _ = dropDownListItemModel.GetById(fin.SourceOfFinding.Id)
+		fin.FindingStatus, _ = dropDownListItemModel.GetById(fin.FindingStatus.Id)
 		fin.Actions, _ = actionModel.GetAll(map[string]interface{}{
 			"registerId": fin.Id,
 			"dbStatus":   "active",
@@ -190,9 +194,10 @@ func (*FINModel) Create(fin registerTypes.FIN) error {
 				"description", 
 				"containmentAction", 
 				"rootCauses", 
+				"findingStatus", 
 				"dbStatus",
 				"dbLastStatus"
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
 		fin.Id,
 		fin.CompanyId,
@@ -209,6 +214,7 @@ func (*FINModel) Create(fin registerTypes.FIN) error {
 		fin.Description,
 		fin.ContainmentAction,
 		fin.RootCauses,
+		fin.FindingStatus.Id,
 		fin.DbStatus,
 		fin.DbLastStatus,
 	)
