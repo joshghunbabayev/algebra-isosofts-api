@@ -9,5 +9,5 @@ import (
 func KPIRoutes(rg *gin.RouterGroup) {
 	var kpiHandler dashboardHandlers.KPIHandler
 	rg.GET("", kpiHandler.GetAll)
-	rg.POST("/:id", kpiHandler.Update)
+	rg.PUT("/:id", kpiHandler.Update)
 }
