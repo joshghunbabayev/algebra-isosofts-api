@@ -3,6 +3,7 @@ package registerModels
 import (
 	"algebra-isosofts-api/database"
 	registerComponentModels "algebra-isosofts-api/models/registers/components"
+	tableComponentModels "algebra-isosofts-api/models/tableComponents"
 	"algebra-isosofts-api/modules"
 	registerTypes "algebra-isosofts-api/types/registers"
 	"fmt"
@@ -69,6 +70,7 @@ func (*EAModel) GetById(Id string) (registerTypes.EA, error) {
 	)
 
 	var ea registerTypes.EA
+	var dropDownListItemModel tableComponentModels.DropDownListItemModel
 	var actionModel registerComponentModels.ActionModel
 
 	err := row.Scan(
@@ -80,12 +82,13 @@ func (*EAModel) GetById(Id string) (registerTypes.EA, error) {
 		&ea.LineManager,
 		&ea.ESD,
 		&ea.AppraisalDate,
-		&ea.AppraisalType,
+		&ea.AppraisalType.Id,
 		&ea.TCA,
 		&ea.SkillsAppraisal,
 		&ea.DbStatus,
 		&ea.DbLastStatus,
 	)
+	ea.AppraisalType, _ = dropDownListItemModel.GetById(ea.AppraisalType.Id)
 	ea.Actions, _ = actionModel.GetAll(map[string]interface{}{
 		"registerId": ea.Id,
 		"dbStatus":   "active",
@@ -124,6 +127,7 @@ func (*EAModel) GetAll(filters map[string]interface{}) ([]registerTypes.EA, erro
 
 	for rows.Next() {
 		var ea registerTypes.EA
+		var dropDownListItemModel tableComponentModels.DropDownListItemModel
 		var actionModel registerComponentModels.ActionModel
 
 		rows.Scan(
@@ -135,12 +139,13 @@ func (*EAModel) GetAll(filters map[string]interface{}) ([]registerTypes.EA, erro
 			&ea.LineManager,
 			&ea.ESD,
 			&ea.AppraisalDate,
-			&ea.AppraisalType,
+			&ea.AppraisalType.Id,
 			&ea.TCA,
 			&ea.SkillsAppraisal,
 			&ea.DbStatus,
 			&ea.DbLastStatus,
 		)
+		ea.AppraisalType, _ = dropDownListItemModel.GetById(ea.AppraisalType.Id)
 		ea.Actions, _ = actionModel.GetAll(map[string]interface{}{
 			"registerId": ea.Id,
 			"dbStatus":   "active",
@@ -179,7 +184,7 @@ func (*EAModel) Create(ea registerTypes.EA) error {
 		ea.LineManager,
 		ea.ESD,
 		ea.AppraisalDate,
-		ea.AppraisalType,
+		ea.AppraisalType.Id,
 		ea.TCA,
 		ea.SkillsAppraisal,
 		ea.DbStatus,

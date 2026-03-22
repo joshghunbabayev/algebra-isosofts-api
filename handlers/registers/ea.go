@@ -4,6 +4,7 @@ import (
 	"algebra-isosofts-api/middlewares"
 	registerModels "algebra-isosofts-api/models/registers"
 	registerTypes "algebra-isosofts-api/types/registers"
+	tableComponentTypes "algebra-isosofts-api/types/tableComponents"
 
 	"github.com/gin-gonic/gin"
 )
@@ -65,15 +66,17 @@ func (*EAHandler) Create(c *gin.Context) {
 	var eaModel registerModels.EAModel
 
 	eaModel.Create(registerTypes.EA{
-		Id:              eaModel.GenerateUniqueId(),
-		CompanyId:       account.CompanyId,
-		No:              eaModel.GenerateUniqueNo(),
-		EmployeeName:    body.EmployeeName,
-		Position:        body.Position,
-		LineManager:     body.LineManager,
-		ESD:             body.ESD,
-		AppraisalDate:   body.AppraisalDate,
-		AppraisalType:   body.AppraisalType,
+		Id:            eaModel.GenerateUniqueId(),
+		CompanyId:     account.CompanyId,
+		No:            eaModel.GenerateUniqueNo(),
+		EmployeeName:  body.EmployeeName,
+		Position:      body.Position,
+		LineManager:   body.LineManager,
+		ESD:           body.ESD,
+		AppraisalDate: body.AppraisalDate,
+		AppraisalType: tableComponentTypes.DropDownListItem{
+			Id: body.AppraisalType,
+		},
 		TCA:             body.TCA,
 		SkillsAppraisal: body.SkillsAppraisal,
 		DbStatus:        "active",
