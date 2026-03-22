@@ -186,7 +186,7 @@ func (*ActionModel) Create(action registerComponentTypes.Action) error {
 			INSERT INTO actions ( 
 				"id",
 				"registerId",
-				"registerTyoe",
+				"registerType",
 				"no",
 				"title",
 				"raiseDate",
