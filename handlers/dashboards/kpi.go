@@ -31,7 +31,7 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 		var calculatedValue int64 = 0
 
 		switch kpis[i].SNo {
-		case 1:
+		case 1: // Number of Residual High Business Risks / Opportunity Level
 			var brModel registerModels.BRModel
 
 			brs, _ := brModel.GetAll(map[string]interface{}{
