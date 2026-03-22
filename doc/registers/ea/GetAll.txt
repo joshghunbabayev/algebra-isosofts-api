@@ -14,7 +14,7 @@ type EA struct {
 	LineManager     string                          `json:"lineManager"`
 	ESD             string                          `json:"esd"`
 	AppraisalDate   string                          `json:"appraisalDate"`
-	AppraisalType   string                          `json:"appraisalType"`
+	AppraisalType   tableComponentTypes.DropDownListItem `json:"appraisalType"`
 	TCA             string                          `json:"tca"`
 	SkillsAppraisal string                          `json:"skillsAppraisal"`
 	DbStatus        string                          `json:"dbStatus"`
