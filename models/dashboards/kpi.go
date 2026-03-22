@@ -2,8 +2,10 @@ package dashboardModels
 
 import (
 	"algebra-isosofts-api/database"
+	tableComponentModels "algebra-isosofts-api/models/tableComponents"
 	"algebra-isosofts-api/modules"
 	dashboardTypes "algebra-isosofts-api/types/dashboards"
+	tableComponentTypes "algebra-isosofts-api/types/tableComponents"
 	"fmt"
 	"strings"
 )
@@ -29,13 +31,15 @@ func (*KPIModel) GetById(id string) (dashboardTypes.KPI, error) {
 		`, id)
 
 	var kpi dashboardTypes.KPI
+	var dropDownListItemModel tableComponentModels.DropDownListItemModel
+
 	err := row.Scan(
 		&kpi.Id,
 		&kpi.CompanyId,
 		&kpi.SNo,
 		&kpi.No,
 		&kpi.Title,
-		&kpi.Function,
+		&kpi.Function.Id,
 		&kpi.LYKPI,
 		&kpi.AnnualTarget,
 		&kpi.January,
@@ -51,6 +55,7 @@ func (*KPIModel) GetById(id string) (dashboardTypes.KPI, error) {
 		&kpi.November,
 		&kpi.December,
 	)
+	kpi.Function, _ = dropDownListItemModel.GetById(kpi.Function.Id)
 
 	return kpi, err
 }
@@ -80,13 +85,15 @@ func (*KPIModel) GetAll(filters map[string]interface{}) ([]dashboardTypes.KPI, e
 	var kpis []dashboardTypes.KPI
 	for rows.Next() {
 		var kpi dashboardTypes.KPI
+		var dropDownListItemModel tableComponentModels.DropDownListItemModel
+
 		err := rows.Scan(
 			&kpi.Id,
 			&kpi.CompanyId,
 			&kpi.SNo,
 			&kpi.No,
 			&kpi.Title,
-			&kpi.Function,
+			&kpi.Function.Id,
 			&kpi.LYKPI,
 			&kpi.AnnualTarget,
 			&kpi.January,
@@ -102,6 +109,8 @@ func (*KPIModel) GetAll(filters map[string]interface{}) ([]dashboardTypes.KPI, e
 			&kpi.November,
 			&kpi.December,
 		)
+
+		kpi.Function, _ = dropDownListItemModel.GetById(kpi.Function.Id)
 		if err != nil {
 			return nil, err
 		}
@@ -121,7 +130,7 @@ func (*KPIModel) Create(kpi dashboardTypes.KPI) error {
 				"july", "august", "september", "october", "november", "december"
 			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
-		kpi.Id, kpi.CompanyId, kpi.SNo, kpi.No, kpi.Title, kpi.Function,
+		kpi.Id, kpi.CompanyId, kpi.SNo, kpi.No, kpi.Title, kpi.Function.Id,
 		kpi.LYKPI, kpi.AnnualTarget,
 		kpi.January, kpi.February, kpi.March, kpi.April, kpi.May, kpi.June,
 		kpi.July, kpi.August, kpi.September, kpi.October, kpi.November, kpi.December,
@@ -180,12 +189,14 @@ func (*KPIModel) DuplicateDefaults(companyId string) error {
 	for _, kpi := range defaultKPIs {
 		// Create metodu vasitəsilə yeni rəqəmlər 0 olaraq (və ya NULL) yaranacaq
 		if err := kpiModel.Create(dashboardTypes.KPI{
-			Id:           kpiModel.GenerateUniqueId(),
-			CompanyId:    companyId,
-			SNo:          kpi.SNo,
-			No:           kpi.No,
-			Title:        kpi.Title,
-			Function:     "",
+			Id:        kpiModel.GenerateUniqueId(),
+			CompanyId: companyId,
+			SNo:       kpi.SNo,
+			No:        kpi.No,
+			Title:     kpi.Title,
+			Function: tableComponentTypes.DropDownListItem{
+				Id: "",
+			},
 			LYKPI:        0,
 			AnnualTarget: 0,
 			January:      0,

@@ -8,7 +8,7 @@ GET /api/dashboard/kpi?token=
     "sno": 1,
     "no": "KPİ/25/001",
     "title": "Number of Residual High Business Risks",
-    "function": "test",
+    "function": "kuasd893kd1od12wdo8jkwqd",  Function     tableComponentTypes.DropDownListItem `json:"function"`
     "lykpi": 30,
     "actualKPI": 100,
     "annualTarget": 45,
