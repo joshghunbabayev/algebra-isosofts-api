@@ -10,8 +10,8 @@ var body struct {
 		CategoryOfFinding string `json:"categoryOfFinding"`
 		TypeOfFinding     string `json:"typeOfFinding"`
 		SourceOfFinding   string `json:"sourceOfFinding"`
-		Customer          string `json:"customer"`
-		Vendor            string `json:"vendor"`
+	CustomerId        string                               `json:"customerId"`
+	VendorId          string                               `json:"vendorId"`
 		Description       string `json:"description"`
 		ContainmentAction string `json:"containmentAction"`
 		RootCauses        string `json:"rootCauses"`

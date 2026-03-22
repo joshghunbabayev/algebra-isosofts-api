@@ -45,8 +45,8 @@ func (*FINHandler) Create(c *gin.Context) {
 		CategoryOfFinding string `json:"categoryOfFinding"`
 		TypeOfFinding     string `json:"typeOfFinding"`
 		SourceOfFinding   string `json:"sourceOfFinding"`
-		Customer          string `json:"customer"`
-		Vendor            string `json:"vendor"`
+		CustomerId        string `json:"customerId"`
+		VendorId          string `json:"vendorId"`
 		Description       string `json:"description"`
 		ContainmentAction string `json:"containmentAction"`
 		RootCauses        string `json:"rootCauses"`
@@ -88,8 +88,8 @@ func (*FINHandler) Create(c *gin.Context) {
 		SourceOfFinding: tableComponentTypes.DropDownListItem{
 			Id: body.SourceOfFinding,
 		},
-		Customer:          body.Customer,
-		Vendor:            body.Vendor,
+		CustomerId:        body.CustomerId,
+		VendorId:          body.VendorId,
 		Description:       body.Description,
 		ContainmentAction: body.ContainmentAction,
 		RootCauses:        body.RootCauses,
@@ -121,8 +121,8 @@ func (*FINHandler) Update(c *gin.Context) {
 		CategoryOfFinding string `json:"categoryOfFinding"`
 		TypeOfFinding     string `json:"typeOfFinding"`
 		SourceOfFinding   string `json:"sourceOfFinding"`
-		Customer          string `json:"customer"`
-		Vendor            string `json:"vendor"`
+		CustomerId        string `json:"customerId"`
+		VendorId          string `json:"vendorId"`
 		Description       string `json:"description"`
 		ContainmentAction string `json:"containmentAction"`
 		RootCauses        string `json:"rootCauses"`
@@ -151,8 +151,8 @@ func (*FINHandler) Update(c *gin.Context) {
 		"categoryOfFinding": body.CategoryOfFinding,
 		"typeOfFinding":     body.TypeOfFinding,
 		"sourceOfFinding":   body.SourceOfFinding,
-		"customer":          body.Customer,
-		"vendor":            body.Vendor,
+		"customerId":        body.CustomerId,
+		"vendorId":          body.VendorId,
 		"description":       body.Description,
 		"containmentAction": body.ContainmentAction,
 		"rootCauses":        body.RootCauses,

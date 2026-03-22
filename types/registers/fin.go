@@ -16,8 +16,8 @@ type FIN struct {
 	CategoryOfFinding tableComponentTypes.DropDownListItem `json:"categoryOfFinding"`
 	TypeOfFinding     tableComponentTypes.DropDownListItem `json:"typeOfFinding"`
 	SourceOfFinding   tableComponentTypes.DropDownListItem `json:"sourceOfFinding"`
-	Customer          string                               `json:"customer"`
-	Vendor            string                               `json:"vendor"`
+	CustomerId        string                               `json:"customerId"`
+	VendorId          string                               `json:"vendorId"`
 	Description       string                               `json:"description"`
 	ContainmentAction string                               `json:"containmentAction"`
 	RootCauses        string                               `json:"rootCauses"`
