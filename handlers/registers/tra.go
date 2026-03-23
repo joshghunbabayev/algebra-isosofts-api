@@ -36,14 +36,14 @@ func (*TRAHandler) GetAll(c *gin.Context) {
 
 func (*TRAHandler) Create(c *gin.Context) {
 	var body struct {
-		EmployeeName     string `json:"employeeName"`
-		Position         string `json:"position"`
-		TCLN             string `json:"tcln"`
-		TCLID            string `json:"nvcd"`
-		CLNumber         string `json:"clnumber"`
-		NCD              string `json:"ncd"`
-		CompetencyStatus int8   `json:"competencyStatus"`
-		Effectiveness    int8   `json:"effectiveness"`
+		EmployeeName   string `json:"employeeName"`
+		Position       string `json:"position"`
+		TCLN           string `json:"tcln"`
+		TCLID          string `json:"nvcd"`
+		CLNumber       string `json:"clnumber"`
+		NCD            string `json:"ncd"`
+		ValidityStatus int8   `json:"validityStatus"`
+		Effectiveness  int8   `json:"effectiveness"`
 	}
 
 	var errs = make(map[string]interface{})
@@ -66,19 +66,19 @@ func (*TRAHandler) Create(c *gin.Context) {
 	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 
 	traModel.Create(registerTypes.TRA{
-		Id:               traModel.GenerateUniqueId(),
-		CompanyId:        account.CompanyId,
-		No:               traModel.GenerateUniqueNo(),
-		EmployeeName:     body.EmployeeName,
-		Position:         body.Position,
-		TCLN:             body.TCLN,
-		TCLID:            body.TCLID,
-		CLNumber:         body.CLNumber,
-		NCD:              body.NCD,
-		CompetencyStatus: body.CompetencyStatus,
-		Effectiveness:    body.Effectiveness,
-		DbStatus:         "active",
-		DbLastStatus:     "active",
+		Id:             traModel.GenerateUniqueId(),
+		CompanyId:      account.CompanyId,
+		No:             traModel.GenerateUniqueNo(),
+		EmployeeName:   body.EmployeeName,
+		Position:       body.Position,
+		TCLN:           body.TCLN,
+		TCLID:          body.TCLID,
+		CLNumber:       body.CLNumber,
+		NCD:            body.NCD,
+		ValidityStatus: body.ValidityStatus,
+		Effectiveness:  body.Effectiveness,
+		DbStatus:       "active",
+		DbLastStatus:   "active",
 	})
 
 	c.IndentedJSON(201, gin.H{})
@@ -98,14 +98,14 @@ func (*TRAHandler) Update(c *gin.Context) {
 	}
 
 	var body struct {
-		EmployeeName     string `json:"employeeName"`
-		Position         string `json:"position"`
-		TCLN             string `json:"tcln"`
-		TCLID            string `json:"nvcd"`
-		CLNumber         string `json:"clnumber"`
-		NCD              string `json:"ncd"`
-		CompetencyStatus int8   `json:"competencyStatus"`
-		Effectiveness    int8   `json:"effectiveness"`
+		EmployeeName   string `json:"employeeName"`
+		Position       string `json:"position"`
+		TCLN           string `json:"tcln"`
+		TCLID          string `json:"nvcd"`
+		CLNumber       string `json:"clnumber"`
+		NCD            string `json:"ncd"`
+		ValidityStatus int8   `json:"validityStatus"`
+		Effectiveness  int8   `json:"effectiveness"`
 	}
 
 	var errs = make(map[string]interface{})
@@ -124,14 +124,14 @@ func (*TRAHandler) Update(c *gin.Context) {
 	}
 
 	traModel.Update(Id, map[string]interface{}{
-		"employeeName":     body.EmployeeName,
-		"position":         body.Position,
-		"tcln":             body.TCLN,
-		"nvcd":             body.TCLID,
-		"clnumber":         body.CLNumber,
-		"ncd":              body.NCD,
-		"competencyStatus": body.CompetencyStatus,
-		"effectiveness":    body.Effectiveness,
+		"employeeName":   body.EmployeeName,
+		"position":       body.Position,
+		"tcln":           body.TCLN,
+		"nvcd":           body.TCLID,
+		"clnumber":       body.CLNumber,
+		"ncd":            body.NCD,
+		"validityStatus": body.ValidityStatus,
+		"effectiveness":  body.Effectiveness,
 	})
 
 	c.JSON(200, gin.H{})
