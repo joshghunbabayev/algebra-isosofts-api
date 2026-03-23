@@ -38,16 +38,21 @@ func (*EAHandler) GetAll(c *gin.Context) {
 func (*EAHandler) Create(c *gin.Context) {
 	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
-		EmployeeName      string `json:"employeeName"`
-		Position          string `json:"position"`
-		LineManager       string `json:"lineManager"`
-		ESD               string `json:"esd"`
-		AppraisalDate     string `json:"appraisalDate"`
-		NextAppraisalDate string `json:"nextAppraisalDate"`
-		AppraisalType     string `json:"appraisalType"`
-		TCA               string `json:"tca"`
-		SkillsAppraisal   string `json:"skillsAppraisal"`
-		EVS               int8   `json:"evs"`
+		EmployeeName             string `json:"employeeName"`
+		Position                 string `json:"position"`
+		LineManager              string `json:"lineManager"`
+		ESD                      string `json:"esd"`
+		AppraisalDate            string `json:"appraisalDate"`
+		NextAppraisalDate        string `json:"nextAppraisalDate"`
+		AppraisalType            string `json:"appraisalType"`
+		TCA                      string `json:"tca"`
+		SkillsAppraisal          string `json:"skillsAppraisal"`
+		JobQuality               int8   `json:"jobQuality"`
+		LeadershipSkills         int8   `json:"leadershipSkills"`
+		ManagementSkills         int8   `json:"managementSkills"`
+		BehavioralSkills         int8   `json:"behavioralSkills"`
+		EffectivenessOfTrainings int8   `json:"effectivenessOfTrainings"`
+		EVS                      int8   `json:"evs"`
 	}
 
 	var errs = make(map[string]interface{})
@@ -80,11 +85,16 @@ func (*EAHandler) Create(c *gin.Context) {
 		AppraisalType: tableComponentTypes.DropDownListItem{
 			Id: body.AppraisalType,
 		},
-		TCA:             body.TCA,
-		SkillsAppraisal: body.SkillsAppraisal,
-		EVS:             body.EVS,
-		DbStatus:        "active",
-		DbLastStatus:    "active",
+		TCA:                      body.TCA,
+		SkillsAppraisal:          body.SkillsAppraisal,
+		JobQuality:               body.JobQuality,
+		LeadershipSkills:         body.LeadershipSkills,
+		ManagementSkills:         body.ManagementSkills,
+		BehavioralSkills:         body.BehavioralSkills,
+		EffectivenessOfTrainings: body.EffectivenessOfTrainings,
+		EVS:                      body.EVS,
+		DbStatus:                 "active",
+		DbLastStatus:             "active",
 	})
 
 	c.IndentedJSON(201, gin.H{})
@@ -104,16 +114,21 @@ func (*EAHandler) Update(c *gin.Context) {
 	}
 
 	var body struct {
-		EmployeeName      string `json:"employeeName"`
-		Position          string `json:"position"`
-		LineManager       string `json:"lineManager"`
-		ESD               string `json:"esd"`
-		AppraisalDate     string `json:"appraisalDate"`
-		NextAppraisalDate string `json:"nextAppraisalDate"`
-		AppraisalType     string `json:"appraisalType"`
-		TCA               string `json:"tca"`
-		SkillsAppraisal   string `json:"skillsAppraisal"`
-		EVS               int8   `json:"evs"`
+		EmployeeName             string `json:"employeeName"`
+		Position                 string `json:"position"`
+		LineManager              string `json:"lineManager"`
+		ESD                      string `json:"esd"`
+		AppraisalDate            string `json:"appraisalDate"`
+		NextAppraisalDate        string `json:"nextAppraisalDate"`
+		AppraisalType            string `json:"appraisalType"`
+		TCA                      string `json:"tca"`
+		SkillsAppraisal          string `json:"skillsAppraisal"`
+		JobQuality               int8   `json:"jobQuality"`
+		LeadershipSkills         int8   `json:"leadershipSkills"`
+		ManagementSkills         int8   `json:"managementSkills"`
+		BehavioralSkills         int8   `json:"behavioralSkills"`
+		EffectivenessOfTrainings int8   `json:"effectivenessOfTrainings"`
+		EVS                      int8   `json:"evs"`
 	}
 
 	var errs = make(map[string]interface{})
@@ -132,16 +147,21 @@ func (*EAHandler) Update(c *gin.Context) {
 	}
 
 	eaModel.Update(Id, map[string]interface{}{
-		"employeeName":      body.EmployeeName,
-		"position":          body.Position,
-		"lineManager":       body.LineManager,
-		"esd":               body.ESD,
-		"appraisalDate":     body.AppraisalDate,
-		"nextAppraisalDate": body.NextAppraisalDate,
-		"appraisalType":     body.AppraisalType,
-		"tca":               body.TCA,
-		"skillsAppraisal":   body.SkillsAppraisal,
-		"evs":               body.EVS,
+		"employeeName":             body.EmployeeName,
+		"position":                 body.Position,
+		"lineManager":              body.LineManager,
+		"esd":                      body.ESD,
+		"appraisalDate":            body.AppraisalDate,
+		"nextAppraisalDate":        body.NextAppraisalDate,
+		"appraisalType":            body.AppraisalType,
+		"tca":                      body.TCA,
+		"skillsAppraisal":          body.SkillsAppraisal,
+		"jobQuality":               body.JobQuality,
+		"leadershipSkills":         body.LeadershipSkills,
+		"managementSkills":         body.ManagementSkills,
+		"behavioralSkills":         body.BehavioralSkills,
+		"effectivenessOfTrainings": body.EffectivenessOfTrainings,
+		"evs":                      body.EVS,
 	})
 
 	c.JSON(200, gin.H{})
