@@ -16,7 +16,7 @@ type CUS struct {
 	Scope3           tableComponentTypes.DropDownListItem `json:"scope3"`
 	RegistrationDate string                               `json:"registrationDate"`
 	ReviewDate       string                               `json:"reviewDate"`
-	Actual           int8                                 `json:"actual"`
+	EvaluationDone   int8                                 `json:"evaluationDone"`
 	QGS              int8                                 `json:"qgs"`
 	Communication    int8                                 `json:"communication"`
 	OTD              int8                                 `json:"otd"`

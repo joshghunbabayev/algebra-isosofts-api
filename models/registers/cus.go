@@ -86,7 +86,7 @@ func (*CUSModel) GetById(Id string) (registerTypes.CUS, error) {
 		&cus.Scope3.Id,
 		&cus.RegistrationDate,
 		&cus.ReviewDate,
-		&cus.Actual,
+		&cus.EvaluationDone,
 		&cus.DbStatus,
 		&cus.DbLastStatus,
 	)
@@ -148,7 +148,7 @@ func (*CUSModel) GetAll(filters map[string]interface{}) ([]registerTypes.CUS, er
 			&cus.Scope3.Id,
 			&cus.RegistrationDate,
 			&cus.ReviewDate,
-			&cus.Actual,
+			&cus.EvaluationDone,
 			&cus.DbStatus,
 			&cus.DbLastStatus,
 		)
@@ -182,7 +182,7 @@ func (*CUSModel) Create(cus registerTypes.CUS) error {
 				"scope3", 
 				"registrationDate", 
 				"reviewDate", 
-				"actual",  
+				"evaluationDone",  
 				"dbStatus",
 				"dbLastStatus"
 			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -197,7 +197,7 @@ func (*CUSModel) Create(cus registerTypes.CUS) error {
 		cus.Scope3.Id,
 		cus.RegistrationDate,
 		cus.ReviewDate,
-		cus.Actual,
+		cus.EvaluationDone,
 		cus.DbStatus,
 		cus.DbLastStatus,
 	)
