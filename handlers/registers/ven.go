@@ -45,7 +45,7 @@ func (*VENHandler) Create(c *gin.Context) {
 		Scope3           string `json:"scope3"`
 		RegistrationDate string `json:"registrationDate"`
 		NRD              string `json:"nrd"`
-		Approved         int8   `json:"approved"`
+		EvaluationDone   int8   `json:"evaluationDone"`
 	}
 
 	var errs = make(map[string]interface{})
@@ -82,7 +82,7 @@ func (*VENHandler) Create(c *gin.Context) {
 		},
 		RegistrationDate: body.RegistrationDate,
 		NRD:              body.NRD,
-		Approved:         body.Approved,
+		EvaluationDone:   body.EvaluationDone,
 		DbStatus:         "active",
 		DbLastStatus:     "active",
 	})
@@ -127,7 +127,7 @@ func (*VENHandler) Update(c *gin.Context) {
 		Scope3           string `json:"scope3"`
 		RegistrationDate string `json:"registrationDate"`
 		NRD              string `json:"nrd"`
-		Approved         int8   `json:"approved"`
+		EvaluationDone   int8   `json:"evaluationDone"`
 	}
 
 	var errs = make(map[string]interface{})
@@ -153,7 +153,7 @@ func (*VENHandler) Update(c *gin.Context) {
 		"scope3":           body.Scope3,
 		"registrationDate": body.RegistrationDate,
 		"nrd":              body.NRD,
-		"approved":         body.Approved,
+		"evaluationDone":   body.EvaluationDone,
 	})
 
 	c.JSON(200, gin.H{})

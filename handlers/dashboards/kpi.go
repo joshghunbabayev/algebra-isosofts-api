@@ -43,6 +43,7 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 					calculatedValue++
 				}
 			}
+
 		case 2: // Number of Residual High H&S Risks
 			var hsrModel registerModels.HSRModel
 
@@ -56,6 +57,7 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 					calculatedValue++
 				}
 			}
+
 		case 3: // Number of Legal Requirment with Residual High Risk
 			var legModel registerModels.LEGModel
 
@@ -69,6 +71,7 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 					calculatedValue++
 				}
 			}
+
 		case 4: // Number of E&A Aspects with High Residual Significance Level
 			var eaiModel registerModels.EAIModel
 
@@ -82,6 +85,7 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 					calculatedValue++
 				}
 			}
+
 		case 5: // Equipment Safety Rate %
 			var eiModel registerModels.EIModel
 
@@ -101,6 +105,7 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 			} else {
 				calculatedValue = 0
 			}
+
 		case 6: // Training Validity Rate %
 			var traModel registerModels.TRAModel
 
@@ -110,9 +115,9 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 			})
 
 			trasSafeties, _ := traModel.GetAll(map[string]interface{}{
-				"dbStatus":  "active",
-				"companyId": account.CompanyId,
-				"tras":      1,
+				"dbStatus":       "active",
+				"companyId":      account.CompanyId,
+				"validityStatus": 1,
 			})
 
 			if len(tras) > 0 {
@@ -120,13 +125,110 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 			} else {
 				calculatedValue = 0
 			}
-		case 7:
+
+		case 7: // Documents Review Rate %
+			var docModel registerModels.DOCModel
+
+			docs, _ := docModel.GetAll(map[string]interface{}{
+				"dbStatus":  "active",
+				"companyId": account.CompanyId,
+			})
+
+			docsActuals, _ := docModel.GetAll(map[string]interface{}{
+				"dbStatus":  "active",
+				"companyId": account.CompanyId,
+				"actual":    1,
+			})
+
+			if len(docs) > 0 {
+				calculatedValue = int64(float64(len(docsActuals)) / float64(len(docs)) * 100)
+			} else {
+				calculatedValue = 0
+			}
+
+		case 8: // Vendors Evaluation Rate %
+			var venModel registerModels.DOCModel
+
+			vens, _ := venModel.GetAll(map[string]interface{}{
+				"dbStatus":  "active",
+				"companyId": account.CompanyId,
+			})
+
+			vensActuals, _ := venModel.GetAll(map[string]interface{}{
+				"dbStatus":  "active",
+				"companyId": account.CompanyId,
+				"actual":    1,
+			})
+
+			if len(vens) > 0 {
+				calculatedValue = int64(float64(len(vensActuals)) / float64(len(vens)) * 100)
+			} else {
+				calculatedValue = 0
+			}
+
+		case 9: // Average Vendors Satisfuction Score
 			// calculatedValue = 300
-		case 8:
+		case 10: // Customer Feedback Evaluation Rate %
 			// calculatedValue = 300
-		case 9:
+		case 11: // Average Customer Satisfuction Score
 			// calculatedValue = 300
-		case 10:
+		case 12: // Number of Jobs
+			var fbModel registerModels.FBModel
+
+			fbs, _ := fbModel.GetAll(map[string]interface{}{
+				"dbStatus":  "active",
+				"companyId": account.CompanyId,
+			})
+
+			calculatedValue = int64(len(fbs))
+
+		case 13: // Employee Performance Appraisal Status Rate %
+			// calculatedValue = 300
+		case 14: // Average Employee Skills Appraisal Score
+			// calculatedValue = 300
+		case 15: // Number of Residual High MoC Risks
+			var mocModel registerModels.MOCModel
+
+			mocs, _ := mocModel.GetAll(map[string]interface{}{
+				"dbStatus":  "active",
+				"companyId": account.CompanyId,
+			})
+
+			for _, moc := range mocs {
+				if moc.ResidualRiskSeverity*moc.ResidualRiskLikelihood >= 12 {
+					calculatedValue++
+				}
+			}
+
+		case 16: // Findings Closure Rate
+			// calculatedValue = 300
+		case 17: // Number of Non-Conformancies
+			// calculatedValue = 300
+		case 18: // Number of Opportunities for Improvement
+			// calculatedValue = 300
+		case 19: // Number of Internal Complaints
+			// calculatedValue = 300
+		case 20: // Number of External Complaints
+			// calculatedValue = 300
+		case 21: // Number of Good Practices
+			// calculatedValue = 300
+		case 22: // Number of Near-Misses
+			// calculatedValue = 300
+		case 23: // Number of Incidents
+			// calculatedValue = 300
+		case 24: // Rate of Incidents %
+			// calculatedValue = 300
+		case 25: // Number of Accident
+			// calculatedValue = 300
+		case 26: // Number of Unsafe Actions
+			// calculatedValue = 300
+		case 27: // Number of Unsafe Conditions
+			// calculatedValue = 300
+		case 28: // Number of Environmental Incidents
+			// calculatedValue = 300
+		case 29: // Assurance & Oversight Plan Implementation Rate %
+			// calculatedValue = 300
+		case 30: // Actions Closure Rate
 			// calculatedValue = 300
 		default:
 			calculatedValue = 0

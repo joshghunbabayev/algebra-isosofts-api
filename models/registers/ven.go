@@ -86,7 +86,7 @@ func (*VENModel) GetById(Id string) (registerTypes.VEN, error) {
 		&ven.Scope3.Id,
 		&ven.RegistrationDate,
 		&ven.NRD,
-		&ven.Approved,
+		&ven.EvaluationDone,
 		&ven.DbStatus,
 		&ven.DbLastStatus,
 	)
@@ -148,7 +148,7 @@ func (*VENModel) GetAll(filters map[string]interface{}) ([]registerTypes.VEN, er
 			&ven.Scope3.Id,
 			&ven.RegistrationDate,
 			&ven.NRD,
-			&ven.Approved,
+			&ven.EvaluationDone,
 			&ven.DbStatus,
 			&ven.DbLastStatus,
 		)
@@ -183,7 +183,7 @@ func (*VENModel) Create(ven registerTypes.VEN) error {
 				"scope3", 
 				"registrationDate", 
 				"nrd", 
-				"approved", 
+				"evaluationDone", 
 				"dbStatus",
 				"dbLastStatus"
 			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -198,7 +198,7 @@ func (*VENModel) Create(ven registerTypes.VEN) error {
 		ven.Scope3.Id,
 		ven.RegistrationDate,
 		ven.NRD,
-		ven.Approved,
+		ven.EvaluationDone,
 		ven.DbStatus,
 		ven.DbLastStatus,
 	)

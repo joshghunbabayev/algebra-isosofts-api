@@ -12,7 +12,7 @@ type VEN struct {
 	Scope3           tableComponentTypes.DropDownListItem `json:"scope3"`
 	RegistrationDate string                               `json:"registrationDate"`
 	NRD       string                               `json:"nrd"`
-	Approved         int8                                 `json:"approved"`
+	EvaluationDone   int8                                 `json:"evaluationDone"`
 	QGS              int8                                 `json:"qgs"`
 	Communication    int8                                 `json:"communication"`
 	OTD              int8                                 `json:"otd"`

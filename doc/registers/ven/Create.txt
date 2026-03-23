@@ -10,5 +10,5 @@ body:
 		Scope3           string `json:"scope3"`
 		RegistrationDate string `json:"registrationDate"`
 		NRD       string `json:"nrd"`
-		Approved         int8   `json:"approved"`
+	EvaluationDone   int8                                 `json:"evaluationDone"`
 	}
