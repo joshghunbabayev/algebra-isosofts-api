@@ -190,7 +190,7 @@ func (*ActionHandler) Update(c *gin.Context) {
 	var body struct {
 		Title              string `json:"title"`
 		RaiseDate          string `json:"raiseDate"`
-		Resources          int64  `json:"resources"`
+		Resources          string `json:"resources"`
 		Currency           string `json:"currency"`
 		RelativeFunction   string `json:"relativeFunction"`
 		Responsible        string `json:"responsible"`

@@ -147,7 +147,7 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 			}
 
 		case 8: // Vendors Evaluation Rate %
-			var venModel registerModels.DOCModel
+			var venModel registerModels.VENModel
 
 			vens, _ := venModel.GetAll(map[string]interface{}{
 				"dbStatus":  "active",
@@ -155,9 +155,9 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 			})
 
 			vensActuals, _ := venModel.GetAll(map[string]interface{}{
-				"dbStatus":  "active",
-				"companyId": account.CompanyId,
-				"actual":    1,
+				"dbStatus":       "active",
+				"companyId":      account.CompanyId,
+				"evaluationDone": 1,
 			})
 
 			if len(vens) > 0 {
@@ -167,11 +167,65 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 			}
 
 		case 9: // Average Vendors Satisfuction Score
-			// calculatedValue = 300
+			var venModel registerModels.VENModel
+
+			var num int64 = 0
+
+			vens, _ := venModel.GetAll(map[string]interface{}{
+				"dbStatus":  "active",
+				"companyId": account.CompanyId,
+			})
+
+			if len(vens) > 0 {
+				for _, ven := range vens {
+					num += int64(ven.EvaluationDone + ven.QGS + ven.Communication + ven.OTD + ven.Documentation + ven.HS + ven.Environment)
+				}
+
+				calculatedValue = int64(float64(num) / float64(len(vens)))
+			} else {
+				calculatedValue = 0
+			}
+
 		case 10: // Customer Feedback Evaluation Rate %
-			// calculatedValue = 300
+			var cusModel registerModels.CUSModel
+
+			cuss, _ := cusModel.GetAll(map[string]interface{}{
+				"dbStatus":  "active",
+				"companyId": account.CompanyId,
+			})
+
+			cussActuals, _ := cusModel.GetAll(map[string]interface{}{
+				"dbStatus":       "active",
+				"companyId":      account.CompanyId,
+				"evaluationDone": 1,
+			})
+
+			if len(cuss) > 0 {
+				calculatedValue = int64(float64(len(cussActuals)) / float64(len(cuss)) * 100)
+			} else {
+				calculatedValue = 0
+			}
+
 		case 11: // Average Customer Satisfuction Score
-			// calculatedValue = 300
+			var cusModel registerModels.CUSModel
+
+			var num int64 = 0
+
+			cuss, _ := cusModel.GetAll(map[string]interface{}{
+				"dbStatus":  "active",
+				"companyId": account.CompanyId,
+			})
+
+			if len(cuss) > 0 {
+				for _, cus := range cuss {
+					num += int64(cus.EvaluationDone + cus.QGS + cus.Communication + cus.OTD + cus.Documentation + cus.HS + cus.Environment)
+				}
+
+				calculatedValue = int64(float64(num) / float64(len(cuss)))
+			} else {
+				calculatedValue = 0
+			}
+
 		case 12: // Number of Jobs
 			var fbModel registerModels.FBModel
 
@@ -183,9 +237,45 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 			calculatedValue = int64(len(fbs))
 
 		case 13: // Employee Performance Appraisal Status Rate %
-			// calculatedValue = 300
+			var eaModel registerModels.EAModel
+
+			eas, _ := eaModel.GetAll(map[string]interface{}{
+				"dbStatus":  "active",
+				"companyId": account.CompanyId,
+			})
+
+			easActuals, _ := eaModel.GetAll(map[string]interface{}{
+				"dbStatus":  "active",
+				"companyId": account.CompanyId,
+				"evs":       1,
+			})
+
+			if len(eas) > 0 {
+				calculatedValue = int64(float64(len(easActuals)) / float64(len(eas)) * 100)
+			} else {
+				calculatedValue = 0
+			}
+
 		case 14: // Average Employee Skills Appraisal Score
-			// calculatedValue = 300
+			var eaModel registerModels.EAModel
+
+			var num int64 = 0
+
+			eas, _ := eaModel.GetAll(map[string]interface{}{
+				"dbStatus":  "active",
+				"companyId": account.CompanyId,
+			})
+
+			if len(eas) > 0 {
+				for _, ea := range eas {
+					num += int64(ea.JobQuality + ea.LeadershipSkills + ea.ManagementSkills + ea.BehavioralSkills + ea.EffectivenessOfTrainings)
+				}
+
+				calculatedValue = int64(float64(num) / float64(len(eas)))
+			} else {
+				calculatedValue = 0
+			}
+
 		case 15: // Number of Residual High MoC Risks
 			var mocModel registerModels.MOCModel
 
@@ -201,33 +291,224 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 			}
 
 		case 16: // Findings Closure Rate
-			// calculatedValue = 300
+			var finModel registerModels.FINModel
+
+			var num int64 = 0
+
+			fins, _ := finModel.GetAll(map[string]interface{}{
+				"dbStatus":  "active",
+				"companyId": account.CompanyId,
+			})
+
+			for _, fin := range fins {
+				if fin.FindingStatus.Value == "Closed" {
+					num++
+				}
+			}
+
+			if len(fins) > 0 {
+				calculatedValue = int64(float64(num) / float64(len(fins)) * 100)
+			} else {
+				calculatedValue = 0
+			}
+
 		case 17: // Number of Non-Conformancies
-			// calculatedValue = 300
+			var finModel registerModels.FINModel
+
+			fins, _ := finModel.GetAll(map[string]interface{}{
+				"dbStatus":  "active",
+				"companyId": account.CompanyId,
+			})
+
+			for _, fin := range fins {
+				if fin.CategoryOfFinding.Value == "Non conformance" {
+					calculatedValue++
+				}
+			}
+
 		case 18: // Number of Opportunities for Improvement
-			// calculatedValue = 300
+			var finModel registerModels.FINModel
+
+			fins, _ := finModel.GetAll(map[string]interface{}{
+				"dbStatus":  "active",
+				"companyId": account.CompanyId,
+			})
+
+			for _, fin := range fins {
+				if fin.CategoryOfFinding.Value == "Opportunity for Improvement" {
+					calculatedValue++
+				}
+			}
+
 		case 19: // Number of Internal Complaints
-			// calculatedValue = 300
+			var finModel registerModels.FINModel
+
+			fins, _ := finModel.GetAll(map[string]interface{}{
+				"dbStatus":  "active",
+				"companyId": account.CompanyId,
+			})
+
+			for _, fin := range fins {
+				if fin.CategoryOfFinding.Value == "Internal complaint" {
+					calculatedValue++
+				}
+			}
+
 		case 20: // Number of External Complaints
-			// calculatedValue = 300
+			var finModel registerModels.FINModel
+
+			fins, _ := finModel.GetAll(map[string]interface{}{
+				"dbStatus":  "active",
+				"companyId": account.CompanyId,
+			})
+
+			for _, fin := range fins {
+				if fin.CategoryOfFinding.Value == "External Complaint" {
+					calculatedValue++
+				}
+			}
+
 		case 21: // Number of Good Practices
-			// calculatedValue = 300
+			var finModel registerModels.FINModel
+
+			fins, _ := finModel.GetAll(map[string]interface{}{
+				"dbStatus":  "active",
+				"companyId": account.CompanyId,
+			})
+
+			for _, fin := range fins {
+				if fin.CategoryOfFinding.Value == "Good practice" {
+					calculatedValue++
+				}
+			}
+
 		case 22: // Number of Near-Misses
-			// calculatedValue = 300
+			var finModel registerModels.FINModel
+
+			fins, _ := finModel.GetAll(map[string]interface{}{
+				"dbStatus":  "active",
+				"companyId": account.CompanyId,
+			})
+
+			for _, fin := range fins {
+				if fin.CategoryOfFinding.Value == "Near miss" {
+					calculatedValue++
+				}
+			}
+
 		case 23: // Number of Incidents
-			// calculatedValue = 300
+			var finModel registerModels.FINModel
+
+			fins, _ := finModel.GetAll(map[string]interface{}{
+				"dbStatus":  "active",
+				"companyId": account.CompanyId,
+			})
+
+			for _, fin := range fins {
+				if fin.CategoryOfFinding.Value == "Incident" {
+					calculatedValue++
+				}
+			}
+
 		case 24: // Rate of Incidents %
-			// calculatedValue = 300
+			var finModel registerModels.FINModel
+
+			var num int64 = 0
+
+			fins, _ := finModel.GetAll(map[string]interface{}{
+				"dbStatus":  "active",
+				"companyId": account.CompanyId,
+			})
+
+			for _, fin := range fins {
+				if fin.CategoryOfFinding.Value == "Incident" {
+					num++
+				}
+			}
+
+			if len(fins) > 0 {
+				calculatedValue = int64(float64(num) / float64(len(fins)) * 100)
+			} else {
+				calculatedValue = 0
+			}
+
 		case 25: // Number of Accident
-			// calculatedValue = 300
+			var finModel registerModels.FINModel
+
+			fins, _ := finModel.GetAll(map[string]interface{}{
+				"dbStatus":  "active",
+				"companyId": account.CompanyId,
+			})
+
+			for _, fin := range fins {
+				if fin.CategoryOfFinding.Value == "Accident" {
+					calculatedValue++
+				}
+			}
+
 		case 26: // Number of Unsafe Actions
-			// calculatedValue = 300
+			var finModel registerModels.FINModel
+
+			fins, _ := finModel.GetAll(map[string]interface{}{
+				"dbStatus":  "active",
+				"companyId": account.CompanyId,
+			})
+
+			for _, fin := range fins {
+				if fin.CategoryOfFinding.Value == "Unsafe actions" {
+					calculatedValue++
+				}
+			}
+
 		case 27: // Number of Unsafe Conditions
-			// calculatedValue = 300
+			var finModel registerModels.FINModel
+
+			fins, _ := finModel.GetAll(map[string]interface{}{
+				"dbStatus":  "active",
+				"companyId": account.CompanyId,
+			})
+
+			for _, fin := range fins {
+				if fin.CategoryOfFinding.Value == "Unsafe condition" {
+					calculatedValue++
+				}
+			}
+
 		case 28: // Number of Environmental Incidents
-			// calculatedValue = 300
+			var finModel registerModels.FINModel
+
+			fins, _ := finModel.GetAll(map[string]interface{}{
+				"dbStatus":  "active",
+				"companyId": account.CompanyId,
+			})
+
+			for _, fin := range fins {
+				if fin.CategoryOfFinding.Value == "Environmental Incident" {
+					calculatedValue++
+				}
+			}
+
 		case 29: // Assurance & Oversight Plan Implementation Rate %
-			// calculatedValue = 300
+			var aopModel registerModels.AOPModel
+
+			var num int64 = 0
+
+			aops, _ := aopModel.GetAll(map[string]interface{}{
+				"dbStatus":  "active",
+				"companyId": account.CompanyId,
+			})
+
+			for _, aop := range aops {
+				if aop.AOAStatus == "Closed" {
+					num++
+				}
+			}
+
+			if len(aops) > 0 {
+				calculatedValue = int64(float64(num) / float64(len(aops)) * 100)
+			} else {
+				calculatedValue = 0
+			}
 		case 30: // Actions Closure Rate
 			// calculatedValue = 300
 		default:
