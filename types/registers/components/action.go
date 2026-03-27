@@ -4,6 +4,7 @@ import tableComponentTypes "algebra-isosofts-api/types/tableComponents"
 
 type Action struct {
 	Id                 string                               `json:"id"`
+	CompanyId          string                               `json:"companyId"`
 	RegisterId         string                               `json:"registerId"`
 	RegisterType       string                               `json:"registerType"`
 	No                 string                               `json:"no"`
