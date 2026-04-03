@@ -8,6 +8,7 @@ type TRA struct {
 	TCLN           string                          `json:"tcln"`
 	TCLID            string                          `json:"nvcd"`
 	CLNumber         string                          `json:"clnumber"`
+	TrainingFrequency tableComponentTypes.DropDownListItem `json:"trainingFrequency"`
 	NCD              string                          `json:"ncd"`
 	ValidityStatus int8                            `json:"validityStatus"`
 	Effectiveness    int8                            `json:"effectiveness"`

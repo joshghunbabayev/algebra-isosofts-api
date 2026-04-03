@@ -3,6 +3,7 @@ package registerModels
 import (
 	"algebra-isosofts-api/database"
 	registerComponentModels "algebra-isosofts-api/models/registers/components"
+	tableComponentModels "algebra-isosofts-api/models/tableComponents"
 	"algebra-isosofts-api/modules"
 	registerTypes "algebra-isosofts-api/types/registers"
 	"fmt"
@@ -69,6 +70,7 @@ func (*TRAModel) GetById(Id string) (registerTypes.TRA, error) {
 	)
 
 	var tra registerTypes.TRA
+	var dropDownListItemModel tableComponentModels.DropDownListItemModel
 	var actionModel registerComponentModels.ActionModel
 
 	err := row.Scan(
@@ -80,12 +82,14 @@ func (*TRAModel) GetById(Id string) (registerTypes.TRA, error) {
 		&tra.TCLN,
 		&tra.TCLID,
 		&tra.CLNumber,
+		&tra.TrainingFrequency.Id,
 		&tra.NCD,
 		&tra.ValidityStatus,
 		&tra.Effectiveness,
 		&tra.DbStatus,
 		&tra.DbLastStatus,
 	)
+	tra.TrainingFrequency, _ = dropDownListItemModel.GetById(tra.TrainingFrequency.Id)
 	tra.Actions, _ = actionModel.GetAll(map[string]interface{}{
 		"registerId": tra.Id,
 		"dbStatus":   "active",
@@ -124,6 +128,7 @@ func (*TRAModel) GetAll(filters map[string]interface{}) ([]registerTypes.TRA, er
 
 	for rows.Next() {
 		var tra registerTypes.TRA
+		var dropDownListItemModel tableComponentModels.DropDownListItemModel
 		var actionModel registerComponentModels.ActionModel
 
 		rows.Scan(
@@ -135,12 +140,14 @@ func (*TRAModel) GetAll(filters map[string]interface{}) ([]registerTypes.TRA, er
 			&tra.TCLN,
 			&tra.TCLID,
 			&tra.CLNumber,
+			&tra.TrainingFrequency.Id,
 			&tra.NCD,
 			&tra.ValidityStatus,
 			&tra.Effectiveness,
 			&tra.DbStatus,
 			&tra.DbLastStatus,
 		)
+		tra.TrainingFrequency, _ = dropDownListItemModel.GetById(tra.TrainingFrequency.Id)
 		tra.Actions, _ = actionModel.GetAll(map[string]interface{}{
 			"registerId": tra.Id,
 			"dbStatus":   "active",
@@ -164,12 +171,13 @@ func (*TRAModel) Create(tra registerTypes.TRA) error {
 				"tcln",
 				"nvcd",
 				"clnumber",
+				"trainingFrequency",
 				"ncd",
 				"validityStatus",
 				"effectiveness",
 				"dbStatus",
 				"dbLastStatus"
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
 		tra.Id,
 		tra.CompanyId,
@@ -179,6 +187,7 @@ func (*TRAModel) Create(tra registerTypes.TRA) error {
 		tra.TCLN,
 		tra.TCLID,
 		tra.CLNumber,
+		tra.TrainingFrequency.Id,
 		tra.NCD,
 		tra.ValidityStatus,
 		tra.Effectiveness,
