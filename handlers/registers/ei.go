@@ -38,6 +38,7 @@ func (*EIHandler) GetAll(c *gin.Context) {
 func (*EIHandler) Create(c *gin.Context) {
 	var body struct {
 		Name                string `json:"name"`
+		Type                string `json:"type"`
 		SerialNumber        string `json:"serialNumber"`
 		CertificateNo       string `json:"certificateNo"`
 		InspectionFrequency string `json:"inspectionFrequency"`
@@ -66,10 +67,13 @@ func (*EIHandler) Create(c *gin.Context) {
 	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 
 	eiModel.Create(registerTypes.EI{
-		Id:            eiModel.GenerateUniqueId(),
-		CompanyId:     account.CompanyId,
-		No:            eiModel.GenerateUniqueNo(),
-		Name:          body.Name,
+		Id:        eiModel.GenerateUniqueId(),
+		CompanyId: account.CompanyId,
+		No:        eiModel.GenerateUniqueNo(),
+		Name:      body.Name,
+		Type: tableComponentTypes.DropDownListItem{
+			Id: body.Type,
+		},
 		SerialNumber:  body.SerialNumber,
 		CertificateNo: body.CertificateNo,
 		InspectionFrequency: tableComponentTypes.DropDownListItem{
@@ -100,6 +104,7 @@ func (*EIHandler) Update(c *gin.Context) {
 
 	var body struct {
 		Name                string `json:"name"`
+		Type                string `json:"type"`
 		SerialNumber        string `json:"serialNumber"`
 		CertificateNo       string `json:"certificateNo"`
 		InspectionFrequency string `json:"inspectionFrequency"`
@@ -125,6 +130,7 @@ func (*EIHandler) Update(c *gin.Context) {
 
 	eiModel.Update(Id, map[string]interface{}{
 		"name":                body.Name,
+		"type":                body.Type,
 		"serialNumber":        body.SerialNumber,
 		"certificateNo":       body.CertificateNo,
 		"inspectionFrequency": body.InspectionFrequency,

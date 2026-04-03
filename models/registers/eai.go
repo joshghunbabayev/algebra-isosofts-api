@@ -42,7 +42,7 @@ func (*EAIModel) GenerateUniqueNo() string {
 		ORDER BY "no" DESC 
 		LIMIT 1
 		`,
-		"EIR/"+year+"/%",
+		"EAR/"+year+"/%",
 	).Scan(&lastNo)
 
 	var nextNumber int

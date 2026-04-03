@@ -78,6 +78,7 @@ func (*EIModel) GetById(Id string) (registerTypes.EI, error) {
 		&ei.CompanyId,
 		&ei.No,
 		&ei.Name,
+		&ei.Type.Id,
 		&ei.SerialNumber,
 		&ei.CertificateNo,
 		&ei.InspectionFrequency.Id,
@@ -87,6 +88,7 @@ func (*EIModel) GetById(Id string) (registerTypes.EI, error) {
 		&ei.DbStatus,
 		&ei.DbLastStatus,
 	)
+	ei.Type, _ = dropDownListItemModel.GetById(ei.Type.Id)
 	ei.InspectionFrequency, _ = dropDownListItemModel.GetById(ei.InspectionFrequency.Id)
 	ei.Actions, _ = actionModel.GetAll(map[string]interface{}{
 		"registerId": ei.Id,
@@ -134,6 +136,7 @@ func (*EIModel) GetAll(filters map[string]interface{}) ([]registerTypes.EI, erro
 			&ei.CompanyId,
 			&ei.No,
 			&ei.Name,
+			&ei.Type.Id,
 			&ei.SerialNumber,
 			&ei.CertificateNo,
 			&ei.InspectionFrequency.Id,
@@ -143,6 +146,7 @@ func (*EIModel) GetAll(filters map[string]interface{}) ([]registerTypes.EI, erro
 			&ei.DbStatus,
 			&ei.DbLastStatus,
 		)
+		ei.Type, _ = dropDownListItemModel.GetById(ei.Type.Id)
 		ei.InspectionFrequency, _ = dropDownListItemModel.GetById(ei.InspectionFrequency.Id)
 		ei.Actions, _ = actionModel.GetAll(map[string]interface{}{
 			"registerId": ei.Id,
@@ -163,6 +167,7 @@ func (*EIModel) Create(ei registerTypes.EI) error {
 				"companyId",
 				"no",
 				"name",
+				"type",
 				"serialNumber",
 				"certificateNo",
 				"inspectionFrequency",
@@ -171,12 +176,13 @@ func (*EIModel) Create(ei registerTypes.EI) error {
 				"eis",
 				"dbStatus",
 				"dbLastStatus"
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
 		ei.Id,
 		ei.CompanyId,
 		ei.No,
 		ei.Name,
+		ei.Type.Id,
 		ei.SerialNumber,
 		ei.CertificateNo,
 		ei.InspectionFrequency.Id,

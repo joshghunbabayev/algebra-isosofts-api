@@ -10,6 +10,7 @@ type EI struct {
 	CompanyId           string                               `json:"companyId"`
 	No                  string                               `json:"no"`
 	Name                string                               `json:"name"`
+	Type                tableComponentTypes.DropDownListItem `json:"type"`
 	SerialNumber        string                               `json:"serialNumber"`
 	CertificateNo       string                               `json:"certificateNo"`
 	InspectionFrequency tableComponentTypes.DropDownListItem `json:"inspectionFrequency"`

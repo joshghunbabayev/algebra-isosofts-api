@@ -4,6 +4,7 @@ For update eiregister
 body:
 type EI struct {
 	Name                string                               `json:"name"`
+	Type                tableComponentTypes.DropDownListItem `json:"type"`
 	SerialNumber        string                               `json:"serialNumber"`
 	CertificateNo       string                               `json:"certificateNo"`
 	InspectionFrequency tableComponentTypes.DropDownListItem `json:"inspectionFrequency"`
