@@ -41,6 +41,7 @@ func (*EIHandler) Create(c *gin.Context) {
 		Type                string `json:"type"`
 		SerialNumber        string `json:"serialNumber"`
 		CertificateNo       string `json:"certificateNo"`
+		CalibrationRequired int8   `json:"calibrationRequired"`
 		InspectionFrequency string `json:"inspectionFrequency"`
 		ICD                 string `json:"icd"`
 		NVCD                string `json:"nvcd"`
@@ -74,8 +75,9 @@ func (*EIHandler) Create(c *gin.Context) {
 		Type: tableComponentTypes.DropDownListItem{
 			Id: body.Type,
 		},
-		SerialNumber:  body.SerialNumber,
-		CertificateNo: body.CertificateNo,
+		SerialNumber:        body.SerialNumber,
+		CertificateNo:       body.CertificateNo,
+		CalibrationRequired: body.CalibrationRequired,
 		InspectionFrequency: tableComponentTypes.DropDownListItem{
 			Id: body.InspectionFrequency,
 		},
@@ -107,6 +109,7 @@ func (*EIHandler) Update(c *gin.Context) {
 		Type                string `json:"type"`
 		SerialNumber        string `json:"serialNumber"`
 		CertificateNo       string `json:"certificateNo"`
+		CalibrationRequired int8   `json:"calibrationRequired"`
 		InspectionFrequency string `json:"inspectionFrequency"`
 		ICD                 string `json:"icd"`
 		NVCD                string `json:"nvcd"`
@@ -133,6 +136,7 @@ func (*EIHandler) Update(c *gin.Context) {
 		"type":                body.Type,
 		"serialNumber":        body.SerialNumber,
 		"certificateNo":       body.CertificateNo,
+		"calibrationRequired": body.CalibrationRequired,
 		"inspectionFrequency": body.InspectionFrequency,
 		"icd":                 body.ICD,
 		"nvcd":                body.NVCD,
