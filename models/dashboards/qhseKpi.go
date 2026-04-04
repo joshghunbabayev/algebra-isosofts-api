@@ -10,57 +10,57 @@ import (
 	"strings"
 )
 
-type KPIModel struct{}
+type QhseKPIModel struct{}
 
-func (*KPIModel) GenerateUniqueId() string {
+func (*QhseKPIModel) GenerateUniqueId() string {
 	id := modules.GenerateRandomString(30)
-	var kpiModel KPIModel
-	kpi, _ := kpiModel.GetById(id)
+	var qhseKPIModel QhseKPIModel
+	qhseKPI, _ := qhseKPIModel.GetById(id)
 
-	if kpi.IsEmpty() {
+	if qhseKPI.IsEmpty() {
 		return id
 	}
-	return kpiModel.GenerateUniqueId()
+	return qhseKPIModel.GenerateUniqueId()
 }
 
-func (*KPIModel) GetById(id string) (dashboardTypes.KPI, error) {
+func (*QhseKPIModel) GetById(id string) (dashboardTypes.QhseKPI, error) {
 	db := database.GetDatabase()
 	row := db.QueryRow(`
-			SELECT * FROM kpis
+			SELECT * FROM qhsekpis
 			WHERE id = ?
 		`, id)
 
-	var kpi dashboardTypes.KPI
+	var qhseKPI dashboardTypes.QhseKPI
 	var dropDownListItemModel tableComponentModels.DropDownListItemModel
 
 	err := row.Scan(
-		&kpi.Id,
-		&kpi.CompanyId,
-		&kpi.SNo,
-		&kpi.No,
-		&kpi.Title,
-		&kpi.Function.Id,
-		&kpi.LYKPI,
-		&kpi.AnnualTarget,
-		&kpi.January,
-		&kpi.February,
-		&kpi.March,
-		&kpi.April,
-		&kpi.May,
-		&kpi.June,
-		&kpi.July,
-		&kpi.August,
-		&kpi.September,
-		&kpi.October,
-		&kpi.November,
-		&kpi.December,
+		&qhseKPI.Id,
+		&qhseKPI.CompanyId,
+		&qhseKPI.SNo,
+		&qhseKPI.No,
+		&qhseKPI.Title,
+		&qhseKPI.Function.Id,
+		&qhseKPI.LYKPI,
+		&qhseKPI.AnnualTarget,
+		&qhseKPI.January,
+		&qhseKPI.February,
+		&qhseKPI.March,
+		&qhseKPI.April,
+		&qhseKPI.May,
+		&qhseKPI.June,
+		&qhseKPI.July,
+		&qhseKPI.August,
+		&qhseKPI.September,
+		&qhseKPI.October,
+		&qhseKPI.November,
+		&qhseKPI.December,
 	)
-	kpi.Function, _ = dropDownListItemModel.GetById(kpi.Function.Id)
+	qhseKPI.Function, _ = dropDownListItemModel.GetById(qhseKPI.Function.Id)
 
-	return kpi, err
+	return qhseKPI, err
 }
 
-func (*KPIModel) GetAll(filters map[string]interface{}) ([]dashboardTypes.KPI, error) {
+func (*QhseKPIModel) GetAll(filters map[string]interface{}) ([]dashboardTypes.QhseKPI, error) {
 	db := database.GetDatabase()
 	whereClause := ""
 	values := []interface{}{}
@@ -74,7 +74,7 @@ func (*KPIModel) GetAll(filters map[string]interface{}) ([]dashboardTypes.KPI, e
 		whereClause = "WHERE " + strings.Join(whereParts, " AND ")
 	}
 
-	query := fmt.Sprintf(`SELECT * FROM kpis %s`, whereClause)
+	query := fmt.Sprintf(`SELECT * FROM qhsekpis %s`, whereClause)
 	rows, err := db.Query(query, values...)
 
 	if err != nil {
@@ -82,63 +82,63 @@ func (*KPIModel) GetAll(filters map[string]interface{}) ([]dashboardTypes.KPI, e
 	}
 	defer rows.Close()
 
-	var kpis []dashboardTypes.KPI
+	var qhseKPIs []dashboardTypes.QhseKPI
 	for rows.Next() {
-		var kpi dashboardTypes.KPI
+		var qhseKPI dashboardTypes.QhseKPI
 		var dropDownListItemModel tableComponentModels.DropDownListItemModel
 
 		err := rows.Scan(
-			&kpi.Id,
-			&kpi.CompanyId,
-			&kpi.SNo,
-			&kpi.No,
-			&kpi.Title,
-			&kpi.Function.Id,
-			&kpi.LYKPI,
-			&kpi.AnnualTarget,
-			&kpi.January,
-			&kpi.February,
-			&kpi.March,
-			&kpi.April,
-			&kpi.May,
-			&kpi.June,
-			&kpi.July,
-			&kpi.August,
-			&kpi.September,
-			&kpi.October,
-			&kpi.November,
-			&kpi.December,
+			&qhseKPI.Id,
+			&qhseKPI.CompanyId,
+			&qhseKPI.SNo,
+			&qhseKPI.No,
+			&qhseKPI.Title,
+			&qhseKPI.Function.Id,
+			&qhseKPI.LYKPI,
+			&qhseKPI.AnnualTarget,
+			&qhseKPI.January,
+			&qhseKPI.February,
+			&qhseKPI.March,
+			&qhseKPI.April,
+			&qhseKPI.May,
+			&qhseKPI.June,
+			&qhseKPI.July,
+			&qhseKPI.August,
+			&qhseKPI.September,
+			&qhseKPI.October,
+			&qhseKPI.November,
+			&qhseKPI.December,
 		)
 
-		kpi.Function, _ = dropDownListItemModel.GetById(kpi.Function.Id)
+		qhseKPI.Function, _ = dropDownListItemModel.GetById(qhseKPI.Function.Id)
 		if err != nil {
 			return nil, err
 		}
-		kpis = append(kpis, kpi)
+		qhseKPIs = append(qhseKPIs, qhseKPI)
 	}
 
-	return kpis, nil
+	return qhseKPIs, nil
 }
 
-func (*KPIModel) Create(kpi dashboardTypes.KPI) error {
+func (*QhseKPIModel) Create(qhseKPI dashboardTypes.QhseKPI) error {
 	db := database.GetDatabase()
 	_, err := db.Exec(`
-			INSERT INTO kpis (
+			INSERT INTO qhsekpis (
 				"id", "companyId", "sno", "no", "title", "function", 
 				"lykpi", "annualTarget",
 				"january", "february", "march", "april", "may", "june",
 				"july", "august", "september", "october", "november", "december"
 			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
-		kpi.Id, kpi.CompanyId, kpi.SNo, kpi.No, kpi.Title, kpi.Function.Id,
-		kpi.LYKPI, kpi.AnnualTarget,
-		kpi.January, kpi.February, kpi.March, kpi.April, kpi.May, kpi.June,
-		kpi.July, kpi.August, kpi.September, kpi.October, kpi.November, kpi.December,
+		qhseKPI.Id, qhseKPI.CompanyId, qhseKPI.SNo, qhseKPI.No, qhseKPI.Title, qhseKPI.Function.Id,
+		qhseKPI.LYKPI, qhseKPI.AnnualTarget,
+		qhseKPI.January, qhseKPI.February, qhseKPI.March, qhseKPI.April, qhseKPI.May, qhseKPI.June,
+		qhseKPI.July, qhseKPI.August, qhseKPI.September, qhseKPI.October, qhseKPI.November, qhseKPI.December,
 	)
 	return err
 }
 
-func (*KPIModel) Update(id string, fields map[string]interface{}) error {
+func (*QhseKPIModel) Update(id string, fields map[string]interface{}) error {
 	if len(fields) == 0 {
 		return nil
 	}
@@ -152,7 +152,7 @@ func (*KPIModel) Update(id string, fields map[string]interface{}) error {
 	}
 
 	setClause = strings.TrimSuffix(setClause, ",")
-	query := fmt.Sprintf(`UPDATE kpis SET %s WHERE "id" = ?`, setClause)
+	query := fmt.Sprintf(`UPDATE qhsekpis SET %s WHERE "id" = ?`, setClause)
 	values = append(values, id)
 
 	db := database.GetDatabase()
@@ -160,40 +160,38 @@ func (*KPIModel) Update(id string, fields map[string]interface{}) error {
 	return err
 }
 
-func (*KPIModel) DuplicateDefaults(companyId string) error {
+func (*QhseKPIModel) DuplicateDefaults(companyId string) error {
 	db := database.GetDatabase()
 
-	// 1. Şablondakı (default) KPI-ları gətiririk
 	rows, err := db.Query(`
 			SELECT sno, no, title 
-			FROM defaultkpis
+			FROM defaultqhsekpis
 		`)
 	if err != nil {
 		return err
 	}
 	defer rows.Close()
 
-	var defaultKPIs []dashboardTypes.KPI
-	var kpiModel KPIModel
+	var defaultQhseKPIs []dashboardTypes.QhseKPI
+	var qhseKPIModel QhseKPIModel
 
 	for rows.Next() {
-		var defaultKPI dashboardTypes.KPI
-		// Şəkildəki struktura uyğun olaraq scan edirik
+		var defaultKPI dashboardTypes.QhseKPI
 		if err := rows.Scan(&defaultKPI.SNo, &defaultKPI.No, &defaultKPI.Title); err != nil {
 			return err
 		}
-		defaultKPIs = append(defaultKPIs, defaultKPI)
+		defaultQhseKPIs = append(defaultQhseKPIs, defaultKPI)
 	}
 
 	// 2. Hər birini yeni şirkət ID-si ilə bazaya yazırıq
-	for _, kpi := range defaultKPIs {
+	for _, qhseKPI := range defaultQhseKPIs {
 		// Create metodu vasitəsilə yeni rəqəmlər 0 olaraq (və ya NULL) yaranacaq
-		if err := kpiModel.Create(dashboardTypes.KPI{
-			Id:        kpiModel.GenerateUniqueId(),
+		if err := qhseKPIModel.Create(dashboardTypes.QhseKPI{
+			Id:        qhseKPIModel.GenerateUniqueId(),
 			CompanyId: companyId,
-			SNo:       kpi.SNo,
-			No:        kpi.No,
-			Title:     kpi.Title,
+			SNo:       qhseKPI.SNo,
+			No:        qhseKPI.No,
+			Title:     qhseKPI.Title,
 			Function: tableComponentTypes.DropDownListItem{
 				Id: "",
 			},

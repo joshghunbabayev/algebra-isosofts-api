@@ -9,6 +9,6 @@ import (
 func MainRoutes(rg *gin.RouterGroup) {
 	rg.Use(middlewares.AuthMiddleware())
 	rg.Use(middlewares.AccessMiddleware())
-	KPIRoutes(rg.Group("/kpi"))
+	QhseKPIRoutes(rg.Group("/qhseKpi"))
 	ActionLogRoutes(rg.Group("/actionLog"))
 }

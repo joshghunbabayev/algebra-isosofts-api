@@ -1,5 +1,5 @@
 For update 
-	PUT    /api/dashboard/kpi/:id?token=
+	PUT    /api/dashboard/qhseKpi/:id?token=
 
 body:
 	var body struct {

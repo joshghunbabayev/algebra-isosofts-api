@@ -2,7 +2,7 @@ package dashboardTypes
 
 import tableComponentTypes "algebra-isosofts-api/types/tableComponents"
 
-type KPI struct {
+type QhseKPI struct {
 	Id           string                               `json:"id"`
 	CompanyId    string                               `json:"companyId"`
 	SNo          int8                                 `json:"sno"`
@@ -26,6 +26,6 @@ type KPI struct {
 	December     int64                                `json:"december"`
 }
 
-func (kpi KPI) IsEmpty() bool {
-	return kpi.Id == ""
+func (qhseKPI QhseKPI) IsEmpty() bool {
+	return qhseKPI.Id == ""
 }

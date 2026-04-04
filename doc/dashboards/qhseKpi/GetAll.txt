@@ -1,4 +1,4 @@
-GET /api/dashboard/kpi?token=
+GET /api/dashboard/qhseKpi?token=
 
 
 [
