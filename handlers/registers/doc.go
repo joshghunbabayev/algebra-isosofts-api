@@ -3,7 +3,6 @@ package registerHandlers
 import (
 	"algebra-isosofts-api/middlewares"
 	registerModels "algebra-isosofts-api/models/registers"
-	tableComponentModels "algebra-isosofts-api/models/tableComponents"
 	registerTypes "algebra-isosofts-api/types/registers"
 	tableComponentTypes "algebra-isosofts-api/types/tableComponents"
 
@@ -69,17 +68,17 @@ func (*DOCHandler) Create(c *gin.Context) {
 	}
 
 	var docModel registerModels.DOCModel
-	var dropDownListItemModel tableComponentModels.DropDownListItemModel
-	var number string
+	// var dropDownListItemModel tableComponentModels.DropDownListItemModel
+	// var number string
 
-	originDDLI, _ := dropDownListItemModel.GetById(body.Origin)
-	if originDDLI.Value == "Internal" {
-		depntFunctionNameDDLI, _ := dropDownListItemModel.GetById(body.DepntFunctionName)
-		typeDDLI, _ := dropDownListItemModel.GetById(body.Type)
-		number = docModel.GenerateUniqueNumber(depntFunctionNameDDLI.ShortValue + "/" + typeDDLI.ShortValue)
-	} else if originDDLI.Value == "External" {
-		number = body.Number
-	}
+	// originDDLI, _ := dropDownListItemModel.GetById(body.Origin)
+	// if originDDLI.Value == "Internal" {
+	// 	depntFunctionNameDDLI, _ := dropDownListItemModel.GetById(body.DepntFunctionName)
+	// 	typeDDLI, _ := dropDownListItemModel.GetById(body.Type)
+	// 	number = docModel.GenerateUniqueNumber(depntFunctionNameDDLI.ShortValue + "/" + typeDDLI.ShortValue)
+	// } else if originDDLI.Value == "External" {
+	// 	number = body.Number
+	// }
 
 	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 
@@ -91,7 +90,8 @@ func (*DOCHandler) Create(c *gin.Context) {
 		Origin: tableComponentTypes.DropDownListItem{
 			Id: body.Origin,
 		},
-		Number: number,
+		// Number: number,
+		Number: body.Number,
 		DepntFunctionName: tableComponentTypes.DropDownListItem{
 			Id: body.DepntFunctionName,
 		},
@@ -157,22 +157,23 @@ func (*DOCHandler) Update(c *gin.Context) {
 		return
 	}
 
-	var dropDownListItemModel tableComponentModels.DropDownListItemModel
-	var number string
+	// var dropDownListItemModel tableComponentModels.DropDownListItemModel
+	// var number string
 
-	originDDLI, _ := dropDownListItemModel.GetById(body.Origin)
-	if originDDLI.Value == "Internal" {
-		depntFunctionNameDDLI, _ := dropDownListItemModel.GetById(body.DepntFunctionName)
-		typeDDLI, _ := dropDownListItemModel.GetById(body.Type)
-		number = docModel.GenerateUniqueNumber(depntFunctionNameDDLI.ShortValue + "/" + typeDDLI.ShortValue)
-	} else if originDDLI.Value == "External" {
-		number = body.Number
-	}
+	// originDDLI, _ := dropDownListItemModel.GetById(body.Origin)
+	// if originDDLI.Value == "Internal" {
+	// 	depntFunctionNameDDLI, _ := dropDownListItemModel.GetById(body.DepntFunctionName)
+	// 	typeDDLI, _ := dropDownListItemModel.GetById(body.Type)
+	// 	number = docModel.GenerateUniqueNumber(depntFunctionNameDDLI.ShortValue + "/" + typeDDLI.ShortValue)
+	// } else if originDDLI.Value == "External" {
+	// 	number = body.Number
+	// }
 
 	docModel.Update(Id, map[string]interface{}{
-		"name":              body.Name,
-		"origin":            body.Origin,
-		"number":            number,
+		"name":   body.Name,
+		"origin": body.Origin,
+		// "number":            number,
+		"number":            body.Number,
 		"depntFunctionName": body.DepntFunctionName,
 		"type":              body.Type,
 		"serialNumber":      body.SerialNumber,
