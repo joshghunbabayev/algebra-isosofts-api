@@ -42,7 +42,7 @@ func (*EAModel) GenerateUniqueNo() string {
 		ORDER BY "no" DESC 
 		LIMIT 1
 		`,
-		"EAR/"+year+"/%",
+		"PAR/"+year+"/%",
 	).Scan(&lastNo)
 
 	var nextNumber int
@@ -55,7 +55,7 @@ func (*EAModel) GenerateUniqueNo() string {
 		nextNumber = num + 1
 	}
 
-	newNo := fmt.Sprintf("EAR/%s/%04d", year, nextNumber)
+	newNo := fmt.Sprintf("PAR/%s/%04d", year, nextNumber)
 	return newNo
 }
 

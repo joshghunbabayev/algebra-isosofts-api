@@ -55,7 +55,7 @@ func (*EAIModel) GenerateUniqueNo() string {
 		nextNumber = num + 1
 	}
 
-	newNo := fmt.Sprintf("EIR/%s/%04d", year, nextNumber)
+	newNo := fmt.Sprintf("EAR/%s/%04d", year, nextNumber)
 	return newNo
 }
 
