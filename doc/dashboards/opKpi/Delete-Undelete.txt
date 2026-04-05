@@ -1,8 +1,0 @@
-For delete and undelete
-    PUT /api/register/opKpi/all/delete
-    PUT /api/register/opKpi/all/undelete
-
-body: 
-{
-  "ids": ["id1", "id2", ......]
-}

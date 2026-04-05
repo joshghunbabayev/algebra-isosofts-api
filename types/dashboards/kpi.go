@@ -1,8 +1,12 @@
-For update brregister
-	PUT    /api/register/opKpi/one/:id
+package dashboardTypes
 
-body:
-var body struct {
+import tableComponentTypes "algebra-isosofts-api/types/tableComponents"
+
+type KPI struct {
+	Id           string                               `json:"id"`
+	CompanyId    string                               `json:"companyId"`
+	SNo          int8                                 `json:"sno"`
+	No           string                               `json:"no"`
 	Title        string                               `json:"title"`
 	Function     tableComponentTypes.DropDownListItem `json:"function"`
 	LYKPI        int64                                `json:"lykpi"`
@@ -20,4 +24,8 @@ var body struct {
 	October      int64                                `json:"october"`
 	November     int64                                `json:"november"`
 	December     int64                                `json:"december"`
-	}
+}
+
+func (kpi KPI) IsEmpty() bool {
+	return kpi.Id == ""
+}

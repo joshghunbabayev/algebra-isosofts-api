@@ -1,5 +1,5 @@
 For create brregister
-	POST    /api/register/opKpi/one
+	POST    /api/register/opi/one
 
 body:
 var body struct {	

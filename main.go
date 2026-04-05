@@ -29,8 +29,8 @@ func main() {
 	})
 
 	r.GET("/kpid", func(c *gin.Context) {
-		var qhseKPIModel dashboardModels.QhseKPIModel
-		qhseKPIModel.DuplicateDefaults("qwqwqwqwqwqw")
+		var kpiModel dashboardModels.KPIModel
+		kpiModel.DuplicateDefaults("qwqwqwqwqwqw")
 		c.IndentedJSON(201, gin.H{})
 	})
 

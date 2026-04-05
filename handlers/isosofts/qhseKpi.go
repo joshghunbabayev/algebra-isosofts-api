@@ -6,17 +6,17 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type QhseKPIHandler struct {
+type KPIHandler struct {
 }
 
-func (*QhseKPIHandler) DuplicateDefaults(c *gin.Context) {
+func (*KPIHandler) DuplicateDefaults(c *gin.Context) {
 	companyId := c.Query("companyId")
 
 	if companyId == "" {
 		c.IndentedJSON(400, gin.H{})
 	}
 
-	var qhseKPIModel dashboardModels.QhseKPIModel
-	qhseKPIModel.DuplicateDefaults(companyId)
+	var kpiModel dashboardModels.KPIModel
+	kpiModel.DuplicateDefaults(companyId)
 	c.IndentedJSON(201, gin.H{})
 }

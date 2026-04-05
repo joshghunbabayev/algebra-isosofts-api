@@ -11,20 +11,20 @@ import (
 	"time"
 )
 
-type OpKPIModel struct{}
+type OPIModel struct{}
 
-func (*OpKPIModel) GenerateUniqueId() string {
+func (*OPIModel) GenerateUniqueId() string {
 	id := modules.GenerateRandomString(30)
-	var opKPIModel OpKPIModel
-	opKPI, _ := opKPIModel.GetById(id)
+	var opiModel OPIModel
+	opi, _ := opiModel.GetById(id)
 
-	if opKPI.IsEmpty() {
+	if opi.IsEmpty() {
 		return id
 	}
-	return opKPIModel.GenerateUniqueId()
+	return opiModel.GenerateUniqueId()
 }
 
-func (*OpKPIModel) GenerateUniqueNo() string {
+func (*OPIModel) GenerateUniqueNo() string {
 	db := database.GetDatabase()
 
 	year := time.Now().Format("06")
@@ -32,7 +32,7 @@ func (*OpKPIModel) GenerateUniqueNo() string {
 	var lastNo string
 	db.QueryRow(`
 		SELECT "no" 
-		FROM opkpis 
+		FROM opis 
 		WHERE "no" LIKE ? 
 		ORDER BY "no" DESC 
 		LIMIT 1
@@ -54,45 +54,45 @@ func (*OpKPIModel) GenerateUniqueNo() string {
 	return newNo
 }
 
-func (*OpKPIModel) GetById(id string) (dashboardTypes.OpKPI, error) {
+func (*OPIModel) GetById(id string) (dashboardTypes.OPI, error) {
 	db := database.GetDatabase()
 	row := db.QueryRow(`
-			SELECT * FROM opkpis
+			SELECT * FROM opis
 			WHERE id = ?
 		`, id)
 
-	var opKPI dashboardTypes.OpKPI
+	var opi dashboardTypes.OPI
 	var dropDownListItemModel tableComponentModels.DropDownListItemModel
 
 	err := row.Scan(
-		&opKPI.Id,
-		&opKPI.CompanyId,
-		&opKPI.No,
-		&opKPI.Title,
-		&opKPI.Function.Id,
-		&opKPI.LYKPI,
-		&opKPI.AnnualTarget,
-		&opKPI.January,
-		&opKPI.February,
-		&opKPI.March,
-		&opKPI.April,
-		&opKPI.May,
-		&opKPI.June,
-		&opKPI.July,
-		&opKPI.August,
-		&opKPI.September,
-		&opKPI.October,
-		&opKPI.November,
-		&opKPI.December,
-		&opKPI.DbStatus,
-		&opKPI.DbLastStatus,
+		&opi.Id,
+		&opi.CompanyId,
+		&opi.No,
+		&opi.Title,
+		&opi.Function.Id,
+		&opi.LYKPI,
+		&opi.AnnualTarget,
+		&opi.January,
+		&opi.February,
+		&opi.March,
+		&opi.April,
+		&opi.May,
+		&opi.June,
+		&opi.July,
+		&opi.August,
+		&opi.September,
+		&opi.October,
+		&opi.November,
+		&opi.December,
+		&opi.DbStatus,
+		&opi.DbLastStatus,
 	)
-	opKPI.Function, _ = dropDownListItemModel.GetById(opKPI.Function.Id)
+	opi.Function, _ = dropDownListItemModel.GetById(opi.Function.Id)
 
-	return opKPI, err
+	return opi, err
 }
 
-func (*OpKPIModel) GetAll(filters map[string]interface{}) ([]dashboardTypes.OpKPI, error) {
+func (*OPIModel) GetAll(filters map[string]interface{}) ([]dashboardTypes.OPI, error) {
 	db := database.GetDatabase()
 	whereClause := ""
 	values := []interface{}{}
@@ -106,7 +106,7 @@ func (*OpKPIModel) GetAll(filters map[string]interface{}) ([]dashboardTypes.OpKP
 		whereClause = "WHERE " + strings.Join(whereParts, " AND ")
 	}
 
-	query := fmt.Sprintf(`SELECT * FROM opkpis %s`, whereClause)
+	query := fmt.Sprintf(`SELECT * FROM opis %s`, whereClause)
 	rows, err := db.Query(query, values...)
 
 	if err != nil {
@@ -114,49 +114,49 @@ func (*OpKPIModel) GetAll(filters map[string]interface{}) ([]dashboardTypes.OpKP
 	}
 	defer rows.Close()
 
-	var opKPIs []dashboardTypes.OpKPI
+	var opis []dashboardTypes.OPI
 	for rows.Next() {
-		var opKPI dashboardTypes.OpKPI
+		var opi dashboardTypes.OPI
 		var dropDownListItemModel tableComponentModels.DropDownListItemModel
 
 		err := rows.Scan(
-			&opKPI.Id,
-			&opKPI.CompanyId,
-			&opKPI.No,
-			&opKPI.Title,
-			&opKPI.Function.Id,
-			&opKPI.LYKPI,
-			&opKPI.AnnualTarget,
-			&opKPI.January,
-			&opKPI.February,
-			&opKPI.March,
-			&opKPI.April,
-			&opKPI.May,
-			&opKPI.June,
-			&opKPI.July,
-			&opKPI.August,
-			&opKPI.September,
-			&opKPI.October,
-			&opKPI.November,
-			&opKPI.December,
-			&opKPI.DbStatus,
-			&opKPI.DbLastStatus,
+			&opi.Id,
+			&opi.CompanyId,
+			&opi.No,
+			&opi.Title,
+			&opi.Function.Id,
+			&opi.LYKPI,
+			&opi.AnnualTarget,
+			&opi.January,
+			&opi.February,
+			&opi.March,
+			&opi.April,
+			&opi.May,
+			&opi.June,
+			&opi.July,
+			&opi.August,
+			&opi.September,
+			&opi.October,
+			&opi.November,
+			&opi.December,
+			&opi.DbStatus,
+			&opi.DbLastStatus,
 		)
 
-		opKPI.Function, _ = dropDownListItemModel.GetById(opKPI.Function.Id)
+		opi.Function, _ = dropDownListItemModel.GetById(opi.Function.Id)
 		if err != nil {
 			return nil, err
 		}
-		opKPIs = append(opKPIs, opKPI)
+		opis = append(opis, opi)
 	}
 
-	return opKPIs, nil
+	return opis, nil
 }
 
-func (*OpKPIModel) Create(opKPI dashboardTypes.OpKPI) error {
+func (*OPIModel) Create(opi dashboardTypes.OPI) error {
 	db := database.GetDatabase()
 	_, err := db.Exec(`
-			INSERT INTO opkpis (
+			INSERT INTO opis (
 				"id", "companyId", "no", "title", "function", 
 				"lykpi", "annualTarget",
 				"january", "february", "march", "april", "may", "june",
@@ -164,16 +164,16 @@ func (*OpKPIModel) Create(opKPI dashboardTypes.OpKPI) error {
 				"dbStatus", "dbLastStatus" 
 			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
-		opKPI.Id, opKPI.CompanyId, opKPI.No, opKPI.Title, opKPI.Function.Id,
-		opKPI.LYKPI, opKPI.AnnualTarget,
-		opKPI.January, opKPI.February, opKPI.March, opKPI.April, opKPI.May, opKPI.June,
-		opKPI.July, opKPI.August, opKPI.September, opKPI.October, opKPI.November, opKPI.December,
-		opKPI.DbStatus, opKPI.DbLastStatus,
+		opi.Id, opi.CompanyId, opi.No, opi.Title, opi.Function.Id,
+		opi.LYKPI, opi.AnnualTarget,
+		opi.January, opi.February, opi.March, opi.April, opi.May, opi.June,
+		opi.July, opi.August, opi.September, opi.October, opi.November, opi.December,
+		opi.DbStatus, opi.DbLastStatus,
 	)
 	return err
 }
 
-func (*OpKPIModel) Update(id string, fields map[string]interface{}) error {
+func (*OPIModel) Update(id string, fields map[string]interface{}) error {
 	if len(fields) == 0 {
 		return nil
 	}
@@ -187,7 +187,7 @@ func (*OpKPIModel) Update(id string, fields map[string]interface{}) error {
 	}
 
 	setClause = strings.TrimSuffix(setClause, ",")
-	query := fmt.Sprintf(`UPDATE opkpis SET %s WHERE "id" = ?`, setClause)
+	query := fmt.Sprintf(`UPDATE opis SET %s WHERE "id" = ?`, setClause)
 	values = append(values, id)
 
 	db := database.GetDatabase()

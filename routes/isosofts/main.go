@@ -5,5 +5,5 @@ import (
 )
 
 func MainRoutes(rg *gin.RouterGroup) {
-	QhseKPIRoutes(rg.Group("/qhseKpi"))
+	KPIRoutes(rg.Group("/kpi"))
 }

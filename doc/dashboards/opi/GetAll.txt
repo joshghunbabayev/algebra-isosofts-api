@@ -1,8 +1,13 @@
-package dashboardTypes
+1. For get all brregister from db
 
-import tableComponentTypes "algebra-isosofts-api/types/tableComponents"
+	GET /api/register/opi/all                    (active)
+	GET /api/register/opi/all?status=active
+	GET /api/register/opi/all?status=archived
+	GET /api/register/opi/all?status=deleted
 
-type OpKPI struct {
+array / icinde :
+
+type BR struct {
 	Id           string                               `json:"id"`
 	CompanyId    string                               `json:"companyId"`
 	No           string                               `json:"no"`
@@ -24,9 +29,4 @@ type OpKPI struct {
 	November     int64                                `json:"november"`
 	December     int64                                `json:"december"`
 	DbStatus     string                               `json:"dbStatus"`
-	DbLastStatus string                               `json:"-"`
-}
-
-func (opKPI OpKPI) IsEmpty() bool {
-	return opKPI.Id == ""
 }

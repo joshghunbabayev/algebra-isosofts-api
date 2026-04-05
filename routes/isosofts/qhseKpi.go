@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func QhseKPIRoutes(rg *gin.RouterGroup) {
-	var qhseKPIHandler isosoftsHandlers.QhseKPIHandler
-	rg.GET("/duplicate-defaults", qhseKPIHandler.DuplicateDefaults) // query: companyId
+func KPIRoutes(rg *gin.RouterGroup) {
+	var kpiHandler isosoftsHandlers.KPIHandler
+	rg.GET("/duplicate-defaults", kpiHandler.DuplicateDefaults) // query: companyId
 }

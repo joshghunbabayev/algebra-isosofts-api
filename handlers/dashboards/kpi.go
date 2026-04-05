@@ -8,15 +8,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type QhseKPIHandler struct {
+type KPIHandler struct {
 }
 
-func (*QhseKPIHandler) GetAll(c *gin.Context) {
+func (*KPIHandler) GetAll(c *gin.Context) {
 	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 
-	var qhseKPIModel dashboardModels.QhseKPIModel
+	var kpiModel dashboardModels.KPIModel
 
-	qhseKPIs, err := qhseKPIModel.GetAll(map[string]interface{}{
+	kpis, err := kpiModel.GetAll(map[string]interface{}{
 		"companyId": account.CompanyId,
 	})
 
@@ -25,11 +25,11 @@ func (*QhseKPIHandler) GetAll(c *gin.Context) {
 		return
 	}
 
-	for i := range qhseKPIs {
+	for i := range kpis {
 
 		var calculatedValue int64 = 0
 
-		switch qhseKPIs[i].SNo {
+		switch kpis[i].SNo {
 		case 1: // Number of Residual High Business Risks / Opportunity Level
 			var brModel registerModels.BRModel
 
@@ -515,20 +515,20 @@ func (*QhseKPIHandler) GetAll(c *gin.Context) {
 			calculatedValue = 0
 		}
 
-		qhseKPIs[i].ActualKPI = calculatedValue
-		qhseKPIs[i].March = calculatedValue
+		kpis[i].ActualKPI = calculatedValue
+		kpis[i].March = calculatedValue
 	}
 
-	c.IndentedJSON(200, qhseKPIs)
+	c.IndentedJSON(200, kpis)
 }
 
-func (*QhseKPIHandler) Update(c *gin.Context) {
+func (*KPIHandler) Update(c *gin.Context) {
 	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	id := c.Param("id")
 
 	var body struct {
 		Function     string `json:"function"`
-		LYKPI        int64  `json:"lyqhseKPI"`
+		LYKPI        int64  `json:"lykpi"`
 		AnnualTarget int64  `json:"annualTarget"`
 	}
 
@@ -537,15 +537,15 @@ func (*QhseKPIHandler) Update(c *gin.Context) {
 		return
 	}
 
-	var qhseKPIModel dashboardModels.QhseKPIModel
-	currentKpi, err := qhseKPIModel.GetById(id)
+	var kpiModel dashboardModels.KPIModel
+	currentKpi, err := kpiModel.GetById(id)
 
 	if err != nil || currentKpi.IsEmpty() || currentKpi.CompanyId != account.CompanyId {
 		c.JSON(404, gin.H{"error": "KPI not found or access denied"})
 		return
 	}
 
-	err = qhseKPIModel.Update(id, map[string]interface{}{
+	err = kpiModel.Update(id, map[string]interface{}{
 		"function":     body.Function,
 		"lykpi":        body.LYKPI,
 		"annualTarget": body.AnnualTarget,

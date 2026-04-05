@@ -1,13 +1,8 @@
-1. For get all brregister from db
+package dashboardTypes
 
-	GET /api/register/opKpi/all                    (active)
-	GET /api/register/opKpi/all?status=active
-	GET /api/register/opKpi/all?status=archived
-	GET /api/register/opKpi/all?status=deleted
+import tableComponentTypes "algebra-isosofts-api/types/tableComponents"
 
-array / icinde :
-
-type BR struct {
+type OPI struct {
 	Id           string                               `json:"id"`
 	CompanyId    string                               `json:"companyId"`
 	No           string                               `json:"no"`
@@ -29,4 +24,9 @@ type BR struct {
 	November     int64                                `json:"november"`
 	December     int64                                `json:"december"`
 	DbStatus     string                               `json:"dbStatus"`
+	DbLastStatus string                               `json:"-"`
+}
+
+func (opi OPI) IsEmpty() bool {
+	return opi.Id == ""
 }

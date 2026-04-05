@@ -1,8 +1,0 @@
-For archive and unarchive
-    PUT /api/register/opKpi/all/archive
-    PUT /api/register/opKpi/all/unarchive
-
-body: 
-{
-  "ids": ["id1", "id2", ......]
-}
