@@ -4,6 +4,7 @@ import (
 	"algebra-isosofts-api/middlewares"
 	dashboardModels "algebra-isosofts-api/models/dashboards"
 	registerModels "algebra-isosofts-api/models/registers"
+	registerComponentModels "algebra-isosofts-api/models/registers/components"
 
 	"github.com/gin-gonic/gin"
 )
@@ -30,7 +31,54 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 		var calculatedValue int64 = 0
 
 		switch kpis[i].SNo {
-		case 1: // Number of Residual High Business Risks / Opportunity Level
+
+		case 1: // Number of Not inspected Inventory/Equipment
+			// calculatedValue = 300
+
+		case 2: // Number of Overdue Trainings
+			// calculatedValue = 300
+
+		case 3: // Number of Not reviewed Documents
+			// calculatedValue = 300
+
+		case 4: // Number of Not evaluated Vendors
+			// calculatedValue = 300
+
+		case 5: // Number of Not evaluated Customers
+			// calculatedValue = 300
+
+		case 6: // Number of Not evaluated Employees
+			// calculatedValue = 300
+
+		case 7: // Number of Open Findings
+			// calculatedValue = 300
+
+		case 8: // Number of Not completed A&O Activities
+			// calculatedValue = 300
+
+		case 9: // Number of Overdue Actions
+			var actionModel registerComponentModels.ActionModel
+
+			var num int64 = 0
+
+			actions, _ := actionModel.GetAll(map[string]interface{}{
+				"dbStatus":  "active",
+				"companyId": account.CompanyId,
+			})
+
+			for _, action := range actions {
+				if action.VerificationStatus.Value == "Delayed" {
+					num++
+				}
+			}
+
+			if len(actions) > 0 {
+				calculatedValue = int64(float64(num) / float64(len(actions)) * 100)
+			} else {
+				calculatedValue = 0
+			}
+
+		case 10: // Number of Residual High Business Risks / Opportunity Level
 			var brModel registerModels.BRModel
 
 			brs, _ := brModel.GetAll(map[string]interface{}{
@@ -44,7 +92,7 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 				}
 			}
 
-		case 2: // Number of Residual High H&S Risks
+		case 11: // Number of Residual High H&S Risks
 			var hsrModel registerModels.HSRModel
 
 			hsrs, _ := hsrModel.GetAll(map[string]interface{}{
@@ -58,7 +106,7 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 				}
 			}
 
-		case 3: // Number of Legal Requirment with Residual High Risk
+		case 12: // Number of Legal Requirment with Residual High Risk
 			var legModel registerModels.LEGModel
 
 			legs, _ := legModel.GetAll(map[string]interface{}{
@@ -72,7 +120,7 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 				}
 			}
 
-		case 4: // Number of E&A Aspects with High Residual Significance Level
+		case 13: // Number of E&A Aspects with High Residual Significance Level
 			var eaiModel registerModels.EAIModel
 
 			eais, _ := eaiModel.GetAll(map[string]interface{}{
@@ -86,7 +134,7 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 				}
 			}
 
-		case 5: // Equipment Safety Rate %
+		case 14: // Equipment Safety Rate %
 			var eiModel registerModels.EIModel
 
 			eis, _ := eiModel.GetAll(map[string]interface{}{
@@ -106,7 +154,7 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 				calculatedValue = 0
 			}
 
-		case 6: // Training Validity Rate %
+		case 15: // Training Validity Rate %
 			var traModel registerModels.TRAModel
 
 			tras, _ := traModel.GetAll(map[string]interface{}{
@@ -126,7 +174,7 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 				calculatedValue = 0
 			}
 
-		case 7: // Documents Review Rate %
+		case 16: // Documents Review Rate %
 			var docModel registerModels.DOCModel
 
 			docs, _ := docModel.GetAll(map[string]interface{}{
@@ -146,7 +194,7 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 				calculatedValue = 0
 			}
 
-		case 8: // Vendors Evaluation Rate %
+		case 17: // Vendors Evaluation Rate %
 			var venModel registerModels.VENModel
 
 			vens, _ := venModel.GetAll(map[string]interface{}{
@@ -166,7 +214,7 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 				calculatedValue = 0
 			}
 
-		case 9: // Average Vendors Satisfuction Score
+		case 18: // Average Vendors Satisfuction Score
 			var venModel registerModels.VENModel
 
 			var num int64 = 0
@@ -186,7 +234,7 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 				calculatedValue = 0
 			}
 
-		case 10: // Customer Feedback Evaluation Rate %
+		case 19: // Customer Feedback Evaluation Rate %
 			var cusModel registerModels.CUSModel
 
 			cuss, _ := cusModel.GetAll(map[string]interface{}{
@@ -206,7 +254,7 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 				calculatedValue = 0
 			}
 
-		case 11: // Average Customer Satisfuction Score
+		case 20: // Average Customer Satisfuction Score
 			var cusModel registerModels.CUSModel
 
 			var num int64 = 0
@@ -226,7 +274,7 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 				calculatedValue = 0
 			}
 
-		case 12: // Number of Jobs
+		case 21: // Number of Jobs
 			var fbModel registerModels.FBModel
 
 			fbs, _ := fbModel.GetAll(map[string]interface{}{
@@ -236,7 +284,7 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 
 			calculatedValue = int64(len(fbs))
 
-		case 13: // Employee Performance Appraisal Status Rate %
+		case 22: // Employee Performance Appraisal Status Rate %
 			var eaModel registerModels.EAModel
 
 			eas, _ := eaModel.GetAll(map[string]interface{}{
@@ -256,7 +304,7 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 				calculatedValue = 0
 			}
 
-		case 14: // Average Employee Skills Appraisal Score
+		case 23: // Average Employee Skills Appraisal Score
 			var eaModel registerModels.EAModel
 
 			var num int64 = 0
@@ -276,7 +324,7 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 				calculatedValue = 0
 			}
 
-		case 15: // Number of Residual High MoC Risks
+		case 24: // Number of Residual High MoC Risks
 			var mocModel registerModels.MOCModel
 
 			mocs, _ := mocModel.GetAll(map[string]interface{}{
@@ -290,7 +338,7 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 				}
 			}
 
-		case 16: // Findings Closure Rate
+		case 25: // Findings Closure Rate
 			var finModel registerModels.FINModel
 
 			var num int64 = 0
@@ -312,7 +360,7 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 				calculatedValue = 0
 			}
 
-		case 17: // Number of Non-Conformancies
+		case 26: // Number of Non-Conformancies
 			var finModel registerModels.FINModel
 
 			fins, _ := finModel.GetAll(map[string]interface{}{
@@ -326,7 +374,7 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 				}
 			}
 
-		case 18: // Number of Opportunities for Improvement
+		case 27: // Number of Opportunities for Improvement
 			var finModel registerModels.FINModel
 
 			fins, _ := finModel.GetAll(map[string]interface{}{
@@ -340,7 +388,7 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 				}
 			}
 
-		case 19: // Number of Internal Complaints
+		case 28: // Number of Internal Complaints
 			var finModel registerModels.FINModel
 
 			fins, _ := finModel.GetAll(map[string]interface{}{
@@ -354,7 +402,7 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 				}
 			}
 
-		case 20: // Number of External Complaints
+		case 29: // Number of External Complaints
 			var finModel registerModels.FINModel
 
 			fins, _ := finModel.GetAll(map[string]interface{}{
@@ -368,7 +416,7 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 				}
 			}
 
-		case 21: // Number of Good Practices
+		case 30: // Number of Good Practices
 			var finModel registerModels.FINModel
 
 			fins, _ := finModel.GetAll(map[string]interface{}{
@@ -382,7 +430,7 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 				}
 			}
 
-		case 22: // Number of Near-Misses
+		case 31: // Number of Near-Misses
 			var finModel registerModels.FINModel
 
 			fins, _ := finModel.GetAll(map[string]interface{}{
@@ -396,7 +444,7 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 				}
 			}
 
-		case 23: // Number of Incidents
+		case 32: // Number of Incidents
 			var finModel registerModels.FINModel
 
 			fins, _ := finModel.GetAll(map[string]interface{}{
@@ -410,7 +458,7 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 				}
 			}
 
-		case 24: // Rate of Incidents %
+		case 33: // Rate of Incidents %
 			var finModel registerModels.FINModel
 
 			var num int64 = 0
@@ -432,7 +480,7 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 				calculatedValue = 0
 			}
 
-		case 25: // Number of Accident
+		case 34: // Number of Accident
 			var finModel registerModels.FINModel
 
 			fins, _ := finModel.GetAll(map[string]interface{}{
@@ -446,7 +494,7 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 				}
 			}
 
-		case 26: // Number of Unsafe Actions
+		case 35: // Number of Unsafe Actions
 			var finModel registerModels.FINModel
 
 			fins, _ := finModel.GetAll(map[string]interface{}{
@@ -460,7 +508,7 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 				}
 			}
 
-		case 27: // Number of Unsafe Conditions
+		case 36: // Number of Unsafe Conditions
 			var finModel registerModels.FINModel
 
 			fins, _ := finModel.GetAll(map[string]interface{}{
@@ -474,7 +522,7 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 				}
 			}
 
-		case 28: // Number of Environmental Incidents
+		case 37: // Number of Environmental Incidents
 			var finModel registerModels.FINModel
 
 			fins, _ := finModel.GetAll(map[string]interface{}{
@@ -488,7 +536,7 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 				}
 			}
 
-		case 29: // Assurance & Oversight Plan Implementation Rate %
+		case 38: // Assurance & Oversight Plan Implementation Rate %
 			var aopModel registerModels.AOPModel
 
 			var num int64 = 0
@@ -509,14 +557,35 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 			} else {
 				calculatedValue = 0
 			}
-		case 30: // Actions Closure Rate
-			// calculatedValue = 300
+
+		case 39: // Actions Closure Rate
+			var actionModel registerComponentModels.ActionModel
+
+			var num int64 = 0
+
+			actions, _ := actionModel.GetAll(map[string]interface{}{
+				"dbStatus":  "active",
+				"companyId": account.CompanyId,
+			})
+
+			for _, action := range actions {
+				if action.Status.Value == "100" {
+					num++
+				}
+			}
+
+			if len(actions) > 0 {
+				calculatedValue = int64(float64(num) / float64(len(actions)) * 100)
+			} else {
+				calculatedValue = 0
+			}
+
 		default:
 			calculatedValue = 0
 		}
 
 		kpis[i].ActualKPI = calculatedValue
-		kpis[i].March = calculatedValue
+		kpis[i].April = calculatedValue
 	}
 
 	c.IndentedJSON(200, kpis)
