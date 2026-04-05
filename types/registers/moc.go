@@ -10,6 +10,7 @@ type MOC struct {
 	CompanyId              string                               `json:"companyId"`
 	No                     string                               `json:"no"`
 	Issuer                 string                               `json:"issuer"`
+	IssuerDate             string                               `json:"issuerDate"`
 	ReasonOfChange         string                               `json:"reasonOfChange"`
 	Process                tableComponentTypes.DropDownListItem `json:"process"`
 	ChangeDescription      string                               `json:"changeDescription"`

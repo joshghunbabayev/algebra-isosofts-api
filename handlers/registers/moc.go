@@ -39,6 +39,7 @@ func (*MOCHandler) Create(c *gin.Context) {
 	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	var body struct {
 		Issuer                 string `json:"issuer"`
+		IssuerDate             string `json:"issuerDate"`
 		ReasonOfChange         string `json:"reasonOfChange"`
 		Process                string `json:"process"`
 		ChangeDescription      string `json:"changeDescription"`
@@ -74,6 +75,7 @@ func (*MOCHandler) Create(c *gin.Context) {
 		CompanyId:      account.CompanyId,
 		No:             mocModel.GenerateUniqueNo(),
 		Issuer:         body.Issuer,
+		IssuerDate:     body.IssuerDate,
 		ReasonOfChange: body.ReasonOfChange,
 		Process: tableComponentTypes.DropDownListItem{
 			Id: body.Process,
@@ -109,6 +111,7 @@ func (*MOCHandler) Update(c *gin.Context) {
 
 	var body struct {
 		Issuer                 string `json:"issuer"`
+		IssuerDate             string `json:"issuerDate"`
 		ReasonOfChange         string `json:"reasonOfChange"`
 		Process                string `json:"process"`
 		ChangeDescription      string `json:"changeDescription"`
@@ -139,6 +142,7 @@ func (*MOCHandler) Update(c *gin.Context) {
 
 	mocModel.Update(Id, map[string]interface{}{
 		"issuer":                 body.Issuer,
+		"issuerDate":             body.IssuerDate,
 		"reasonOfChange":         body.ReasonOfChange,
 		"process":                body.Process,
 		"changeDescription":      body.ChangeDescription,

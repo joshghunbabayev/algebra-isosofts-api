@@ -4,6 +4,7 @@ For update mocregister
 body:
 var body struct {
 		Issuer                 string `json:"issuer"`
+	IssuerDate             string                               `json:"issuerDate"`
 		ReasonOfChange         string `json:"reasonOfChange"`
 		Process                string `json:"process"`
 		ChangeDescription      string `json:"changeDescription"`
