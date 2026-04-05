@@ -37,7 +37,7 @@ func (*OPIModel) GenerateUniqueNo() string {
 		ORDER BY "no" DESC 
 		LIMIT 1
 		`,
-		"OKİ/"+year+"/%",
+		"OPI/"+year+"/%",
 	).Scan(&lastNo)
 
 	var nextNumber int
@@ -50,7 +50,7 @@ func (*OPIModel) GenerateUniqueNo() string {
 		nextNumber = num + 1
 	}
 
-	newNo := fmt.Sprintf("OKİ/%s/%04d", year, nextNumber)
+	newNo := fmt.Sprintf("OPI/%s/%04d", year, nextNumber)
 	return newNo
 }
 
