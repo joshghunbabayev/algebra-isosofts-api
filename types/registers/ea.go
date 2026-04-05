@@ -24,6 +24,7 @@ type EA struct {
 	BehavioralSkills         int8                                 `json:"behavioralSkills"`
 	EffectivenessOfTrainings int8                                 `json:"effectivenessOfTrainings"`
 	EVS                      int8                                 `json:"evs"`
+	Comment                  string                               `json:"comment"`
 	DbStatus                 string                               `json:"dbStatus"`
 	DbLastStatus             string                               `json:"-"`
 	Actions                  []registerComponentTypes.Action      `json:"actions"`

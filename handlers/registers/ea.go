@@ -53,6 +53,7 @@ func (*EAHandler) Create(c *gin.Context) {
 		BehavioralSkills         int8   `json:"behavioralSkills"`
 		EffectivenessOfTrainings int8   `json:"effectivenessOfTrainings"`
 		EVS                      int8   `json:"evs"`
+		Comment                  string `json:"comment"`
 	}
 
 	var errs = make(map[string]interface{})
@@ -93,6 +94,7 @@ func (*EAHandler) Create(c *gin.Context) {
 		BehavioralSkills:         body.BehavioralSkills,
 		EffectivenessOfTrainings: body.EffectivenessOfTrainings,
 		EVS:                      body.EVS,
+		Comment:                  body.Comment,
 		DbStatus:                 "active",
 		DbLastStatus:             "active",
 	})
@@ -129,6 +131,7 @@ func (*EAHandler) Update(c *gin.Context) {
 		BehavioralSkills         int8   `json:"behavioralSkills"`
 		EffectivenessOfTrainings int8   `json:"effectivenessOfTrainings"`
 		EVS                      int8   `json:"evs"`
+		Comment                  string `json:"comment"`
 	}
 
 	var errs = make(map[string]interface{})
@@ -162,6 +165,7 @@ func (*EAHandler) Update(c *gin.Context) {
 		"behavioralSkills":         body.BehavioralSkills,
 		"effectivenessOfTrainings": body.EffectivenessOfTrainings,
 		"evs":                      body.EVS,
+		"comment":                  body.Comment,
 	})
 
 	c.JSON(200, gin.H{})

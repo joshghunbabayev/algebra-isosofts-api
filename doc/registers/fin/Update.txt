@@ -16,4 +16,5 @@ var body struct {
 		ContainmentAction string `json:"containmentAction"`
 		RootCauses        string `json:"rootCauses"`
 	FindingStatus     string `json:"findingStatus"`
+	Comment                string                               `json:"comment"`
 	}

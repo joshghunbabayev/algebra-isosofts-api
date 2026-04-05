@@ -92,6 +92,7 @@ func (*EAModel) GetById(Id string) (registerTypes.EA, error) {
 		&ea.BehavioralSkills,
 		&ea.EffectivenessOfTrainings,
 		&ea.EVS,
+		&ea.Comment,
 		&ea.DbStatus,
 		&ea.DbLastStatus,
 	)
@@ -156,6 +157,7 @@ func (*EAModel) GetAll(filters map[string]interface{}) ([]registerTypes.EA, erro
 			&ea.BehavioralSkills,
 			&ea.EffectivenessOfTrainings,
 			&ea.EVS,
+			&ea.Comment,
 			&ea.DbStatus,
 			&ea.DbLastStatus,
 		)
@@ -193,9 +195,10 @@ func (*EAModel) Create(ea registerTypes.EA) error {
 				"behavioralSkills", 
 				"effectivenessOfTrainings", 
 				"evs", 
+				"comment", 
 				"dbStatus",
 				"dbLastStatus"
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
 		ea.Id,
 		ea.CompanyId,
@@ -215,6 +218,7 @@ func (*EAModel) Create(ea registerTypes.EA) error {
 		ea.BehavioralSkills,
 		ea.EffectivenessOfTrainings,
 		ea.EVS,
+		ea.Comment,
 		ea.DbStatus,
 		ea.DbLastStatus,
 	)

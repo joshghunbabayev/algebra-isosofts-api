@@ -86,6 +86,7 @@ func (*EIModel) GetById(Id string) (registerTypes.EI, error) {
 		&ei.ICD,
 		&ei.NVCD,
 		&ei.EIS,
+		&ei.Comment,
 		&ei.DbStatus,
 		&ei.DbLastStatus,
 	)
@@ -145,6 +146,7 @@ func (*EIModel) GetAll(filters map[string]interface{}) ([]registerTypes.EI, erro
 			&ei.ICD,
 			&ei.NVCD,
 			&ei.EIS,
+			&ei.Comment,
 			&ei.DbStatus,
 			&ei.DbLastStatus,
 		)
@@ -177,9 +179,10 @@ func (*EIModel) Create(ei registerTypes.EI) error {
 				"icd",
 				"nvcd",
 				"eis",
+				"comment",
 				"dbStatus",
 				"dbLastStatus"
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
 		ei.Id,
 		ei.CompanyId,
@@ -193,6 +196,7 @@ func (*EIModel) Create(ei registerTypes.EI) error {
 		ei.ICD,
 		ei.NVCD,
 		ei.EIS,
+		ei.Comment,
 		ei.DbStatus,
 		ei.DbLastStatus,
 	)

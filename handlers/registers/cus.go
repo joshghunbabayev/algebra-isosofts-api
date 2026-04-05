@@ -46,6 +46,7 @@ func (*CUSHandler) Create(c *gin.Context) {
 		RegistrationDate string `json:"registrationDate"`
 		ReviewDate       string `json:"reviewDate"`
 		EvaluationDone   int8   `json:"evaluationDone"`
+		Comment          string `json:"comment"`
 	}
 
 	var errs = make(map[string]interface{})
@@ -83,6 +84,7 @@ func (*CUSHandler) Create(c *gin.Context) {
 		RegistrationDate: body.RegistrationDate,
 		ReviewDate:       body.ReviewDate,
 		EvaluationDone:   body.EvaluationDone,
+		Comment:          body.Comment,
 		DbStatus:         "active",
 		DbLastStatus:     "active",
 	})
@@ -128,6 +130,7 @@ func (*CUSHandler) Update(c *gin.Context) {
 		RegistrationDate string `json:"registrationDate"`
 		ReviewDate       string `json:"reviewDate"`
 		EvaluationDone   int8   `json:"evaluationDone"`
+		Comment          string `json:"comment"`
 	}
 
 	var errs = make(map[string]interface{})
@@ -154,6 +157,7 @@ func (*CUSHandler) Update(c *gin.Context) {
 		"registrationDate": body.RegistrationDate,
 		"reviewDate":       body.ReviewDate,
 		"EvaluationDone":   body.EvaluationDone,
+		"comment":          body.Comment,
 	})
 
 	c.JSON(200, gin.H{})

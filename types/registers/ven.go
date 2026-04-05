@@ -23,6 +23,7 @@ type VEN struct {
 	Documentation    int8                                 `json:"documentation"`
 	HS               int8                                 `json:"hs"`
 	Environment      int8                                 `json:"environment"`
+	Comment          string                               `json:"comment"`
 	DbStatus         string                               `json:"dbStatus"`
 	DbLastStatus     string                               `json:"-"`
 	Actions          []registerComponentTypes.Action      `json:"actions"`

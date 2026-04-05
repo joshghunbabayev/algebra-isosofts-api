@@ -90,6 +90,7 @@ func (*BRModel) GetById(Id string) (registerTypes.BR, error) {
 		&br.ACM,
 		&br.ResidualRiskSeverity,
 		&br.ResidualRiskLikelihood,
+		&br.Comment,
 		&br.DbStatus,
 		&br.DbLastStatus,
 	)
@@ -155,6 +156,7 @@ func (*BRModel) GetAll(filters map[string]interface{}) ([]registerTypes.BR, erro
 			&br.ACM,
 			&br.ResidualRiskSeverity,
 			&br.ResidualRiskLikelihood,
+			&br.Comment,
 			&br.DbStatus,
 			&br.DbLastStatus,
 		)
@@ -193,9 +195,10 @@ func (*BRModel) Create(br registerTypes.BR) error {
 				"acm", 
 				"residualRiskSeverity", 
 				"residualRiskLikelihood",
+				"comment",
 				"dbStatus",
 				"dbLastStatus"
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
 		br.Id,
 		br.CompanyId,
@@ -213,6 +216,7 @@ func (*BRModel) Create(br registerTypes.BR) error {
 		br.ACM,
 		br.ResidualRiskSeverity,
 		br.ResidualRiskLikelihood,
+		br.Comment,
 		br.DbStatus,
 		br.DbLastStatus,
 	)

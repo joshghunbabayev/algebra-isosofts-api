@@ -46,6 +46,7 @@ func (*TRAHandler) Create(c *gin.Context) {
 		NCD               string `json:"ncd"`
 		ValidityStatus    int8   `json:"validityStatus"`
 		Effectiveness     int8   `json:"effectiveness"`
+		Comment           string `json:"comment"`
 	}
 
 	var errs = make(map[string]interface{})
@@ -82,6 +83,7 @@ func (*TRAHandler) Create(c *gin.Context) {
 		NCD:            body.NCD,
 		ValidityStatus: body.ValidityStatus,
 		Effectiveness:  body.Effectiveness,
+		Comment:        body.Comment,
 		DbStatus:       "active",
 		DbLastStatus:   "active",
 	})
@@ -112,6 +114,7 @@ func (*TRAHandler) Update(c *gin.Context) {
 		NCD               string `json:"ncd"`
 		ValidityStatus    int8   `json:"validityStatus"`
 		Effectiveness     int8   `json:"effectiveness"`
+		Comment           string `json:"comment"`
 	}
 
 	var errs = make(map[string]interface{})
@@ -139,6 +142,7 @@ func (*TRAHandler) Update(c *gin.Context) {
 		"ncd":               body.NCD,
 		"validityStatus":    body.ValidityStatus,
 		"effectiveness":     body.Effectiveness,
+		"comment":           body.Comment,
 	})
 
 	c.JSON(200, gin.H{})

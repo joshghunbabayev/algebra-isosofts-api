@@ -86,6 +86,7 @@ func (*TRAModel) GetById(Id string) (registerTypes.TRA, error) {
 		&tra.NCD,
 		&tra.ValidityStatus,
 		&tra.Effectiveness,
+		&tra.Comment,
 		&tra.DbStatus,
 		&tra.DbLastStatus,
 	)
@@ -144,6 +145,7 @@ func (*TRAModel) GetAll(filters map[string]interface{}) ([]registerTypes.TRA, er
 			&tra.NCD,
 			&tra.ValidityStatus,
 			&tra.Effectiveness,
+			&tra.Comment,
 			&tra.DbStatus,
 			&tra.DbLastStatus,
 		)
@@ -175,9 +177,10 @@ func (*TRAModel) Create(tra registerTypes.TRA) error {
 				"ncd",
 				"validityStatus",
 				"effectiveness",
+				"comment",
 				"dbStatus",
 				"dbLastStatus"
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
 		tra.Id,
 		tra.CompanyId,
@@ -191,6 +194,7 @@ func (*TRAModel) Create(tra registerTypes.TRA) error {
 		tra.NCD,
 		tra.ValidityStatus,
 		tra.Effectiveness,
+		tra.Comment,
 		tra.DbStatus,
 		tra.DbLastStatus,
 	)

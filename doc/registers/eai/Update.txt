@@ -17,4 +17,5 @@ type EAI struct {
 	RDOSSeverity     int8                                 `json:"rdosSeverity"`
 	RDOSDuration     int8                                 `json:"rdosDuration"`
 	RDOSScale        int8                                 `json:"rdosScale"`
+	Comment                string                               `json:"comment"`
 }

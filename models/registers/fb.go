@@ -89,6 +89,7 @@ func (*FBModel) GetById(Id string) (registerTypes.FB, error) {
 		&fb.Documentation,
 		&fb.HS,
 		&fb.Environment,
+		&fb.Comment,
 		&fb.DbStatus,
 		&fb.DbLastStatus,
 	)
@@ -151,6 +152,7 @@ func (*FBModel) GetAll(filters map[string]interface{}) ([]registerTypes.FB, erro
 			&fb.Documentation,
 			&fb.HS,
 			&fb.Environment,
+			&fb.Comment,
 			&fb.DbStatus,
 			&fb.DbLastStatus,
 		)
@@ -186,9 +188,10 @@ func (*FBModel) Create(fb registerTypes.FB) error {
 				"documentation",
 				"hs",
 				"environment",
+				"comment",
 				"dbStatus",
 				"dbLastStatus"
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
 		fb.Id,
 		fb.CompanyId,
@@ -205,6 +208,7 @@ func (*FBModel) Create(fb registerTypes.FB) error {
 		fb.Documentation,
 		fb.HS,
 		fb.Environment,
+		fb.Comment,
 		fb.DbStatus,
 		fb.DbLastStatus,
 	)

@@ -20,6 +20,7 @@ type AOP struct {
 	InspectionFrequency tableComponentTypes.DropDownListItem `json:"inspectionFrequency"`
 	NextAoaDate         string                               `json:"nextAoaDate"`
 	AOAStatus           string                               `json:"aoaStatus"`
+	Comment             string                               `json:"comment"`
 	DbStatus            string                               `json:"dbStatus"`
 	DbLastStatus        string                               `json:"-"`
 	Actions             []registerComponentTypes.Action      `json:"actions"`

@@ -19,6 +19,7 @@ type HSR struct {
 	ACM                    string                               `json:"acm"`
 	ResidualRiskSeverity   int8                                 `json:"residualRiskSeverity"`
 	ResidualRiskLikelihood int8                                 `json:"residualRiskLikelihood"`
+	Comment                string                               `json:"comment"`
 	DbStatus               string                               `json:"dbStatus"`
 	DbLastStatus           string                               `json:"-"`
 	Actions                []registerComponentTypes.Action      `json:"actions"`

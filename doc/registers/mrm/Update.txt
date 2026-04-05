@@ -6,4 +6,5 @@ type MRM struct {
 	Topic        tableComponentTypes.DropDownListItem `json:"topic"`
 	RISOS        string                               `json:"risos"`
 	Process      tableComponentTypes.DropDownListItem `json:"process"`
+	Comment                string                               `json:"comment"`
 }

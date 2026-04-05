@@ -15,4 +15,5 @@ type LEG struct {
 	ACM                    string                               `json:"acm"`
 	ResidualRiskSeverity   int8                                 `json:"residualRiskSeverity"`
 	ResidualRiskLikelihood int8                                 `json:"residualRiskLikelihood"`
+	Comment                string                               `json:"comment"`
 }

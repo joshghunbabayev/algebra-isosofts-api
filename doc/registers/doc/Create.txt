@@ -29,4 +29,5 @@ var body struct {
 		IssueDate         string `json:"issueDate"`
 		NextReviewDate    string `json:"nextReviewDate"`
 		Actual            int8   `json:"actual"`
+	Comment                string                               `json:"comment"`
 	}

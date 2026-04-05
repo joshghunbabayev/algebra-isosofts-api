@@ -51,6 +51,7 @@ func (*EAIHandler) Create(c *gin.Context) {
 		RDOSSeverity      int8   `json:"rdosSeverity"`
 		RDOSDuration      int8   `json:"rdosDuration"`
 		RDOSScale         int8   `json:"rdosScale"`
+		Comment           string `json:"comment"`
 	}
 
 	var errs = make(map[string]interface{})
@@ -96,6 +97,7 @@ func (*EAIHandler) Create(c *gin.Context) {
 		RDOSSeverity:    body.RDOSSeverity,
 		RDOSDuration:    body.RDOSDuration,
 		RDOSScale:       body.RDOSScale,
+		Comment:         body.Comment,
 		DbStatus:        "active",
 		DbLastStatus:    "active",
 	})
@@ -131,6 +133,7 @@ func (*EAIHandler) Update(c *gin.Context) {
 		RDOSSeverity      int8   `json:"rdosSeverity"`
 		RDOSDuration      int8   `json:"rdosDuration"`
 		RDOSScale         int8   `json:"rdosScale"`
+		Comment           string `json:"comment"`
 	}
 
 	var errs = make(map[string]interface{})
@@ -163,6 +166,7 @@ func (*EAIHandler) Update(c *gin.Context) {
 		"rdosSeverity":      body.RDOSSeverity,
 		"rdosDuration":      body.RDOSDuration,
 		"rdosScale":         body.RDOSScale,
+		"comment":           body.Comment,
 	})
 
 	c.JSON(200, gin.H{})

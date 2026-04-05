@@ -21,6 +21,7 @@ type DOC struct {
 	IssueDate         string                               `json:"issueDate"`
 	NextReviewDate    string                               `json:"nextReviewDate"`
 	Actual            int8                                 `json:"actual"`
+	Comment           string                               `json:"comment"`
 	DbStatus          string                               `json:"dbStatus"`
 	DbLastStatus      string                               `json:"-"`
 	Actions           []registerComponentTypes.Action      `json:"actions"`

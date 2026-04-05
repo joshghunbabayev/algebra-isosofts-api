@@ -11,4 +11,5 @@ body:
 		RegistrationDate string `json:"registrationDate"`
 		NRD       string `json:"nrd"`
 	EvaluationDone   int8                                 `json:"evaluationDone"`
+	Comment                string                               `json:"comment"`
 	}

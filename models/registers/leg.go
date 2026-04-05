@@ -89,6 +89,7 @@ func (*LEGModel) GetById(Id string) (registerTypes.LEG, error) {
 		&leg.ACM,
 		&leg.ResidualRiskSeverity,
 		&leg.ResidualRiskLikelihood,
+		&leg.Comment,
 		&leg.DbStatus,
 		&leg.DbLastStatus,
 	)
@@ -151,6 +152,7 @@ func (*LEGModel) GetAll(filters map[string]interface{}) ([]registerTypes.LEG, er
 			&leg.ACM,
 			&leg.ResidualRiskSeverity,
 			&leg.ResidualRiskLikelihood,
+			&leg.Comment,
 			&leg.DbStatus,
 			&leg.DbLastStatus,
 		)
@@ -186,9 +188,10 @@ func (*LEGModel) Create(leg registerTypes.LEG) error {
 				"acm", 
 				"residualRiskSeverity", 
 				"residualRiskLikelihood",
+				"comment",
 				"dbStatus",
 				"dbLastStatus"
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
 		leg.Id,
 		leg.CompanyId,
@@ -205,6 +208,7 @@ func (*LEGModel) Create(leg registerTypes.LEG) error {
 		leg.ACM,
 		leg.ResidualRiskSeverity,
 		leg.ResidualRiskLikelihood,
+		leg.Comment,
 		leg.DbStatus,
 		leg.DbLastStatus,
 	)

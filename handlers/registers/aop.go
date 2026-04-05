@@ -49,6 +49,7 @@ func (*AOPHandler) Create(c *gin.Context) {
 		InspectionFrequency string `json:"inspectionFrequency"`
 		NextAoaDate         string `json:"nextAoaDate"`
 		AOAStatus           string `json:"aoaStatus"`
+		Comment             string `json:"comment"`
 	}
 
 	var errs = make(map[string]interface{})
@@ -91,6 +92,7 @@ func (*AOPHandler) Create(c *gin.Context) {
 		},
 		NextAoaDate:  body.NextAoaDate,
 		AOAStatus:    body.AOAStatus,
+		Comment:      body.Comment,
 		DbStatus:     "active",
 		DbLastStatus: "active",
 	})
@@ -123,6 +125,7 @@ func (*AOPHandler) Update(c *gin.Context) {
 		InspectionFrequency string `json:"inspectionFrequency"`
 		NextAoaDate         string `json:"nextAoaDate"`
 		AOAStatus           string `json:"aoaStatus"`
+		Comment             string `json:"comment"`
 	}
 
 	var errs = make(map[string]interface{})
@@ -152,6 +155,7 @@ func (*AOPHandler) Update(c *gin.Context) {
 		"inspectionFrequency": body.InspectionFrequency,
 		"nextAoaDate":         body.NextAoaDate,
 		"aoaStatus":           body.AOAStatus,
+		"comment":             body.Comment,
 	})
 
 	c.JSON(200, gin.H{})

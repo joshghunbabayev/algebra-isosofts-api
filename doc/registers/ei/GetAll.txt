@@ -21,6 +21,7 @@ type EI struct {
 	NVCD                string                               `json:"nvcd"`
 	EIS           int8                                 `json:"eis"`
 	DbStatus            string                               `json:"dbStatus"`
+	Comment                string                               `json:"comment"`
 	DbLastStatus        string                               `json:"-"`
 	Actions             []registerComponentTypes.Action      `json:"actions"`
 }

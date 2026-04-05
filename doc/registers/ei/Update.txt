@@ -12,4 +12,5 @@ type EI struct {
 	ICD                 string                               `json:"icd"`
 	NVCD                string                               `json:"nvcd"`
 	EIS           int8                                 `json:"eis"`
+	Comment                string                               `json:"comment"`
 }

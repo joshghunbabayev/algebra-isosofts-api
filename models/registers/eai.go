@@ -91,6 +91,7 @@ func (*EAIModel) GetById(Id string) (registerTypes.EAI, error) {
 		&eai.RDOSSeverity,
 		&eai.RDOSDuration,
 		&eai.RDOSScale,
+		&eai.Comment,
 		&eai.DbStatus,
 		&eai.DbLastStatus,
 	)
@@ -156,6 +157,7 @@ func (*EAIModel) GetAll(filters map[string]interface{}) ([]registerTypes.EAI, er
 			&eai.RDOSSeverity,
 			&eai.RDOSDuration,
 			&eai.RDOSScale,
+			&eai.Comment,
 			&eai.DbStatus,
 			&eai.DbLastStatus,
 		)
@@ -194,9 +196,10 @@ func (*EAIModel) Create(eai registerTypes.EAI) error {
 				"rdosSeverity",
 				"rdosDuration",
 				"rdosScale",
+				"comment",
 				"dbStatus",
 				"dbLastStatus"
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
 		eai.Id,
 		eai.CompanyId,
@@ -215,6 +218,7 @@ func (*EAIModel) Create(eai registerTypes.EAI) error {
 		eai.RDOSSeverity,
 		eai.RDOSDuration,
 		eai.RDOSScale,
+		eai.Comment,
 		eai.DbStatus,
 		eai.DbLastStatus,
 	)

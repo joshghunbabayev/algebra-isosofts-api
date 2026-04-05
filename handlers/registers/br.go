@@ -50,6 +50,7 @@ func (*BRHandler) Create(c *gin.Context) {
 		ACM                    string `json:"acm"`
 		ResidualRiskSeverity   int8   `json:"residualRiskSeverity"`
 		ResidualRiskLikelihood int8   `json:"residualRiskLikelihood"`
+		Comment                string `json:"comment"`
 	}
 
 	var errs = make(map[string]interface{})
@@ -96,6 +97,7 @@ func (*BRHandler) Create(c *gin.Context) {
 		ACM:                    body.ACM,
 		ResidualRiskSeverity:   body.ResidualRiskSeverity,
 		ResidualRiskLikelihood: body.ResidualRiskLikelihood,
+		Comment:                body.Comment,
 		DbStatus:               "active",
 		DbLastStatus:           "active",
 	})
@@ -130,6 +132,7 @@ func (*BRHandler) Update(c *gin.Context) {
 		ACM                    string `json:"acm"`
 		ResidualRiskSeverity   int8   `json:"residualRiskSeverity"`
 		ResidualRiskLikelihood int8   `json:"residualRiskLikelihood"`
+		Comment                string `json:"comment"`
 	}
 
 	var errs = make(map[string]interface{})
@@ -161,6 +164,7 @@ func (*BRHandler) Update(c *gin.Context) {
 		"acm":                    body.ACM,
 		"residualRiskSeverity":   body.ResidualRiskSeverity,
 		"residualRiskLikelihood": body.ResidualRiskLikelihood,
+		"comment":                body.Comment,
 	})
 
 	c.JSON(200, gin.H{})

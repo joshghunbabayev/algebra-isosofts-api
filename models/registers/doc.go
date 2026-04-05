@@ -116,6 +116,7 @@ func (*DOCModel) GetById(Id string) (registerTypes.DOC, error) {
 		&doc.IssueDate,
 		&doc.NextReviewDate,
 		&doc.Actual,
+		&doc.Comment,
 		&doc.DbStatus,
 		&doc.DbLastStatus,
 	)
@@ -179,6 +180,7 @@ func (*DOCModel) GetAll(filters map[string]interface{}) ([]registerTypes.DOC, er
 			&doc.IssueDate,
 			&doc.NextReviewDate,
 			&doc.Actual,
+			&doc.Comment,
 			&doc.DbStatus,
 			&doc.DbLastStatus,
 		)
@@ -215,9 +217,10 @@ func (*DOCModel) Create(doc registerTypes.DOC) error {
 				"issueDate", 
 				"nextReviewDate", 
 				"actual",
+				"comment",
 				"dbStatus",
 				"dbLastStatus"
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
 		doc.Id,
 		doc.CompanyId,
@@ -234,6 +237,7 @@ func (*DOCModel) Create(doc registerTypes.DOC) error {
 		doc.IssueDate,
 		doc.NextReviewDate,
 		doc.Actual,
+		doc.Comment,
 		doc.DbStatus,
 		doc.DbLastStatus,
 	)

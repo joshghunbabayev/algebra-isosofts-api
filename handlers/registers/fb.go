@@ -50,6 +50,7 @@ func (*FBHandler) Create(c *gin.Context) {
 		Documentation     int8   `json:"documentation"`
 		HS                int8   `json:"hs"`
 		Environment       int8   `json:"environment"`
+		Comment           string `json:"comment"`
 	}
 
 	var errs = make(map[string]interface{})
@@ -89,6 +90,7 @@ func (*FBHandler) Create(c *gin.Context) {
 		Documentation: body.Documentation,
 		HS:            body.HS,
 		Environment:   body.Environment,
+		Comment:       body.Comment,
 		DbStatus:      "active",
 		DbLastStatus:  "active",
 	})
@@ -122,6 +124,7 @@ func (*FBHandler) Update(c *gin.Context) {
 		Documentation     int8   `json:"documentation"`
 		HS                int8   `json:"hs"`
 		Environment       int8   `json:"environment"`
+		Comment           string `json:"comment"`
 	}
 
 	var errs = make(map[string]interface{})
@@ -152,6 +155,7 @@ func (*FBHandler) Update(c *gin.Context) {
 		"documentation":     body.Documentation,
 		"hs":                body.HS,
 		"environment":       body.Environment,
+		"comment":           body.Comment,
 	})
 
 	c.JSON(200, gin.H{})

@@ -80,6 +80,7 @@ func (*MRMModel) GetById(Id string) (registerTypes.MRM, error) {
 		&mrm.Topic.Id,
 		&mrm.RISOS,
 		&mrm.Process.Id,
+		&mrm.Comment,
 		&mrm.DbStatus,
 		&mrm.DbLastStatus,
 	)
@@ -134,6 +135,7 @@ func (*MRMModel) GetAll(filters map[string]interface{}) ([]registerTypes.MRM, er
 			&mrm.Topic.Id,
 			&mrm.RISOS,
 			&mrm.Process.Id,
+			&mrm.Comment,
 			&mrm.DbStatus,
 			&mrm.DbLastStatus,
 		)
@@ -161,9 +163,10 @@ func (*MRMModel) Create(mrm registerTypes.MRM) error {
 				"topic", 
 				"risos", 
 				"process", 
+				"comment", 
 				"dbStatus",
 				"dbLastStatus"
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
 		mrm.Id,
 		mrm.CompanyId,
@@ -171,6 +174,7 @@ func (*MRMModel) Create(mrm registerTypes.MRM) error {
 		mrm.Topic.Id,
 		mrm.RISOS,
 		mrm.Process.Id,
+		mrm.Comment,
 		mrm.DbStatus,
 		mrm.DbLastStatus,
 	)

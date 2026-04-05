@@ -46,6 +46,7 @@ func (*VENHandler) Create(c *gin.Context) {
 		RegistrationDate string `json:"registrationDate"`
 		NRD              string `json:"nrd"`
 		EvaluationDone   int8   `json:"evaluationDone"`
+		Comment          string `json:"comment"`
 	}
 
 	var errs = make(map[string]interface{})
@@ -83,6 +84,7 @@ func (*VENHandler) Create(c *gin.Context) {
 		RegistrationDate: body.RegistrationDate,
 		NRD:              body.NRD,
 		EvaluationDone:   body.EvaluationDone,
+		Comment:          body.Comment,
 		DbStatus:         "active",
 		DbLastStatus:     "active",
 	})
@@ -128,6 +130,7 @@ func (*VENHandler) Update(c *gin.Context) {
 		RegistrationDate string `json:"registrationDate"`
 		NRD              string `json:"nrd"`
 		EvaluationDone   int8   `json:"evaluationDone"`
+		Comment          string `json:"comment"`
 	}
 
 	var errs = make(map[string]interface{})
@@ -154,6 +157,7 @@ func (*VENHandler) Update(c *gin.Context) {
 		"registrationDate": body.RegistrationDate,
 		"nrd":              body.NRD,
 		"evaluationDone":   body.EvaluationDone,
+		"comment":          body.Comment,
 	})
 
 	c.JSON(200, gin.H{})

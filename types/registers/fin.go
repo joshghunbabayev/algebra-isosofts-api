@@ -22,6 +22,7 @@ type FIN struct {
 	ContainmentAction string                               `json:"containmentAction"`
 	RootCauses        string                               `json:"rootCauses"`
 	FindingStatus     tableComponentTypes.DropDownListItem `json:"findingStatus"`
+	Comment           string                               `json:"comment"`
 	DbStatus          string                               `json:"dbStatus"`
 	DbLastStatus      string                               `json:"-"`
 	Actions           []registerComponentTypes.Action      `json:"actions"`

@@ -40,6 +40,7 @@ func (*MRMHandler) Create(c *gin.Context) {
 		Topic   string `json:"topic"`
 		RISOS   string `json:"risos"`
 		Process string `json:"process"`
+		Comment string `json:"comment"`
 	}
 
 	var errs = make(map[string]interface{})
@@ -72,6 +73,7 @@ func (*MRMHandler) Create(c *gin.Context) {
 		Process: tableComponentTypes.DropDownListItem{
 			Id: body.Process,
 		},
+		Comment:      body.Comment,
 		DbStatus:     "active",
 		DbLastStatus: "active",
 	})
@@ -96,6 +98,7 @@ func (*MRMHandler) Update(c *gin.Context) {
 		Topic   string `json:"topic"`
 		RISOS   string `json:"risos"`
 		Process string `json:"process"`
+		Comment string `json:"comment"`
 	}
 
 	var errs = make(map[string]interface{})
@@ -117,6 +120,7 @@ func (*MRMHandler) Update(c *gin.Context) {
 		"topic":   body.Topic,
 		"risos":   body.RISOS,
 		"process": body.Process,
+		"comment": body.Comment,
 	})
 
 	c.JSON(200, gin.H{})

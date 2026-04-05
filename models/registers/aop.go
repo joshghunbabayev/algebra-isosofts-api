@@ -88,6 +88,7 @@ func (*AOPModel) GetById(Id string) (registerTypes.AOP, error) {
 		&aop.InspectionFrequency.Id,
 		&aop.NextAoaDate,
 		&aop.AOAStatus,
+		&aop.Comment,
 		&aop.DbStatus,
 		&aop.DbLastStatus,
 	)
@@ -151,6 +152,7 @@ func (*AOPModel) GetAll(filters map[string]interface{}) ([]registerTypes.AOP, er
 			&aop.InspectionFrequency.Id,
 			&aop.NextAoaDate,
 			&aop.AOAStatus,
+			&aop.Comment,
 			&aop.DbStatus,
 			&aop.DbLastStatus,
 		)
@@ -187,9 +189,10 @@ func (*AOPModel) Create(aop registerTypes.AOP) error {
 				"inspectionFrequency", 
 				"nextAoaDate", 
 				"aoaStatus", 
+				"comment", 
 				"dbStatus",
 				"dbLastStatus"
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
 		aop.Id,
 		aop.CompanyId,
@@ -205,6 +208,7 @@ func (*AOPModel) Create(aop registerTypes.AOP) error {
 		aop.InspectionFrequency.Id,
 		aop.NextAoaDate,
 		aop.AOAStatus,
+		aop.Comment,
 		aop.DbStatus,
 		aop.DbLastStatus,
 	)

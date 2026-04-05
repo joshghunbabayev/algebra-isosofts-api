@@ -22,6 +22,7 @@ type FB struct {
 	Documentation     int8                                    `json:"documentation"`
 	HS                int8                                    `json:"hs"`
 	Environment       int8                                    `json:"environment"`
+	Comment                string                               `json:"comment"`
 	DbStatus          string                                  `json:"dbStatus"`
 	DbLastStatus      string                                  `json:"-"`
 	VendorFeedbacks   []registerComponentTypes.VendorFeedback `json:"vendorFeedbacks"`

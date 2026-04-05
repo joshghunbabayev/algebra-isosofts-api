@@ -50,6 +50,7 @@ func (*DOCHandler) Create(c *gin.Context) {
 		IssueDate         string `json:"issueDate"`
 		NextReviewDate    string `json:"nextReviewDate"`
 		Actual            int8   `json:"actual"`
+		Comment           string `json:"comment"`
 	}
 
 	var errs = make(map[string]interface{})
@@ -104,6 +105,7 @@ func (*DOCHandler) Create(c *gin.Context) {
 		IssueDate:      body.IssueDate,
 		NextReviewDate: body.NextReviewDate,
 		Actual:         body.Actual,
+		Comment:        body.Comment,
 		DbStatus:       "active",
 		DbLastStatus:   "active",
 	})
@@ -137,6 +139,7 @@ func (*DOCHandler) Update(c *gin.Context) {
 		IssueDate         string `json:"issueDate"`
 		NextReviewDate    string `json:"nextReviewDate"`
 		Actual            int8   `json:"actual"`
+		Comment           string `json:"comment"`
 	}
 
 	var errs = make(map[string]interface{})
@@ -179,6 +182,7 @@ func (*DOCHandler) Update(c *gin.Context) {
 		"issueDate":         body.IssueDate,
 		"nextReviewDate":    body.NextReviewDate,
 		"actual":            body.Actual,
+		"comment":           body.Comment,
 	})
 
 	c.JSON(200, gin.H{})

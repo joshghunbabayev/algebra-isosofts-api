@@ -12,4 +12,5 @@ type TRA struct {
 	NCD              string                          `json:"ncd"`
 	ValidityStatus int8                            `json:"validityStatus"`
 	Effectiveness    int8                            `json:"effectiveness"`
+	Comment                string                               `json:"comment"`
 }
