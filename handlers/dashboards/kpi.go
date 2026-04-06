@@ -5,6 +5,7 @@ import (
 	dashboardModels "algebra-isosofts-api/models/dashboards"
 	registerModels "algebra-isosofts-api/models/registers"
 	registerComponentModels "algebra-isosofts-api/models/registers/components"
+	"algebra-isosofts-api/modules"
 
 	"github.com/gin-gonic/gin"
 )
@@ -33,33 +34,119 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 		switch kpis[i].SNo {
 
 		case 1: // Number of Not inspected Inventory/Equipment
-			// calculatedValue = 300
+			var eiModel registerModels.EIModel
+
+			eis, _ := eiModel.GetAll(map[string]interface{}{
+				"dbStatus":  "active",
+				"companyId": account.CompanyId,
+			})
+
+			for _, ei := range eis {
+				if !modules.IsDateBigger(ei.NVCD) {
+					calculatedValue++
+				}
+			}
 
 		case 2: // Number of Overdue Trainings
-			// calculatedValue = 300
+			var traModel registerModels.TRAModel
+
+			tras, _ := traModel.GetAll(map[string]interface{}{
+				"dbStatus":  "active",
+				"companyId": account.CompanyId,
+			})
+
+			for _, tra := range tras {
+				if !modules.IsDateBigger(tra.NCD) {
+					calculatedValue++
+				}
+			}
 
 		case 3: // Number of Not reviewed Documents
-			// calculatedValue = 300
+			var docModel registerModels.DOCModel
+
+			docs, _ := docModel.GetAll(map[string]interface{}{
+				"dbStatus":  "active",
+				"companyId": account.CompanyId,
+			})
+
+			for _, doc := range docs {
+				if !modules.IsDateBigger(doc.NextReviewDate) {
+					calculatedValue++
+				}
+			}
 
 		case 4: // Number of Not evaluated Vendors
-			// calculatedValue = 300
+			var venModel registerModels.VENModel
+
+			vens, _ := venModel.GetAll(map[string]interface{}{
+				"dbStatus":  "active",
+				"companyId": account.CompanyId,
+			})
+
+			for _, ven := range vens {
+				if !modules.IsDateBigger(ven.NRD) {
+					calculatedValue++
+				}
+			}
 
 		case 5: // Number of Not evaluated Customers
-			// calculatedValue = 300
+			var cusModel registerModels.CUSModel
+
+			cuss, _ := cusModel.GetAll(map[string]interface{}{
+				"dbStatus":  "active",
+				"companyId": account.CompanyId,
+			})
+
+			for _, cus := range cuss {
+				if !modules.IsDateBigger(cus.ReviewDate) {
+					calculatedValue++
+				}
+			}
 
 		case 6: // Number of Not evaluated Employees
-			// calculatedValue = 300
+			var eaModel registerModels.EAModel
+
+			eas, _ := eaModel.GetAll(map[string]interface{}{
+				"dbStatus":  "active",
+				"companyId": account.CompanyId,
+			})
+
+			for _, ea := range eas {
+				if !modules.IsDateBigger(ea.NextAppraisalDate) {
+					calculatedValue++
+				}
+			}
 
 		case 7: // Number of Open Findings
-			// calculatedValue = 300
+			var finModel registerModels.FINModel
+
+			fins, _ := finModel.GetAll(map[string]interface{}{
+				"dbStatus":  "active",
+				"companyId": account.CompanyId,
+			})
+
+			for _, fin := range fins {
+				if fin.FindingStatus.Value == "Open" {
+					calculatedValue++
+				}
+			}
 
 		case 8: // Number of Not completed A&O Activities
-			// calculatedValue = 300
+			var aopModel registerModels.AOPModel
+
+			aops, _ := aopModel.GetAll(map[string]interface{}{
+				"dbStatus":  "active",
+				"companyId": account.CompanyId,
+			})
+
+			for _, aop := range aops {
+				if !modules.IsDateBigger(aop.NextAoaDate) {
+					calculatedValue++
+				}
+			}
 
 		case 9: // Number of Overdue Actions
 			var actionModel registerComponentModels.ActionModel
-
-			var num int64 = 0
 
 			actions, _ := actionModel.GetAll(map[string]interface{}{
 				"dbStatus":  "active",
@@ -68,14 +155,8 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 
 			for _, action := range actions {
 				if action.VerificationStatus.Value == "Delayed" {
-					num++
+					calculatedValue++
 				}
-			}
-
-			if len(actions) > 0 {
-				calculatedValue = int64(float64(num) / float64(len(actions)) * 100)
-			} else {
-				calculatedValue = 0
 			}
 
 		case 10: // Number of Residual High Business Risks / Opportunity Level
@@ -137,19 +218,21 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 		case 14: // Equipment Safety Rate %
 			var eiModel registerModels.EIModel
 
+			var num int64 = 0
+
 			eis, _ := eiModel.GetAll(map[string]interface{}{
 				"dbStatus":  "active",
 				"companyId": account.CompanyId,
 			})
 
-			eisSafeties, _ := eiModel.GetAll(map[string]interface{}{
-				"dbStatus":  "active",
-				"companyId": account.CompanyId,
-				"eis":       1,
-			})
+			for _, ei := range eis {
+				if modules.IsDateBigger(ei.NVCD) {
+					num++
+				}
+			}
 
 			if len(eis) > 0 {
-				calculatedValue = int64(float64(len(eisSafeties)) / float64(len(eis)) * 100)
+				calculatedValue = int64(float64(num) / float64(len(eis)) * 100)
 			} else {
 				calculatedValue = 0
 			}
