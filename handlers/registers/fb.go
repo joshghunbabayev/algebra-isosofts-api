@@ -73,7 +73,7 @@ func (*FBHandler) Create(c *gin.Context) {
 	fbModel.Create(registerTypes.FB{
 		Id:                fbModel.GenerateUniqueId(),
 		CompanyId:         account.CompanyId,
-		No:                fbModel.GenerateUniqueNo(),
+		No:                fbModel.GenerateUniqueNo(account.CompanyId),
 		JobNumber:         body.JobNumber,
 		JobStartDate:      body.JobStartDate,
 		JobCompletionDate: body.JobCompletionDate,

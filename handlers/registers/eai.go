@@ -76,7 +76,7 @@ func (*EAIHandler) Create(c *gin.Context) {
 	eaiModel.Create(registerTypes.EAI{
 		Id:        eaiModel.GenerateUniqueId(),
 		CompanyId: account.CompanyId,
-		No:        eaiModel.GenerateUniqueNo(),
+		No:        eaiModel.GenerateUniqueNo(account.CompanyId),
 		Process: tableComponentTypes.DropDownListItem{
 			Id: body.Process,
 		},

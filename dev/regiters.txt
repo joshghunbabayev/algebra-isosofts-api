@@ -1,16 +1,16 @@
-      sql type model handler doc
-BR    ok  ok   ok    ok      ok
-HSR   ok  ok   ok    ok      ok
-LEG   ok  ok   ok    ok      ok
-EAI   ok  ok   ok    ok      ok
-EI    ok  ok   ok    ok      ok
-TRA   ok  ok   ok    ok      ok
-DOC   ok  ok   ok    ok      ok
-VEN   ok  ok   ok    ok      ok
-CUS   ok  ok   ok    ok      ok
-FB    ok  ok   ok    ok      ok
-EA    ok  ok   ok    ok      ok
-MOC   ok  ok   ok    ok      ok
-FIN   ok  ok   ok    ok      ok
-MRM   ok  ok   ok    ok      ok
-AOP   ok  ok   ok    ok      ok
+      model handler
+BR    ok    
+HSR   ok    
+LEG   ok    
+EAI   ok    
+EI    ok    
+TRA   ok    
+DOC   ok    
+VEN   ok    
+CUS   ok    
+FB    ok    
+EA    ok    
+MOC   ok    
+FIN   ok    
+MRM   ok    
+AOP   ok    

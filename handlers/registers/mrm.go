@@ -65,7 +65,7 @@ func (*MRMHandler) Create(c *gin.Context) {
 	mrmModel.Create(registerTypes.MRM{
 		Id:        mrmModel.GenerateUniqueId(),
 		CompanyId: account.CompanyId,
-		No:        mrmModel.GenerateUniqueNo(),
+		No:        mrmModel.GenerateUniqueNo(account.CompanyId),
 		Topic: tableComponentTypes.DropDownListItem{
 			Id: body.Topic,
 		},

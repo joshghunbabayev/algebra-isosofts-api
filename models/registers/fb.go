@@ -29,7 +29,7 @@ func (*FBModel) GenerateUniqueId() string {
 	}
 }
 
-func (*FBModel) GenerateUniqueNo() string {
+func (*FBModel) GenerateUniqueNo(companyId string) string {
 	db := database.GetDatabase()
 
 	year := time.Now().Format("06")
@@ -38,10 +38,11 @@ func (*FBModel) GenerateUniqueNo() string {
 	db.QueryRow(`
 		SELECT "no" 
 		FROM fbregisters 
-		WHERE "no" LIKE ? 
+        WHERE companyId = ? AND "no" LIKE ? 
 		ORDER BY "no" DESC 
 		LIMIT 1
 		`,
+		companyId,
 		"FBR/"+year+"/%",
 	).Scan(&lastNo)
 

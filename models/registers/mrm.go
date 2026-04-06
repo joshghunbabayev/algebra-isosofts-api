@@ -29,7 +29,7 @@ func (*MRMModel) GenerateUniqueId() string {
 	}
 }
 
-func (*MRMModel) GenerateUniqueNo() string {
+func (*MRMModel) GenerateUniqueNo(companyId string) string {
 	db := database.GetDatabase()
 
 	year := time.Now().Format("06")
@@ -38,10 +38,11 @@ func (*MRMModel) GenerateUniqueNo() string {
 	db.QueryRow(`
 		SELECT "no" 
 		FROM mrmregisters 
-		WHERE "no" LIKE ? 
+        WHERE companyId = ? AND "no" LIKE ? 
 		ORDER BY "no" DESC 
 		LIMIT 1
 		`,
+		companyId,
 		"MRM/"+year+"/%",
 	).Scan(&lastNo)
 

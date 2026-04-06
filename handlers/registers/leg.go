@@ -74,7 +74,7 @@ func (*LEGHandler) Create(c *gin.Context) {
 	legModel.Create(registerTypes.LEG{
 		Id:        legModel.GenerateUniqueId(),
 		CompanyId: account.CompanyId,
-		No:        legModel.GenerateUniqueNo(),
+		No:        legModel.GenerateUniqueNo(account.CompanyId),
 		Process: tableComponentTypes.DropDownListItem{
 			Id: body.Process,
 		},

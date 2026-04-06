@@ -85,7 +85,7 @@ func (*DOCHandler) Create(c *gin.Context) {
 	docModel.Create(registerTypes.DOC{
 		Id:        docModel.GenerateUniqueId(),
 		CompanyId: account.CompanyId,
-		No:        docModel.GenerateUniqueNo(),
+		No:        docModel.GenerateUniqueNo(account.CompanyId),
 		Name:      body.Name,
 		Origin: tableComponentTypes.DropDownListItem{
 			Id: body.Origin,

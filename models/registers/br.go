@@ -29,30 +29,35 @@ func (*BRModel) GenerateUniqueId() string {
 	}
 }
 
-func (*BRModel) GenerateUniqueNo() string {
+func (*BRModel) GenerateUniqueNo(companyId string) string {
 	db := database.GetDatabase()
 
 	year := time.Now().Format("06")
 
 	var lastNo string
-	db.QueryRow(`
-		SELECT "no" 
-		FROM brregisters 
-		WHERE "no" LIKE ? 
-		ORDER BY "no" DESC 
-		LIMIT 1
-		`,
+	err := db.QueryRow(`
+        SELECT "no" 
+        FROM brregisters 
+        WHERE companyId = ? AND "no" LIKE ? 
+        ORDER BY "no" DESC 
+        LIMIT 1
+        `,
+		companyId,
 		"BRR/"+year+"/%",
 	).Scan(&lastNo)
 
 	var nextNumber int
-	if lastNo == "" {
+	if err != nil || lastNo == "" {
 		nextNumber = 1
 	} else {
 		parts := strings.Split(lastNo, "/")
-		numPart := parts[2]
-		num, _ := strconv.Atoi(numPart)
-		nextNumber = num + 1
+		if len(parts) == 3 {
+			numPart := parts[2]
+			num, _ := strconv.Atoi(numPart)
+			nextNumber = num + 1
+		} else {
+			nextNumber = 1
+		}
 	}
 
 	newNo := fmt.Sprintf("BRR/%s/%04d", year, nextNumber)

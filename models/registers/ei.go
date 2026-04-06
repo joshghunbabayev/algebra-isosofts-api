@@ -29,7 +29,7 @@ func (*EIModel) GenerateUniqueId() string {
 	}
 }
 
-func (*EIModel) GenerateUniqueNo() string {
+func (*EIModel) GenerateUniqueNo(companyId string) string {
 	db := database.GetDatabase()
 
 	year := time.Now().Format("06")
@@ -38,10 +38,11 @@ func (*EIModel) GenerateUniqueNo() string {
 	db.QueryRow(`
 		SELECT "no" 
 		FROM eiregisters 
-		WHERE "no" LIKE ? 
+        WHERE companyId = ? AND "no" LIKE ? 
 		ORDER BY "no" DESC 
 		LIMIT 1
 		`,
+		companyId,
 		"EIR/"+year+"/%",
 	).Scan(&lastNo)
 

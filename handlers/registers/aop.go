@@ -72,7 +72,7 @@ func (*AOPHandler) Create(c *gin.Context) {
 	aopModel.Create(registerTypes.AOP{
 		Id:        aopModel.GenerateUniqueId(),
 		CompanyId: account.CompanyId,
-		No:        aopModel.GenerateUniqueNo(),
+		No:        aopModel.GenerateUniqueNo(account.CompanyId),
 		ActivityDescription: tableComponentTypes.DropDownListItem{
 			Id: body.ActivityDescription,
 		},

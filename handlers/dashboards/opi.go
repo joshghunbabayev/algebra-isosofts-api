@@ -78,7 +78,7 @@ func (*OPIHandler) Create(c *gin.Context) {
 	opiModel.Create(dashboardTypes.OPI{
 		Id:        opiModel.GenerateUniqueId(),
 		CompanyId: account.CompanyId,
-		No:        opiModel.GenerateUniqueNo(),
+		No:        opiModel.GenerateUniqueNo(account.CompanyId),
 		Title:     body.Title,
 		Function: tableComponentTypes.DropDownListItem{
 			Id: body.Function,

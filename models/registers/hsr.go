@@ -29,7 +29,7 @@ func (*HSRModel) GenerateUniqueId() string {
 	}
 }
 
-func (*HSRModel) GenerateUniqueNo() string {
+func (*HSRModel) GenerateUniqueNo(companyId string) string {
 	db := database.GetDatabase()
 
 	year := time.Now().Format("06")
@@ -38,10 +38,11 @@ func (*HSRModel) GenerateUniqueNo() string {
 	db.QueryRow(`
 		SELECT "no" 
 		FROM hsrregisters 
-		WHERE "no" LIKE ? 
+        WHERE companyId = ? AND "no" LIKE ? 
 		ORDER BY "no" DESC 
 		LIMIT 1
 		`,
+		companyId,
 		"HSR/"+year+"/%",
 	).Scan(&lastNo)
 

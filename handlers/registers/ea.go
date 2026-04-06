@@ -76,7 +76,7 @@ func (*EAHandler) Create(c *gin.Context) {
 	eaModel.Create(registerTypes.EA{
 		Id:                eaModel.GenerateUniqueId(),
 		CompanyId:         account.CompanyId,
-		No:                eaModel.GenerateUniqueNo(),
+		No:                eaModel.GenerateUniqueNo(account.CompanyId),
 		EmployeeName:      body.EmployeeName,
 		Position:          body.Position,
 		LineManager:       body.LineManager,

@@ -74,7 +74,7 @@ func (*MOCHandler) Create(c *gin.Context) {
 	mocModel.Create(registerTypes.MOC{
 		Id:             mocModel.GenerateUniqueId(),
 		CompanyId:      account.CompanyId,
-		No:             mocModel.GenerateUniqueNo(),
+		No:             mocModel.GenerateUniqueNo(account.CompanyId),
 		Issuer:         body.Issuer,
 		IssuerDate:     body.IssuerDate,
 		ReasonOfChange: body.ReasonOfChange,

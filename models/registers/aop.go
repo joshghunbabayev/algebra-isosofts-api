@@ -29,7 +29,7 @@ func (*AOPModel) GenerateUniqueId() string {
 	}
 }
 
-func (*AOPModel) GenerateUniqueNo() string {
+func (*AOPModel) GenerateUniqueNo(companyId string) string {
 	db := database.GetDatabase()
 
 	year := time.Now().Format("06")
@@ -38,10 +38,11 @@ func (*AOPModel) GenerateUniqueNo() string {
 	db.QueryRow(`
 		SELECT "no" 
 		FROM aopregisters 
-		WHERE "no" LIKE ? 
+        WHERE companyId = ? AND "no" LIKE ? 
 		ORDER BY "no" DESC 
 		LIMIT 1
 		`,
+		companyId,
 		"AOR/"+year+"/%",
 	).Scan(&lastNo)
 

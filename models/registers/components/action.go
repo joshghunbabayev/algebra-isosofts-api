@@ -6,6 +6,7 @@ import (
 	"algebra-isosofts-api/modules"
 	registerComponentTypes "algebra-isosofts-api/types/registers/components"
 	"fmt"
+	"strconv"
 	"strings"
 )
 
@@ -24,6 +25,39 @@ func (*ActionModel) GenerateUniqueId() string {
 	} else {
 		return actionModel.GenerateUniqueId()
 	}
+}
+
+func (*ActionModel) GenerateUniqueNo(companyId string, regNo string) string {
+	db := database.GetDatabase()
+
+	var lastNo string
+	err := db.QueryRow(`
+        SELECT "no" 
+        FROM actions 
+        WHERE companyId = ? AND "no" LIKE ? 
+        ORDER BY "no" DESC 
+        LIMIT 1
+        `,
+		companyId,
+		regNo+"/%",
+	).Scan(&lastNo)
+
+	var nextNumber int
+	if err != nil || lastNo == "" {
+		nextNumber = 1
+	} else {
+		parts := strings.Split(lastNo, "/")
+		if len(parts) == 4 {
+			numPart := parts[3]
+			num, _ := strconv.Atoi(numPart)
+			nextNumber = num + 1
+		} else {
+			nextNumber = 1
+		}
+	}
+
+	newNo := fmt.Sprintf("%s/%02d", regNo, nextNumber)
+	return newNo
 }
 
 func (*ActionModel) GetById(Id string) (registerComponentTypes.Action, error) {

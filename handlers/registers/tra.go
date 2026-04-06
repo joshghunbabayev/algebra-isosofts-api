@@ -71,7 +71,7 @@ func (*TRAHandler) Create(c *gin.Context) {
 	traModel.Create(registerTypes.TRA{
 		Id:           traModel.GenerateUniqueId(),
 		CompanyId:    account.CompanyId,
-		No:           traModel.GenerateUniqueNo(),
+		No:           traModel.GenerateUniqueNo(account.CompanyId),
 		EmployeeName: body.EmployeeName,
 		Position:     body.Position,
 		TCLN:         body.TCLN,

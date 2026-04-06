@@ -29,7 +29,7 @@ func (*EAModel) GenerateUniqueId() string {
 	}
 }
 
-func (*EAModel) GenerateUniqueNo() string {
+func (*EAModel) GenerateUniqueNo(companyId string) string {
 	db := database.GetDatabase()
 
 	year := time.Now().Format("06")
@@ -38,10 +38,11 @@ func (*EAModel) GenerateUniqueNo() string {
 	db.QueryRow(`
 		SELECT "no" 
 		FROM earegisters 
-		WHERE "no" LIKE ? 
+        WHERE companyId = ? AND "no" LIKE ? 
 		ORDER BY "no" DESC 
 		LIMIT 1
 		`,
+		companyId,
 		"PAR/"+year+"/%",
 	).Scan(&lastNo)
 

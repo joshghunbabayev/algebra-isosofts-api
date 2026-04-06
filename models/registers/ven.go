@@ -30,7 +30,7 @@ func (*VENModel) GenerateUniqueId() string {
 	}
 }
 
-func (*VENModel) GenerateUniqueNo() string {
+func (*VENModel) GenerateUniqueNo(companyId string) string {
 	db := database.GetDatabase()
 
 	year := time.Now().Format("06")
@@ -39,10 +39,11 @@ func (*VENModel) GenerateUniqueNo() string {
 	db.QueryRow(`
 		SELECT "no" 
 		FROM venregisters 
-		WHERE "no" LIKE ? 
+        WHERE companyId = ? AND "no" LIKE ? 
 		ORDER BY "no" DESC 
 		LIMIT 1
 		`,
+		companyId,
 		"VNR/"+year+"/%",
 	).Scan(&lastNo)
 

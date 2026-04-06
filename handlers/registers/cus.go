@@ -69,7 +69,7 @@ func (*CUSHandler) Create(c *gin.Context) {
 	cusModel.Create(registerTypes.CUS{
 		Id:        cusModel.GenerateUniqueId(),
 		CompanyId: account.CompanyId,
-		No:        cusModel.GenerateUniqueNo(),
+		No:        cusModel.GenerateUniqueNo(account.CompanyId),
 		Name:      body.Name,
 		RegNumber: body.RegNumber,
 		Scope1: tableComponentTypes.DropDownListItem{

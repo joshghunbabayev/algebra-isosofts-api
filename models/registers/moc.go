@@ -29,7 +29,7 @@ func (*MOCModel) GenerateUniqueId() string {
 	}
 }
 
-func (*MOCModel) GenerateUniqueNo() string {
+func (*MOCModel) GenerateUniqueNo(companyId string) string {
 	db := database.GetDatabase()
 
 	year := time.Now().Format("06")
@@ -38,10 +38,11 @@ func (*MOCModel) GenerateUniqueNo() string {
 	db.QueryRow(`
 		SELECT "no" 
 		FROM mocregisters 
-		WHERE "no" LIKE ? 
+        WHERE companyId = ? AND "no" LIKE ? 
 		ORDER BY "no" DESC 
 		LIMIT 1
 		`,
+		companyId,
 		"MOC/"+year+"/%",
 	).Scan(&lastNo)
 

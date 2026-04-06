@@ -24,7 +24,7 @@ func (*OPIModel) GenerateUniqueId() string {
 	return opiModel.GenerateUniqueId()
 }
 
-func (*OPIModel) GenerateUniqueNo() string {
+func (*OPIModel) GenerateUniqueNo(companyId string) string {
 	db := database.GetDatabase()
 
 	year := time.Now().Format("06")
@@ -33,10 +33,11 @@ func (*OPIModel) GenerateUniqueNo() string {
 	db.QueryRow(`
 		SELECT "no" 
 		FROM opis 
-		WHERE "no" LIKE ? 
+        WHERE companyId = ? AND "no" LIKE ? 
 		ORDER BY "no" DESC 
 		LIMIT 1
 		`,
+		companyId,
 		"OPI/"+year+"/%",
 	).Scan(&lastNo)
 

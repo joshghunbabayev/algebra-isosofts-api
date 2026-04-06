@@ -72,7 +72,7 @@ func (*HSRHandler) Create(c *gin.Context) {
 	hsrModel.Create(registerTypes.HSR{
 		Id:        hsrModel.GenerateUniqueId(),
 		CompanyId: account.CompanyId,
-		No:        hsrModel.GenerateUniqueNo(),
+		No:        hsrModel.GenerateUniqueNo(account.CompanyId),
 		Process: tableComponentTypes.DropDownListItem{
 			Id: body.Process,
 		},

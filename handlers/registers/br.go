@@ -75,7 +75,7 @@ func (*BRHandler) Create(c *gin.Context) {
 	brModel.Create(registerTypes.BR{
 		Id:        brModel.GenerateUniqueId(),
 		CompanyId: account.CompanyId,
-		No:        brModel.GenerateUniqueNo(),
+		No:        brModel.GenerateUniqueNo(account.CompanyId),
 		Swot: tableComponentTypes.DropDownListItem{
 			Id: body.Swot,
 		},

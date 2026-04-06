@@ -30,7 +30,7 @@ func (*CUSModel) GenerateUniqueId() string {
 	}
 }
 
-func (*CUSModel) GenerateUniqueNo() string {
+func (*CUSModel) GenerateUniqueNo(companyId string) string {
 	db := database.GetDatabase()
 
 	year := time.Now().Format("06")
@@ -39,10 +39,11 @@ func (*CUSModel) GenerateUniqueNo() string {
 	db.QueryRow(`
 		SELECT "no" 
 		FROM cusregisters 
-		WHERE "no" LIKE ? 
+        WHERE companyId = ? AND "no" LIKE ? 
 		ORDER BY "no" DESC 
 		LIMIT 1
 		`,
+		companyId,
 		"CSR/"+year+"/%",
 	).Scan(&lastNo)
 

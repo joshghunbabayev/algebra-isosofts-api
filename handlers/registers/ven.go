@@ -69,7 +69,7 @@ func (*VENHandler) Create(c *gin.Context) {
 	venModel.Create(registerTypes.VEN{
 		Id:        venModel.GenerateUniqueId(),
 		CompanyId: account.CompanyId,
-		No:        venModel.GenerateUniqueNo(),
+		No:        venModel.GenerateUniqueNo(account.CompanyId),
 		Name:      body.Name,
 		RegNumber: body.RegNumber,
 		Scope1: tableComponentTypes.DropDownListItem{

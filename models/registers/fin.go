@@ -29,7 +29,7 @@ func (*FINModel) GenerateUniqueId() string {
 	}
 }
 
-func (*FINModel) GenerateUniqueNo() string {
+func (*FINModel) GenerateUniqueNo(companyId string) string {
 	db := database.GetDatabase()
 
 	year := time.Now().Format("06")
@@ -38,10 +38,11 @@ func (*FINModel) GenerateUniqueNo() string {
 	db.QueryRow(`
 		SELECT "no" 
 		FROM finregisters 
-		WHERE "no" LIKE ? 
+        WHERE companyId = ? AND "no" LIKE ? 
 		ORDER BY "no" DESC 
 		LIMIT 1
 		`,
+		companyId,
 		"FNR/"+year+"/%",
 	).Scan(&lastNo)
 

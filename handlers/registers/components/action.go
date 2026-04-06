@@ -1,6 +1,8 @@
 package registerComponentHandlers
 
 import (
+	"algebra-isosofts-api/middlewares"
+	registerModels "algebra-isosofts-api/models/registers"
 	registerComponentModels "algebra-isosofts-api/models/registers/components"
 	registerComponentTypes "algebra-isosofts-api/types/registers/components"
 	tableComponentTypes "algebra-isosofts-api/types/tableComponents"
@@ -87,29 +89,19 @@ func (*ActionHandler) Create(c *gin.Context) {
 		return
 	}
 
-	// var brModel registerModels.BRModel
-
-	// br, _ := brModel.GetById(body.RegisterId)
-
-	// if br.IsEmpty() {
-	// 	c.IndentedJSON(404, gin.H{})
-	// 	return
-	// }
-
-	// if br.DbStatus != "active" {
-	// 	c.IndentedJSON(400, gin.H{})
-	// 	return
-	// }
-
-	var no string
-
+	var commonModel registerModels.CommonModel
 	var actionModel registerComponentModels.ActionModel
+
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
+
+	regNo, _ := commonModel.GetRegNo(body.RegisterId, body.RegisterType)
 
 	actionModel.Create(registerComponentTypes.Action{
 		Id:           actionModel.GenerateUniqueId(),
+		CompanyId:    account.CompanyId,
 		RegisterId:   body.RegisterId,
 		RegisterType: body.RegisterType,
-		No:           no,
+		No:           actionModel.GenerateUniqueNo(account.CompanyId, regNo),
 		Title:        body.Title,
 		RaiseDate:    body.RaiseDate,
 		Resources:    body.Resources,

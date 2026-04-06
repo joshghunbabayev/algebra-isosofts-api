@@ -29,7 +29,7 @@ func (*DOCModel) GenerateUniqueId() string {
 	}
 }
 
-func (*DOCModel) GenerateUniqueNo() string {
+func (*DOCModel) GenerateUniqueNo(companyId string) string {
 	db := database.GetDatabase()
 
 	year := time.Now().Format("06")
@@ -38,10 +38,11 @@ func (*DOCModel) GenerateUniqueNo() string {
 	db.QueryRow(`
 		SELECT "no" 
 		FROM docregisters 
-		WHERE "no" LIKE ? 
+        WHERE companyId = ? AND "no" LIKE ? 
 		ORDER BY "no" DESC 
 		LIMIT 1
 		`,
+		companyId,
 		"DCR/"+year+"/%",
 	).Scan(&lastNo)
 

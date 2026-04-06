@@ -74,7 +74,7 @@ func (*FINHandler) Create(c *gin.Context) {
 	finModel.Create(registerTypes.FIN{
 		Id:          finModel.GenerateUniqueId(),
 		CompanyId:   account.CompanyId,
-		No:          finModel.GenerateUniqueNo(),
+		No:          finModel.GenerateUniqueNo(account.CompanyId),
 		Issuer:      body.Issuer,
 		FindingDate: body.FindingDate,
 		JobNumber:   body.JobNumber,
