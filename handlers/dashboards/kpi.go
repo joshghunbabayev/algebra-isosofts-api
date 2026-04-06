@@ -240,19 +240,21 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 		case 15: // Training Validity Rate %
 			var traModel registerModels.TRAModel
 
+			var num int64 = 0
+
 			tras, _ := traModel.GetAll(map[string]interface{}{
 				"dbStatus":  "active",
 				"companyId": account.CompanyId,
 			})
 
-			trasSafeties, _ := traModel.GetAll(map[string]interface{}{
-				"dbStatus":       "active",
-				"companyId":      account.CompanyId,
-				"validityStatus": 1,
-			})
+			for _, tra := range tras {
+				if modules.IsDateBigger(tra.NCD) {
+					num++
+				}
+			}
 
 			if len(tras) > 0 {
-				calculatedValue = int64(float64(len(trasSafeties)) / float64(len(tras)) * 100)
+				calculatedValue = int64(float64(num) / float64(len(tras)) * 100)
 			} else {
 				calculatedValue = 0
 			}
@@ -260,19 +262,21 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 		case 16: // Documents Review Rate %
 			var docModel registerModels.DOCModel
 
+			var num int64 = 0
+
 			docs, _ := docModel.GetAll(map[string]interface{}{
 				"dbStatus":  "active",
 				"companyId": account.CompanyId,
 			})
 
-			docsActuals, _ := docModel.GetAll(map[string]interface{}{
-				"dbStatus":  "active",
-				"companyId": account.CompanyId,
-				"actual":    1,
-			})
+			for _, doc := range docs {
+				if modules.IsDateBigger(doc.NextReviewDate) {
+					num++
+				}
+			}
 
 			if len(docs) > 0 {
-				calculatedValue = int64(float64(len(docsActuals)) / float64(len(docs)) * 100)
+				calculatedValue = int64(float64(num) / float64(len(docs)) * 100)
 			} else {
 				calculatedValue = 0
 			}
@@ -280,19 +284,21 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 		case 17: // Vendors Evaluation Rate %
 			var venModel registerModels.VENModel
 
+			var num int64 = 0
+
 			vens, _ := venModel.GetAll(map[string]interface{}{
 				"dbStatus":  "active",
 				"companyId": account.CompanyId,
 			})
 
-			vensActuals, _ := venModel.GetAll(map[string]interface{}{
-				"dbStatus":       "active",
-				"companyId":      account.CompanyId,
-				"evaluationDone": 1,
-			})
+			for _, ven := range vens {
+				if modules.IsDateBigger(ven.NRD) {
+					num++
+				}
+			}
 
 			if len(vens) > 0 {
-				calculatedValue = int64(float64(len(vensActuals)) / float64(len(vens)) * 100)
+				calculatedValue = int64(float64(num) / float64(len(vens)) * 100)
 			} else {
 				calculatedValue = 0
 			}
@@ -320,19 +326,21 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 		case 19: // Customer Feedback Evaluation Rate %
 			var cusModel registerModels.CUSModel
 
+			var num int64 = 0
+
 			cuss, _ := cusModel.GetAll(map[string]interface{}{
 				"dbStatus":  "active",
 				"companyId": account.CompanyId,
 			})
 
-			cussActuals, _ := cusModel.GetAll(map[string]interface{}{
-				"dbStatus":       "active",
-				"companyId":      account.CompanyId,
-				"evaluationDone": 1,
-			})
+			for _, cus := range cuss {
+				if modules.IsDateBigger(cus.ReviewDate) {
+					num++
+				}
+			}
 
 			if len(cuss) > 0 {
-				calculatedValue = int64(float64(len(cussActuals)) / float64(len(cuss)) * 100)
+				calculatedValue = int64(float64(num) / float64(len(cuss)) * 100)
 			} else {
 				calculatedValue = 0
 			}
@@ -370,19 +378,21 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 		case 22: // Employee Performance Appraisal Status Rate %
 			var eaModel registerModels.EAModel
 
+			var num int64 = 0
+
 			eas, _ := eaModel.GetAll(map[string]interface{}{
 				"dbStatus":  "active",
 				"companyId": account.CompanyId,
 			})
 
-			easActuals, _ := eaModel.GetAll(map[string]interface{}{
-				"dbStatus":  "active",
-				"companyId": account.CompanyId,
-				"evs":       1,
-			})
+			for _, ea := range eas {
+				if modules.IsDateBigger(ea.NextAppraisalDate) {
+					num++
+				}
+			}
 
 			if len(eas) > 0 {
-				calculatedValue = int64(float64(len(easActuals)) / float64(len(eas)) * 100)
+				calculatedValue = int64(float64(num) / float64(len(eas)) * 100)
 			} else {
 				calculatedValue = 0
 			}
@@ -630,7 +640,7 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 			})
 
 			for _, aop := range aops {
-				if aop.AOAStatus == "Closed" {
+				if modules.IsDateBigger(aop.NextAoaDate) {
 					num++
 				}
 			}
