@@ -1,9 +1,9 @@
 1. For get all brregister from db
 
-	GET /api/register/opi/all                    (active)
-	GET /api/register/opi/all?status=active
-	GET /api/register/opi/all?status=archived
-	GET /api/register/opi/all?status=deleted
+	GET /api/dashboard/opi/all                    (active)
+	GET /api/dashboard/opi/all?status=active
+	GET /api/dashboard/opi/all?status=archived
+	GET /api/dashboard/opi/all?status=deleted
 
 array / icinde :
 

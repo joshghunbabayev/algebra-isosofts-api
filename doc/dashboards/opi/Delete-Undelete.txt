@@ -1,6 +1,6 @@
 For delete and undelete
-    PUT /api/register/opi/all/delete
-    PUT /api/register/opi/all/undelete
+    PUT /api/dashboard/opi/all/delete
+    PUT /api/dashboard/opi/all/undelete
 
 body: 
 {

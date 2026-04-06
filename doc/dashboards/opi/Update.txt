@@ -1,5 +1,5 @@
 For update brregister
-	PUT    /api/register/opi/one/:id
+	PUT    /api/dashboard/opi/one/:id
 
 body:
 var body struct {

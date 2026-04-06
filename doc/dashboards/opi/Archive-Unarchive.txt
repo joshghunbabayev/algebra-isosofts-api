@@ -1,6 +1,6 @@
 For archive and unarchive
-    PUT /api/register/opi/all/archive
-    PUT /api/register/opi/all/unarchive
+    PUT /api/dashboard/opi/all/archive
+    PUT /api/dashboard/opi/all/unarchive
 
 body: 
 {
