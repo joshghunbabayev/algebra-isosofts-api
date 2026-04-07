@@ -315,7 +315,7 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 
 			if len(vens) > 0 {
 				for _, ven := range vens {
-					num += int64(ven.EvaluationDone + ven.QGS + ven.Communication + ven.OTD + ven.Documentation + ven.HS + ven.Environment)
+					num += int64(ven.QGS + ven.Communication + ven.OTD + ven.Documentation + ven.HS + ven.Environment)
 				}
 
 				calculatedValue = int64(float64(num) / float64(len(vens)))
@@ -357,7 +357,7 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 
 			if len(cuss) > 0 {
 				for _, cus := range cuss {
-					num += int64(cus.EvaluationDone + cus.QGS + cus.Communication + cus.OTD + cus.Documentation + cus.HS + cus.Environment)
+					num += int64(cus.QGS + cus.Communication + cus.OTD + cus.Documentation + cus.HS + cus.Environment)
 				}
 
 				calculatedValue = int64(float64(num) / float64(len(cuss)))
