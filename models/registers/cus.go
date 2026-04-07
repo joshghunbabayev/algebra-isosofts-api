@@ -271,12 +271,12 @@ func (*CUSModel) SetScores(Id string, cus *registerTypes.CUS) error {
 
 		count := float64(len(fbs))
 
-		cus.QGS = int8(math.Round(float64(sumQGS) / count))
-		cus.Communication = int8(math.Round(float64(sumCommunication) / count))
-		cus.OTD = int8(math.Round(float64(sumOTD) / count))
-		cus.Documentation = int8(math.Round(float64(sumDocumentation) / count))
-		cus.HS = int8(math.Round(float64(sumHS) / count))
-		cus.Environment = int8(math.Round(float64(sumEnvironment) / count))
+		cus.QGS = float32(math.Round((float64(sumQGS)/count)*10) / 10)
+		cus.Communication = float32(math.Round((float64(sumCommunication)/count)*10) / 10)
+		cus.OTD = float32(math.Round((float64(sumOTD)/count)*10) / 10)
+		cus.Documentation = float32(math.Round((float64(sumDocumentation)/count)*10) / 10)
+		cus.HS = float32(math.Round((float64(sumHS)/count)*10) / 10)
+		cus.Environment = float32(math.Round((float64(sumEnvironment)/count)*10) / 10)
 	}
 
 	return err

@@ -272,12 +272,12 @@ func (*VENModel) SetScores(Id string, ven *registerTypes.VEN) error {
 
 		count := float64(len(vendorFeedbacks))
 
-		ven.QGS = int8(math.Round(float64(sumQGS) / count))
-		ven.Communication = int8(math.Round(float64(sumCommunication) / count))
-		ven.OTD = int8(math.Round(float64(sumOTD) / count))
-		ven.Documentation = int8(math.Round(float64(sumDocumentation) / count))
-		ven.HS = int8(math.Round(float64(sumHS) / count))
-		ven.Environment = int8(math.Round(float64(sumEnvironment) / count))
+		ven.QGS = float32(math.Round((float64(sumQGS)/count)*10) / 10)
+		ven.Communication = float32(math.Round((float64(sumCommunication)/count)*10) / 10)
+		ven.OTD = float32(math.Round((float64(sumOTD)/count)*10) / 10)
+		ven.Documentation = float32(math.Round((float64(sumDocumentation)/count)*10) / 10)
+		ven.HS = float32(math.Round((float64(sumHS)/count)*10) / 10)
+		ven.Environment = float32(math.Round((float64(sumEnvironment)/count)*10) / 10)
 	}
 
 	return err

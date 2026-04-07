@@ -17,12 +17,12 @@ type VEN struct {
 	RegistrationDate string                               `json:"registrationDate"`
 	NRD              string                               `json:"nrd"`
 	EvaluationDone   int8                                 `json:"evaluationDone"`
-	QGS              int8                                 `json:"qgs"`
-	Communication    int8                                 `json:"communication"`
-	OTD              int8                                 `json:"otd"`
-	Documentation    int8                                 `json:"documentation"`
-	HS               int8                                 `json:"hs"`
-	Environment      int8                                 `json:"environment"`
+	QGS              float32                              `json:"qgs"`
+	Communication    float32                              `json:"communication"`
+	OTD              float32                              `json:"otd"`
+	Documentation    float32                              `json:"documentation"`
+	HS               float32                              `json:"hs"`
+	Environment      float32                              `json:"environment"`
 	Comment          string                               `json:"comment"`
 	DbStatus         string                               `json:"dbStatus"`
 	DbLastStatus     string                               `json:"-"`
