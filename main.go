@@ -22,39 +22,27 @@ func main() {
 	r.RedirectTrailingSlash = false
 	routes.APIRoutes(r.Group("/api"))
 
-	var kpiModel dashboardModels.KPIModel
+	// ---- ARKA PLAN ZAMANLAYICI (GOROUTINE) BAŞLANGICI ----
+	// Bu bloğu go func() içine aldığımız için r.Run()'ı bloklamaz, arka planda akar.
+	go func() {
+		var kpiModel dashboardModels.KPIModel
 
-	ticker := time.NewTicker(1 * time.Hour)
+		// Test için 1 saniye bırakıyorum, 4 saat için: 4 * time.Hour yaparsın
+		ticker := time.NewTicker(1 * time.Hour)
+		defer ticker.Stop()
 
-	// Program kapandığında bellek sızıntısını önlemek için ticker'ı durduruyoruz
-	defer ticker.Stop()
-
-	// Ticker'ı dinlemek için sonsuz bir döngü başlatıyoruz
-	for range ticker.C {
-		kpiModel.UpdateMonthsAll()
-	}
-
-	// r.GET("/reddli", func(c *gin.Context) {
-	// 	var dropDownListItemModel tableComponentModels.DropDownListItemModel
-	// 	dropDownListItemModel.DuplicateDefaults()
-	// 	c.IndentedJSON(201, gin.H{})
-	// })
-
-	// r.GET("/kpid", func(c *gin.Context) {
-	// 	var kpiModel dashboardModels.KPIModel
-	// 	kpiModel.DuplicateDefaults("qwqwqwqwqwqw")
-	// 	c.IndentedJSON(201, gin.H{})
-	// })
-
-	// r.GET("/rn", func(c *gin.Context) {
-	// 	var commonModel registerModels.CommonModel
-	// 	a, _ := commonModel.GetRegNo("32cP24T2HXM62zx5Zu2D4Jd10173QS", "cus")
-	// 	c.IndentedJSON(201, a)
-	// })
+		for range ticker.C {
+			kpiModel.UpdateMonthsAll()
+		}
+	}()
+	// ---- ARKA PLAN ZAMANLAYICI BİTİŞİ ----
 
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8000"
 	}
+
+	// r.Run programı burada kilitler ve istekleri dinlemeye başlar.
+	// Ama yukarıdaki kod 'go' ile başladığı için o arkada dönmeye devam eder.
 	r.Run(":" + port)
 }
