@@ -33,11 +33,9 @@ func AccessMiddleware() gin.HandlerFunc {
 		isosoftsUrl := os.Getenv("ISOSOFTS_API_URL") + "/api/algebra/check-access?register=" + register + "&token=" + token
 
 		resp, err := http.Get(isosoftsUrl)
-		if err != nil {
-			c.AbortWithStatusJSON(500, gin.H{"error": "Identity service is unreachable"})
-			return
+		if err == nil {
+			resp.Body.Close()
 		}
-		defer resp.Body.Close()
 
 		if resp.StatusCode != 200 {
 			c.AbortWithStatusJSON(403, gin.H{

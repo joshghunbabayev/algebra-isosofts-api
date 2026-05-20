@@ -678,7 +678,6 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 		}
 
 		kpis[i].ActualKPI = calculatedValue
-		kpis[i].April = calculatedValue
 	}
 
 	c.IndentedJSON(200, kpis)
