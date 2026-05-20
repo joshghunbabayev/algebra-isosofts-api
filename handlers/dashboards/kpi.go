@@ -18,6 +18,8 @@ func (*KPIHandler) GetAll(c *gin.Context) {
 
 	var kpiModel dashboardModels.KPIModel
 
+	kpiModel.UpdateMonthsByCompanyId(account.CompanyId)
+
 	kpis, err := kpiModel.GetAll(map[string]interface{}{
 		"companyId": account.CompanyId,
 	})
