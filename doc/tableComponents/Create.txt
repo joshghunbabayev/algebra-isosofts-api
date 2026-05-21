@@ -1,0 +1,9 @@
+For create brregister
+	POST    /api/tablecomponent/dropdownlistitem
+	
+body:
+	var body struct {
+		Type       string `json:"type"`
+		Value      string `json:"value"`
+		ShortValue string `json:"shortValue"`
+	}

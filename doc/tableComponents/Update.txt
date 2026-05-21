@@ -1,0 +1,8 @@
+For update brregister
+	PUT    /api/tablecomponent/dropdownlistitem/:id
+
+body:
+	var body struct {
+		Value      string `json:"value"`
+		ShortValue string `json:"shortValue"`
+	}
