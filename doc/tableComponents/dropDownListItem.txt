@@ -1,5 +1,5 @@
 1. For get all dropdownlistitems from db
-	GET    /api/tablecomponent/dropdownlistitem
+	GET     
 
 {
     "affectedPosition": [

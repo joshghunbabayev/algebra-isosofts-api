@@ -118,6 +118,43 @@ func (*DropDownListItemModel) Create(dropDownListItem tableComponentTypes.DropDo
 	return nil
 }
 
+func (*DropDownListItemModel) Update(Id string, fields map[string]interface{}) error {
+	if len(fields) == 0 {
+		return nil
+	}
+
+	setClause := ""
+	values := []interface{}{}
+
+	for key, val := range fields {
+		setClause += fmt.Sprintf(` "%s" = ?,`, key)
+		values = append(values, val)
+	}
+
+	setClause = strings.TrimSuffix(setClause, ",")
+	query := fmt.Sprintf(`
+			UPDATE dropdownlistitems 
+			SET %s 
+			WHERE "id" = ?
+		`,
+		setClause,
+	)
+	values = append(values, Id)
+
+	db := database.GetDatabase()
+	_, err := db.Exec(query, values...)
+	return err
+}
+
+func (*DropDownListItemModel) Delete(Id string) error {
+	db := database.GetDatabase()
+	_, err := db.Exec(`
+			DELETE FROM dropdownlistitems 
+			WHERE id = ?
+		`, Id)
+	return err
+}
+
 func (*DropDownListItemModel) DuplicateDefaults(companyId string) error {
 	db := database.GetDatabase()
 	rows, err := db.Query(`
