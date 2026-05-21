@@ -4,6 +4,8 @@ import (
 	"algebra-isosofts-api/database"
 	"algebra-isosofts-api/modules"
 	tableComponentTypes "algebra-isosofts-api/types/tableComponents"
+	"fmt"
+	"strings"
 )
 
 type DropDownListItemModel struct {
@@ -36,6 +38,7 @@ func (*DropDownListItemModel) GetById(Id string) (tableComponentTypes.DropDownLi
 	var dropDownListItem tableComponentTypes.DropDownListItem
 	err := row.Scan(
 		&dropDownListItem.Id,
+		&dropDownListItem.CompanyId,
 		&dropDownListItem.Type,
 		&dropDownListItem.Value,
 		&dropDownListItem.ShortValue,
@@ -44,13 +47,26 @@ func (*DropDownListItemModel) GetById(Id string) (tableComponentTypes.DropDownLi
 	return dropDownListItem, err
 }
 
-func (*DropDownListItemModel) GetAll() ([]tableComponentTypes.DropDownListItem, error) {
+func (*DropDownListItemModel) GetAll(filters map[string]interface{}) ([]tableComponentTypes.DropDownListItem, error) {
 	db := database.GetDatabase()
-	rows, err := db.Query(`
-			SELECT * 
-			FROM dropdownlistitems
+	whereClause := ""
+	values := []interface{}{}
+
+	if len(filters) > 0 {
+		whereParts := []string{}
+		for key, val := range filters {
+			whereParts = append(whereParts, fmt.Sprintf(`"%s" = ?`, key))
+			values = append(values, val)
+		}
+		whereClause = "WHERE " + strings.Join(whereParts, " AND ")
+	}
+
+	query := fmt.Sprintf(`
+			SELECT * FROM dropdownlistitems %s
 		`,
+		whereClause,
 	)
+	rows, err := db.Query(query, values...)
 
 	if err != nil {
 		return nil, err
@@ -63,6 +79,7 @@ func (*DropDownListItemModel) GetAll() ([]tableComponentTypes.DropDownListItem, 
 		var dropDownListItem tableComponentTypes.DropDownListItem
 		rows.Scan(
 			&dropDownListItem.Id,
+			&dropDownListItem.CompanyId,
 			&dropDownListItem.Type,
 			&dropDownListItem.Value,
 			&dropDownListItem.ShortValue,
@@ -80,13 +97,15 @@ func (*DropDownListItemModel) Create(dropDownListItem tableComponentTypes.DropDo
 	_, err := db.Exec(`
 			INSERT INTO dropdownlistitems (
 				"id", 
+				"companyId", 
 				"type", 
 				"value", 
 				"shortValue"
 			) 
-			VALUES (?, ?, ?, ?)
+			VALUES (?, ?, ?, ?, ?)
 		`,
 		dropDownListItem.Id,
+		dropDownListItem.CompanyId,
 		dropDownListItem.Type,
 		dropDownListItem.Value,
 		dropDownListItem.ShortValue,
@@ -99,7 +118,7 @@ func (*DropDownListItemModel) Create(dropDownListItem tableComponentTypes.DropDo
 	return nil
 }
 
-func (*DropDownListItemModel) DuplicateDefaults() error {
+func (*DropDownListItemModel) DuplicateDefaults(companyId string) error {
 	db := database.GetDatabase()
 	rows, err := db.Query(`
 			SELECT * 
@@ -127,6 +146,7 @@ func (*DropDownListItemModel) DuplicateDefaults() error {
 
 	for _, defaultDropDownListItem := range defaultDropDownListItems {
 		defaultDropDownListItem.Id = dropDownListItemModel.GenerateUniqueId()
+		defaultDropDownListItem.CompanyId = companyId
 		dropDownListItemModel.Create(defaultDropDownListItem)
 	}
 

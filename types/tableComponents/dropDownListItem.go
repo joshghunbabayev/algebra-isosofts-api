@@ -2,6 +2,7 @@ package tableComponentTypes
 
 type DropDownListItem struct {
 	Id         string `json:"id"`
+	CompanyId  string `json:"companyId"`
 	Type       string `json:"type"`
 	Value      string `json:"value"`
 	ShortValue string `json:"shortValue"`

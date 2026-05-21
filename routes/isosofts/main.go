@@ -6,4 +6,5 @@ import (
 
 func MainRoutes(rg *gin.RouterGroup) {
 	KPIRoutes(rg.Group("/kpi"))
+	DropDownListItemRoutes(rg.Group("/dropdownlistitem"))
 }
