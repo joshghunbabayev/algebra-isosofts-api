@@ -53,7 +53,7 @@ func (*ActionHandler) Create(c *gin.Context) {
 		Resources          string `json:"resources"`
 		Currency           string `json:"currency"`
 		RelativeFunction   string `json:"relativeFunction"`
-		RPID               string `json:"rpId"`
+		ResponsibleId      string `json:"responsibleId"`
 		Deadline           string `json:"deadline"`
 		Confirmation       string `json:"confirmation"`
 		Status             string `json:"status"`
@@ -109,8 +109,8 @@ func (*ActionHandler) Create(c *gin.Context) {
 		RelativeFunction: tableComponentTypes.DropDownListItem{
 			Id: body.RelativeFunction,
 		},
-		RPID:     body.RPID,
-		Deadline: body.Deadline,
+		ResponsibleId: body.ResponsibleId,
+		Deadline:      body.Deadline,
 		Confirmation: tableComponentTypes.DropDownListItem{
 			Id: body.Confirmation,
 		},
@@ -183,7 +183,7 @@ func (*ActionHandler) Update(c *gin.Context) {
 		Resources          string `json:"resources"`
 		Currency           string `json:"currency"`
 		RelativeFunction   string `json:"relativeFunction"`
-		RPID               string `json:"rpId"`
+		ResponsibleId      string `json:"responsibleId"`
 		Deadline           string `json:"deadline"`
 		Confirmation       string `json:"confirmation"`
 		Status             string `json:"status"`
@@ -225,7 +225,7 @@ func (*ActionHandler) Update(c *gin.Context) {
 		"resources":          body.Resources,
 		"currency":           body.Currency,
 		"relativeFunction":   body.RelativeFunction,
-		"rpId":               body.RPID,
+		"responsibleId":      body.ResponsibleId,
 		"deadline":           body.Deadline,
 		"confirmation":       body.Confirmation,
 		"status":             body.Status,

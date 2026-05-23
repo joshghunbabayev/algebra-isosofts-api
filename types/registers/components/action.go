@@ -13,7 +13,7 @@ type Action struct {
 	Resources          string                               `json:"resources"`
 	Currency           string                               `json:"currency"`
 	RelativeFunction   tableComponentTypes.DropDownListItem `json:"relativeFunction"`
-	RPID               string                               `json:"rpId"`
+	ResponsibleId      string                               `json:"responsibleId"`
 	Deadline           string                               `json:"deadline"`
 	Confirmation       tableComponentTypes.DropDownListItem `json:"confirmation"`
 	Status             tableComponentTypes.DropDownListItem `json:"status"`
