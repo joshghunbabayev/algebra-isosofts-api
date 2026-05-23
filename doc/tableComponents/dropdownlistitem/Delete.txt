@@ -1,2 +1,2 @@
 For delete and undelete
-    PUT /api/tablecomponent/dropdownlistitem/:id
+    DELETE /api/tablecomponent/dropdownlistitem/:id

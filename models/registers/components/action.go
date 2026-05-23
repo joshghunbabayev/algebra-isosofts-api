@@ -84,7 +84,7 @@ func (*ActionModel) GetById(Id string) (registerComponentTypes.Action, error) {
 		&action.Resources,
 		&action.Currency,
 		&action.RelativeFunction.Id,
-		&action.Responsible.Id,
+		&action.RPID,
 		&action.Deadline,
 		&action.Confirmation.Id,
 		&action.Status.Id,
@@ -107,7 +107,6 @@ func (*ActionModel) GetById(Id string) (registerComponentTypes.Action, error) {
 		&action.DbLastStatus,
 	)
 	action.RelativeFunction, _ = dropDownListItemModel.GetById(action.RelativeFunction.Id)
-	action.Responsible, _ = dropDownListItemModel.GetById(action.Responsible.Id)
 	action.Confirmation, _ = dropDownListItemModel.GetById(action.Confirmation.Id)
 	action.Status, _ = dropDownListItemModel.GetById(action.Status.Id)
 	action.VerificationStatus, _ = dropDownListItemModel.GetById(action.VerificationStatus.Id)
@@ -170,7 +169,7 @@ func (*ActionModel) GetAll(filters map[string]interface{}) ([]registerComponentT
 			&action.Resources,
 			&action.Currency,
 			&action.RelativeFunction.Id,
-			&action.Responsible.Id,
+			&action.RPID,
 			&action.Deadline,
 			&action.Confirmation.Id,
 			&action.Status.Id,
@@ -193,7 +192,6 @@ func (*ActionModel) GetAll(filters map[string]interface{}) ([]registerComponentT
 			&action.DbLastStatus,
 		)
 		action.RelativeFunction, _ = dropDownListItemModel.GetById(action.RelativeFunction.Id)
-		action.Responsible, _ = dropDownListItemModel.GetById(action.Responsible.Id)
 		action.Confirmation, _ = dropDownListItemModel.GetById(action.Confirmation.Id)
 		action.Status, _ = dropDownListItemModel.GetById(action.Status.Id)
 		action.VerificationStatus, _ = dropDownListItemModel.GetById(action.VerificationStatus.Id)
@@ -230,7 +228,7 @@ func (*ActionModel) Create(action registerComponentTypes.Action) error {
 				"resources",
 				"currency",
 				"relativeFunction",
-				"responsible",
+				"rpId",
 				"deadline",
 				"confirmation",
 				"status",
@@ -263,7 +261,7 @@ func (*ActionModel) Create(action registerComponentTypes.Action) error {
 		action.Resources,
 		action.Currency,
 		action.RelativeFunction.Id,
-		action.Responsible.Id,
+		action.RPID,
 		action.Deadline,
 		action.Confirmation.Id,
 		action.Status.Id,
