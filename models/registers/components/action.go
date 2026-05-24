@@ -103,6 +103,7 @@ func (*ActionModel) GetById(Id string) (registerComponentTypes.Action, error) {
 		&action.October.Id,
 		&action.November.Id,
 		&action.December.Id,
+		&action.CreatedById,
 		&action.DbStatus,
 		&action.DbLastStatus,
 	)
@@ -188,6 +189,7 @@ func (*ActionModel) GetAll(filters map[string]interface{}) ([]registerComponentT
 			&action.October.Id,
 			&action.November.Id,
 			&action.December.Id,
+			&action.CreatedById,
 			&action.DbStatus,
 			&action.DbLastStatus,
 		)
@@ -247,9 +249,10 @@ func (*ActionModel) Create(action registerComponentTypes.Action) error {
 				"october",
 				"november",
 				"december",
+				"createdById",
 				"dbStatus",
 				"dbLastStatus"
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
 		action.Id,
 		action.CompanyId,
@@ -280,6 +283,7 @@ func (*ActionModel) Create(action registerComponentTypes.Action) error {
 		action.October.Id,
 		action.November.Id,
 		action.December.Id,
+		action.CreatedById,
 		action.DbStatus,
 		action.DbLastStatus,
 	)

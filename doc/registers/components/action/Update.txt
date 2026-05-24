@@ -8,7 +8,7 @@ body
     "resources":
     "currency":
     "relativeFunction":
-    "responsible":
+    "responsibleId":
     "deadline":
     "confirmation":
     "status":

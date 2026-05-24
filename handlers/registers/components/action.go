@@ -1,6 +1,7 @@
 package registerComponentHandlers
 
 import (
+	"algebra-isosofts-api/mailer"
 	"algebra-isosofts-api/middlewares"
 	registerModels "algebra-isosofts-api/models/registers"
 	registerComponentModels "algebra-isosofts-api/models/registers/components"
@@ -158,9 +159,25 @@ func (*ActionHandler) Create(c *gin.Context) {
 		December: tableComponentTypes.DropDownListItem{
 			Id: body.December,
 		},
+		CreatedById:  account.Id,
 		DbStatus:     "active",
 		DbLastStatus: "active",
 	})
+
+	// send notification
+	// 4.2	Add/Edit Action-da  həmin Reyestr üzrə Məsul şəxs (full access olan)
+	// Responsible Person-u seçib və Add Action düyməsini basan kimi,
+	// Responsible person və onun rəhbərinə (cc),
+	// həmin Reyestr üzrə Məsul şəxsə (Action yaradan şəxs/cc)
+	// notification email getməlidir. Notification email:
+	// “Dear Recipient,
+	// We would like to inform you that the following action has been assigned to you for implementation:
+	// (action №, action description, action raised date, resources, related function, responsible person, action status, and deadline).
+	// Kindly accept the action and reply to all recipients of this email.
+	// If the action is rejected, so please appropriately reply with brief explanation to all recipients of this email.
+	// Thanks for the prompt response”
+
+	mailer.SendEmail()
 
 	c.IndentedJSON(201, gin.H{})
 }

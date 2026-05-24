@@ -32,6 +32,7 @@ type Action struct {
 	October            tableComponentTypes.DropDownListItem `json:"october"`
 	November           tableComponentTypes.DropDownListItem `json:"november"`
 	December           tableComponentTypes.DropDownListItem `json:"december"`
+	CreatedById        string                               `json:"createdById"`
 	DbStatus           string                               `json:"dbStatus"`
 	DbLastStatus       string                               `json:"-"`
 }
