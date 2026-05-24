@@ -3,6 +3,7 @@ package main
 import (
 	dashboardModels "algebra-isosofts-api/models/dashboards"
 	"algebra-isosofts-api/routes"
+	"fmt"
 	"os"
 	"time"
 
@@ -32,6 +33,8 @@ func main() {
 			kpiModel.UpdateMonthsAll()
 		}
 	}()
+
+	fmt.Println(err)
 
 	port := os.Getenv("PORT")
 	if port == "" {

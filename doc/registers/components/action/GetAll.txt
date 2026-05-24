@@ -19,12 +19,7 @@ GET /api/register/component/action/all
       "value": "",
       "shortValue": ""
     },
-    "responsibleId": {
-      "id": "",
-      "type": "",
-      "value": "",
-      "shortValue": ""
-    },
+    "responsibleId": "oisnadc",
     "deadline": "",
     "confirmation": {
       "id": "",

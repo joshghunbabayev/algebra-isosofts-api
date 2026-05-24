@@ -1,12 +1,15 @@
 package registerComponentHandlers
 
 import (
-	"algebra-isosofts-api/mailer"
 	"algebra-isosofts-api/middlewares"
 	registerModels "algebra-isosofts-api/models/registers"
 	registerComponentModels "algebra-isosofts-api/models/registers/components"
 	registerComponentTypes "algebra-isosofts-api/types/registers/components"
 	tableComponentTypes "algebra-isosofts-api/types/tableComponents"
+	"encoding/json"
+	"net/http"
+	"os"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -177,7 +180,31 @@ func (*ActionHandler) Create(c *gin.Context) {
 	// If the action is rejected, so please appropriately reply with brief explanation to all recipients of this email.
 	// Thanks for the prompt response”
 
-	mailer.SendEmail()
+	if strings.TrimSpace(body.ResponsibleId) != "" {
+		token := c.Query("token")
+
+		isosoftsUrl := os.Getenv("ISOSOFTS_API_URL") + "/api/algebra/account/" + body.ResponsibleId + "?token=" + token
+		resp, err := http.Get(isosoftsUrl)
+
+		if err != nil {
+			c.AbortWithStatusJSON(500, gin.H{"error": "Identity service is unreachable"})
+			return
+		}
+		defer resp.Body.Close()
+
+		if resp.StatusCode != 200 {
+			c.AbortWithStatusJSON(401, gin.H{"error": "Unauthorized by Isosofts"})
+			return
+		}
+
+		var responsible middlewares.RemoteAccount
+		if err := json.NewDecoder(resp.Body).Decode(&responsible); err != nil {
+			c.AbortWithStatusJSON(500, gin.H{"error": "Failed to parse identity data"})
+			return
+		}
+
+		// mailer.SendEmail()
+	}
 
 	c.IndentedJSON(201, gin.H{})
 }
