@@ -20,6 +20,10 @@ type RemoteAccount struct {
 	PhoneNumber   string `json:"phoneNumber"`
 }
 
+func (remoteAccount RemoteAccount) IsEmpty() bool {
+	return remoteAccount.Id == ""
+}
+
 func AuthMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		token := c.Query("token")

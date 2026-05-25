@@ -27,4 +27,5 @@ body
     "october":
     "november":
     "december":
+    "sendNotification" 1 ve ya 0
 }

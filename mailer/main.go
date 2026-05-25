@@ -8,10 +8,18 @@ import (
 	sw "github.com/getbrevo/brevo-go/lib"
 )
 
-// SendEmail avtomatik mail göndərmək üçün əsas funksiya
-func SendEmail(toEmail, toName, subject, htmlContent string) error {
-	// API açarını .env faylından və ya mühit dəyişənlərindən oxuyuruq
+// EmailContact alıcı məlumatlarını (Email və Ad) saxlamaq üçündür
+type EmailContact struct {
+	Email string
+	Name  string
+}
+
+// SendEmail birdən çox TO və CC (istəyə bağlı) alıcıya mail göndərir
+func SendEmail(to []EmailContact, cc []EmailContact, subject, htmlContent string) error {
 	apiKey := os.Getenv("BREVO_API_KEY")
+	if apiKey == "" {
+		return fmt.Errorf("BREVO_API_KEY mühit dəyişəni tapılmadı")
+	}
 
 	ctx := context.WithValue(context.Background(), sw.ContextAPIKey, sw.APIKey{
 		Key: apiKey,
@@ -20,32 +28,55 @@ func SendEmail(toEmail, toName, subject, htmlContent string) error {
 	cfg := sw.NewConfiguration()
 	client := sw.NewAPIClient(cfg)
 
-	// Göndərən şəxs (Sizin sisteminiz)
+	// Göndərən şəxs (Brevo panelində təsdiqlənmiş olmalıdır)
 	sender := &sw.SendSmtpEmailSender{
 		Name:  "Joshghun Babayev",
 		Email: "joshghunbabayev@gmail.com",
 	}
 
-	// Qəbul edən şəxs
-	recipient := sw.SendSmtpEmailTo{
-		Email: toEmail,
-		Name:  toName,
+	// 1. TO (Əsas Alıcılar) Siyahısını Hazırlayırıq
+	if len(to) == 0 {
+		return fmt.Errorf("ən azı bir əsas alıcı (TO) qeyd edilməlidir")
 	}
 
-	// Mail konfiqurasiyası
+	var brevoTo []sw.SendSmtpEmailTo
+	for _, t := range to {
+		name := t.Name
+		brevoTo = append(brevoTo, sw.SendSmtpEmailTo{
+			Email: t.Email,
+			Name:  name,
+		})
+	}
+
+	// Mail konfiqurasiyası (Payload)
 	emailPayload := sw.SendSmtpEmail{
 		Sender:      sender,
-		To:          []sw.SendSmtpEmailTo{recipient},
+		To:          brevoTo,
 		Subject:     subject,
-		HtmlContent: htmlContent, // HTML formatında mesaj
+		HtmlContent: htmlContent,
+	}
+
+	// 2. CC Siyahısını Hazırlayırıq (Əgər parametr olaraq göndərilibsə)
+	if len(cc) > 0 {
+		var brevoCc []sw.SendSmtpEmailCc
+		for _, c := range cc {
+			ccName := c.Name
+			brevoCc = append(brevoCc, sw.SendSmtpEmailCc{
+				Email: c.Email,
+				Name:  ccName,
+			})
+		}
+		// CC siyahısını payload-a əlavə edirik
+		emailPayload.Cc = brevoCc
 	}
 
 	// Göndərmə prosesi
 	_, resp, err := client.TransactionalEmailsApi.SendTransacEmail(ctx, emailPayload)
 	if err != nil {
-		return fmt.Errorf("mail göndərilərkən xəta baş verdi: %v", err)
+		// 400 Bad Request olduqda Brevo-nun qaytardığı dəqiq səbəbi görmək üçün resp-i də yazdırırıq
+		return fmt.Errorf("mail göndərilərkən xəta baş verdi: %v | Brevo Cavabı: %+v", err, resp)
 	}
 
-	fmt.Printf("Mail uğurla göndərildi! Status: %s\n", resp.Status)
+	fmt.Printf("Mail uğurla göndərildi! Status koda uyğun cavab: %s\n", resp.Status)
 	return nil
 }

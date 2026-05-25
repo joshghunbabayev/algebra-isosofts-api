@@ -1,14 +1,14 @@
 package registerComponentHandlers
 
 import (
+	"algebra-isosofts-api/mailer"
 	"algebra-isosofts-api/middlewares"
 	registerModels "algebra-isosofts-api/models/registers"
 	registerComponentModels "algebra-isosofts-api/models/registers/components"
+	"algebra-isosofts-api/modules"
 	registerComponentTypes "algebra-isosofts-api/types/registers/components"
 	tableComponentTypes "algebra-isosofts-api/types/tableComponents"
-	"encoding/json"
-	"net/http"
-	"os"
+	"fmt"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -183,27 +183,32 @@ func (*ActionHandler) Create(c *gin.Context) {
 	if strings.TrimSpace(body.ResponsibleId) != "" {
 		token := c.Query("token")
 
-		isosoftsUrl := os.Getenv("ISOSOFTS_API_URL") + "/api/algebra/account/" + body.ResponsibleId + "?token=" + token
-		resp, err := http.Get(isosoftsUrl)
+		responsible := modules.GetAccountById(body.ResponsibleId, token)
 
-		if err != nil {
-			c.AbortWithStatusJSON(500, gin.H{"error": "Identity service is unreachable"})
-			return
-		}
-		defer resp.Body.Close()
-
-		if resp.StatusCode != 200 {
-			c.AbortWithStatusJSON(401, gin.H{"error": "Unauthorized by Isosofts"})
-			return
+		toContacts := []mailer.EmailContact{
+			{Email: responsible.Email, Name: responsible.Name + " " + responsible.Surname},
 		}
 
-		var responsible middlewares.RemoteAccount
-		if err := json.NewDecoder(resp.Body).Decode(&responsible); err != nil {
-			c.AbortWithStatusJSON(500, gin.H{"error": "Failed to parse identity data"})
-			return
+		ccContacts := []mailer.EmailContact{}
+
+		lineManager := modules.GetAccountById(responsible.LineManagerId, token)
+		if !lineManager.IsEmpty() {
+			ccContacts = append(ccContacts, mailer.EmailContact{Email: lineManager.Email, Name: lineManager.Name + " " + lineManager.Surname})
 		}
 
-		// mailer.SendEmail()
+		createdBy := modules.GetAccountById(account.Id, token)
+		if !createdBy.IsEmpty() {
+			ccContacts = append(ccContacts, mailer.EmailContact{Email: createdBy.Email, Name: createdBy.Name + " " + createdBy.Surname})
+		}
+
+		err := mailer.SendEmail(
+			toContacts,
+			ccContacts,
+			"TEST",
+			"<h1>test</h1>",
+		)
+
+		fmt.Println("errr", err)
 	}
 
 	c.IndentedJSON(201, gin.H{})
@@ -246,6 +251,7 @@ func (*ActionHandler) Update(c *gin.Context) {
 		October            string `json:"october"`
 		November           string `json:"november"`
 		December           string `json:"december"`
+		SendNotification   int    `json:"sendNotification"`
 	}
 
 	var errs = make(map[string]interface{})
@@ -289,6 +295,37 @@ func (*ActionHandler) Update(c *gin.Context) {
 		"november":           body.November,
 		"december":           body.December,
 	})
+
+	if strings.TrimSpace(body.ResponsibleId) != "" && body.SendNotification == 1 {
+		token := c.Query("token")
+
+		responsible := modules.GetAccountById(body.ResponsibleId, token)
+
+		toContacts := []mailer.EmailContact{
+			{Email: responsible.Email, Name: responsible.Name + " " + responsible.Surname},
+		}
+
+		ccContacts := []mailer.EmailContact{}
+
+		lineManager := modules.GetAccountById(responsible.LineManagerId, token)
+		if !lineManager.IsEmpty() {
+			ccContacts = append(ccContacts, mailer.EmailContact{Email: lineManager.Email, Name: lineManager.Name + " " + lineManager.Surname})
+		}
+
+		createdBy := modules.GetAccountById(currentAction.CreatedById, token)
+		if !createdBy.IsEmpty() {
+			ccContacts = append(ccContacts, mailer.EmailContact{Email: createdBy.Email, Name: createdBy.Name + " " + createdBy.Surname})
+		}
+
+		err := mailer.SendEmail(
+			toContacts,
+			ccContacts,
+			"TEST",
+			"<h1>test</h1>",
+		)
+
+		fmt.Println("errr", err)
+	}
 
 	c.JSON(200, gin.H{})
 }
