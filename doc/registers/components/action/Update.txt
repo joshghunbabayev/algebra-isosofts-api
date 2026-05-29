@@ -9,6 +9,7 @@ body
     "currency":
     "relativeFunction":
     "responsibleId":
+    "approverId":
     "deadline":
     "confirmation":
     "status":

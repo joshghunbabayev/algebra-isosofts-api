@@ -7,8 +7,8 @@ import (
 	"os"
 )
 
-func GetAccountById(Id string, token string) middlewares.RemoteAccount {
-	isosoftsUrl := os.Getenv("ISOSOFTS_API_URL") + "/api/algebra/account/" + Id + "?token=" + token
+func GetAccountById(Id string) middlewares.RemoteAccount {
+	isosoftsUrl := os.Getenv("ISOSOFTS_API_URL") + "/api/algebra/account/" + Id
 	resp, err := http.Get(isosoftsUrl)
 
 	var account middlewares.RemoteAccount

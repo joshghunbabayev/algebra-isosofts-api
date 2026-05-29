@@ -20,6 +20,7 @@ GET /api/register/component/action/all
       "shortValue": ""
     },
     "responsibleId": "oisnadc",
+    "approverId":"oisnadc",
     "deadline": "",
     "confirmation": {
       "id": "",

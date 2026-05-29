@@ -2,12 +2,14 @@ package registerComponentModels
 
 import (
 	"algebra-isosofts-api/database"
+	"algebra-isosofts-api/mailer"
 	tableComponentModels "algebra-isosofts-api/models/tableComponents"
 	"algebra-isosofts-api/modules"
 	registerComponentTypes "algebra-isosofts-api/types/registers/components"
 	"fmt"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type ActionModel struct {
@@ -85,6 +87,7 @@ func (*ActionModel) GetById(Id string) (registerComponentTypes.Action, error) {
 		&action.Currency,
 		&action.RelativeFunction.Id,
 		&action.ResponsibleId,
+		&action.ApproverId,
 		&action.Deadline,
 		&action.Confirmation.Id,
 		&action.Status.Id,
@@ -106,6 +109,7 @@ func (*ActionModel) GetById(Id string) (registerComponentTypes.Action, error) {
 		&action.CreatedById,
 		&action.DbStatus,
 		&action.DbLastStatus,
+		&action.LastNotificationDate,
 	)
 	action.RelativeFunction, _ = dropDownListItemModel.GetById(action.RelativeFunction.Id)
 	action.Confirmation, _ = dropDownListItemModel.GetById(action.Confirmation.Id)
@@ -171,6 +175,7 @@ func (*ActionModel) GetAll(filters map[string]interface{}) ([]registerComponentT
 			&action.Currency,
 			&action.RelativeFunction.Id,
 			&action.ResponsibleId,
+			&action.ApproverId,
 			&action.Deadline,
 			&action.Confirmation.Id,
 			&action.Status.Id,
@@ -192,6 +197,7 @@ func (*ActionModel) GetAll(filters map[string]interface{}) ([]registerComponentT
 			&action.CreatedById,
 			&action.DbStatus,
 			&action.DbLastStatus,
+			&action.LastNotificationDate,
 		)
 		action.RelativeFunction, _ = dropDownListItemModel.GetById(action.RelativeFunction.Id)
 		action.Confirmation, _ = dropDownListItemModel.GetById(action.Confirmation.Id)
@@ -231,6 +237,7 @@ func (*ActionModel) Create(action registerComponentTypes.Action) error {
 				"currency",
 				"relativeFunction",
 				"responsibleId",
+				"approverId",
 				"deadline",
 				"confirmation",
 				"status",
@@ -251,8 +258,9 @@ func (*ActionModel) Create(action registerComponentTypes.Action) error {
 				"december",
 				"createdById",
 				"dbStatus",
-				"dbLastStatus"
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+				"dbLastStatus",
+				"lastNotificationDate"
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`,
 		action.Id,
 		action.CompanyId,
@@ -265,6 +273,7 @@ func (*ActionModel) Create(action registerComponentTypes.Action) error {
 		action.Currency,
 		action.RelativeFunction.Id,
 		action.ResponsibleId,
+		action.ApproverId,
 		action.Deadline,
 		action.Confirmation.Id,
 		action.Status.Id,
@@ -286,6 +295,7 @@ func (*ActionModel) Create(action registerComponentTypes.Action) error {
 		action.CreatedById,
 		action.DbStatus,
 		action.DbLastStatus,
+		action.LastNotificationDate,
 	)
 
 	fmt.Println(err)
@@ -319,4 +329,151 @@ func (*ActionModel) Update(Id string, fields map[string]interface{}) error {
 	db := database.GetDatabase()
 	_, err := db.Exec(query, values...)
 	return err
+}
+
+func (*ActionModel) SendDailyNotifications() {
+	var actionModel ActionModel
+	var dropDownModel tableComponentModels.DropDownListItemModel
+
+	actions, err := actionModel.GetAll(map[string]interface{}{
+		"dbStatus": "active",
+	})
+
+	if err != nil {
+		return
+	}
+
+	today := time.Now().Truncate(24 * time.Hour)
+	tomorrow := today.AddDate(0, 0, 1)
+	isEndOfMonth := today.Month() != tomorrow.Month()
+
+	for _, action := range actions {
+		confirmation, _ := dropDownModel.GetById(action.Confirmation.Id)
+		status, _ := dropDownModel.GetById(action.Status.Id)
+		relativeFunc, _ := dropDownModel.GetById(action.RelativeFunction.Id)
+
+		responsible := modules.GetAccountById(action.ResponsibleId)
+		toContacts := []mailer.EmailContact{{Email: responsible.Email, Name: responsible.Name + " " + responsible.Surname}}
+
+		ccContacts := []mailer.EmailContact{}
+		lineManager := modules.GetAccountById(responsible.LineManagerId)
+		if !lineManager.IsEmpty() {
+			ccContacts = append(ccContacts, mailer.EmailContact{Email: lineManager.Email, Name: lineManager.Name + " " + lineManager.Surname})
+		}
+
+		createdBy := modules.GetAccountById(action.CreatedById)
+		if !createdBy.IsEmpty() {
+			ccContacts = append(ccContacts, mailer.EmailContact{Email: createdBy.Email, Name: createdBy.Name + " " + createdBy.Surname})
+		}
+
+		// DÜZƏLİŞ 1: "confirmed" əvəzinə "agreed" yazıldı
+		isConfirmed := strings.ToLower(confirmation.Value) == "agreed" || strings.ToLower(confirmation.Value) == "rejected"
+
+		lastNotifDate := action.LastNotificationDate
+		if lastNotifDate == "" {
+			lastNotifDate = action.RaiseDate
+		}
+
+		lastNotif, err := time.Parse("2006-01-02", lastNotifDate)
+		if err == nil {
+			daysSinceNotif := int(today.Sub(lastNotif).Hours() / 24)
+
+			if !isConfirmed && daysSinceNotif >= 3 {
+				subject := fmt.Sprintf("Action Assignment Notification: %s - %s", action.No, action.Title)
+				body := fmt.Sprintf(`
+                    <p>Dear Recipient,</p>
+                    <p>We would like to inform you that the following action has been assigned to you for implementation:</p>
+                    <br/>
+                    <table style="border-collapse: collapse; width: 100%%; max-width: 600px;">
+                        <tr><td style="padding: 5px; font-weight: bold; width: 150px;">Action No:</td><td style="padding: 5px;">%s</td></tr>
+                        <tr><td style="padding: 5px; font-weight: bold;">Action Description:</td><td style="padding: 5px;">%s</td></tr>
+                        <tr><td style="padding: 5px; font-weight: bold;">Action Raised Date:</td><td style="padding: 5px;">%s</td></tr>
+                        <tr><td style="padding: 5px; font-weight: bold;">Resources:</td><td style="padding: 5px;">%s (%s)</td></tr>
+                        <tr><td style="padding: 5px; font-weight: bold;">Related Function:</td><td style="padding: 5px;">%s</td></tr>
+                        <tr><td style="padding: 5px; font-weight: bold;">Responsible Person:</td><td style="padding: 5px;">%s %s</td></tr>
+                        <tr><td style="padding: 5px; font-weight: bold;">Action Status:</td><td style="padding: 5px;">%s</td></tr>
+                        <tr><td style="padding: 5px; font-weight: bold;">Deadline:</td><td style="padding: 5px;">%s</td></tr>
+                    </table>
+                    <br/>
+                    <p>Kindly accept the action and reply to all recipients of this email.</p>
+                    <p>If the action is rejected, so please appropriately reply with brief explanation to all recipients of this email.</p>
+                    <br/>
+                    <p>Thanks for the prompt response</p>
+                `, action.No, action.Title, action.RaiseDate, action.Resources, action.Currency, relativeFunc.Value, responsible.Name, responsible.Surname, status.Value, action.Deadline)
+
+				mailer.SendEmail(toContacts, ccContacts, subject, body)
+
+				actionModel.Update(action.Id, map[string]interface{}{
+					"lastNotificationDate": today.Format("2006-01-02"),
+				})
+
+				// DÜZƏLİŞ 2: 'continue' silindi ki, kod aşağıdakı Deadline yoxlamalarına keçə bilsin
+			}
+		}
+
+		deadline, err := time.Parse("2006-01-02", action.Deadline)
+		if err == nil {
+			daysToDeadline := int(deadline.Sub(today).Hours() / 24)
+			isCompleted := strings.Contains(status.Value, "100") || strings.ToLower(status.Value) == "completed"
+
+			if !isCompleted {
+				isOneMonthPrior := deadline.AddDate(0, -1, 0).Equal(today)
+
+				if isEndOfMonth || isOneMonthPrior || daysToDeadline == 7 || daysToDeadline == 3 || daysToDeadline == 0 {
+					subject := fmt.Sprintf("Action Reminder: %s - Upcoming Deadline", action.No)
+					body := fmt.Sprintf(`
+                        <p>Dear Recipient,</p>
+                        <p>I would like to remind you that the following action has been assigned to you for implementation:</p>
+                        <br/>
+                        <table style="border-collapse: collapse; width: 100%%; max-width: 600px;">
+                            <tr><td style="padding: 5px; font-weight: bold; width: 150px;">Action No:</td><td style="padding: 5px;">%s</td></tr>
+                            <tr><td style="padding: 5px; font-weight: bold;">Action Description:</td><td style="padding: 5px;">%s</td></tr>
+                            <tr><td style="padding: 5px; font-weight: bold;">Action Raised Date:</td><td style="padding: 5px;">%s</td></tr>
+                            <tr><td style="padding: 5px; font-weight: bold;">Resources:</td><td style="padding: 5px;">%s (%s)</td></tr>
+                            <tr><td style="padding: 5px; font-weight: bold;">Related Function:</td><td style="padding: 5px;">%s</td></tr>
+                            <tr><td style="padding: 5px; font-weight: bold;">Responsible Person:</td><td style="padding: 5px;">%s %s</td></tr>
+                            <tr><td style="padding: 5px; font-weight: bold;">Action Status:</td><td style="padding: 5px;">%s</td></tr>
+                            <tr><td style="padding: 5px; font-weight: bold;">Deadline:</td><td style="padding: 5px;">%s</td></tr>
+                        </table>
+                        <br/>
+                        <p>Please provide an update on the status of the action with evidences of the action progress and highlight the percentage that appropriately reflects the progress status from the list.</p>
+                        <p>10%% 20%% 30%% 40%% 50%% 60%% 70%% 80%% 90%% 100%%</p>
+                        <br/>
+                        <p>Thanks for the prompt response</p>
+                    `, action.No, action.Title, action.RaiseDate, action.Resources, action.Currency, relativeFunc.Value, responsible.Name, responsible.Surname, status.Value, action.Deadline)
+
+					mailer.SendEmail(toContacts, ccContacts, subject, body)
+				}
+
+				if daysToDeadline < 0 {
+					overdueDays := -daysToDeadline
+					if overdueDays%7 == 0 {
+						subject := fmt.Sprintf("DELAYED ACTION WARNING: %s - Overdue by %d Days", action.No, overdueDays)
+						body := fmt.Sprintf(`
+                            <p>Dear Recipient,</p>
+                            <p>I would like to inform you that the following action has been delayed for %d days:</p>
+                            <br/>
+                            <table style="border-collapse: collapse; width: 100%%; max-width: 600px;">
+                                <tr><td style="padding: 5px; font-weight: bold; width: 150px;">Action No:</td><td style="padding: 5px;">%s</td></tr>
+                                <tr><td style="padding: 5px; font-weight: bold;">Action Description:</td><td style="padding: 5px;">%s</td></tr>
+                                <tr><td style="padding: 5px; font-weight: bold;">Action Raised Date:</td><td style="padding: 5px;">%s</td></tr>
+                                <tr><td style="padding: 5px; font-weight: bold;">Resources:</td><td style="padding: 5px;">%s (%s)</td></tr>
+                                <tr><td style="padding: 5px; font-weight: bold;">Related Function:</td><td style="padding: 5px;">%s</td></tr>
+                                <tr><td style="padding: 5px; font-weight: bold;">Responsible Person:</td><td style="padding: 5px;">%s %s</td></tr>
+                                <tr><td style="padding: 5px; font-weight: bold;">Action Status:</td><td style="padding: 5px;">%s</td></tr>
+                                <tr><td style="padding: 5px; font-weight: bold;">Deadline:</td><td style="padding: 5px;">%s</td></tr>
+                            </table>
+                            <br/>
+                            <p>Please provide an update on the status of the action with evidences of the action progress and highlight the percentage that appropriately reflects the progress status from the list.</p>
+                            <p>10%% 20%% 30%% 40%% 50%% 60%% 70%% 80%% 90%% 100%%</p>
+                            <br/>
+                            <p>Thanks for the prompt response</p>
+                        `, overdueDays, action.No, action.Title, action.RaiseDate, action.Resources, action.Currency, relativeFunc.Value, responsible.Name, responsible.Surname, status.Value, action.Deadline)
+
+						mailer.SendEmail(toContacts, ccContacts, subject, body)
+					}
+				}
+			}
+		}
+	}
 }

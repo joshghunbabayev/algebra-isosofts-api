@@ -2,6 +2,7 @@ package main
 
 import (
 	dashboardModels "algebra-isosofts-api/models/dashboards"
+	registerComponentModels "algebra-isosofts-api/models/registers/components"
 	"algebra-isosofts-api/routes"
 	"fmt"
 	"os"
@@ -31,6 +32,17 @@ func main() {
 
 		for range ticker.C {
 			kpiModel.UpdateMonthsAll()
+		}
+	}()
+
+	go func() {
+		var actionModel registerComponentModels.ActionModel
+
+		ticker := time.NewTicker(24 * time.Hour)
+		defer ticker.Stop()
+
+		for range ticker.C {
+			actionModel.SendDailyNotifications()
 		}
 	}()
 

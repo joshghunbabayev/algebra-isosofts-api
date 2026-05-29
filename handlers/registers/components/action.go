@@ -5,11 +5,13 @@ import (
 	"algebra-isosofts-api/middlewares"
 	registerModels "algebra-isosofts-api/models/registers"
 	registerComponentModels "algebra-isosofts-api/models/registers/components"
+	tableComponentModels "algebra-isosofts-api/models/tableComponents"
 	"algebra-isosofts-api/modules"
 	registerComponentTypes "algebra-isosofts-api/types/registers/components"
 	tableComponentTypes "algebra-isosofts-api/types/tableComponents"
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -58,6 +60,7 @@ func (*ActionHandler) Create(c *gin.Context) {
 		Currency           string `json:"currency"`
 		RelativeFunction   string `json:"relativeFunction"`
 		ResponsibleId      string `json:"responsibleId"`
+		ApproverId         string `json:"approverId"`
 		Deadline           string `json:"deadline"`
 		Confirmation       string `json:"confirmation"`
 		Status             string `json:"status"`
@@ -97,15 +100,15 @@ func (*ActionHandler) Create(c *gin.Context) {
 	var actionModel registerComponentModels.ActionModel
 
 	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
-
 	regNo, _ := commonModel.GetRegNo(body.RegisterId, body.RegisterType)
+	actionNo := actionModel.GenerateUniqueNo(account.CompanyId, regNo)
 
 	actionModel.Create(registerComponentTypes.Action{
 		Id:           actionModel.GenerateUniqueId(),
 		CompanyId:    account.CompanyId,
 		RegisterId:   body.RegisterId,
 		RegisterType: body.RegisterType,
-		No:           actionModel.GenerateUniqueNo(account.CompanyId, regNo),
+		No:           actionNo,
 		Title:        body.Title,
 		RaiseDate:    body.RaiseDate,
 		Resources:    body.Resources,
@@ -114,6 +117,7 @@ func (*ActionHandler) Create(c *gin.Context) {
 			Id: body.RelativeFunction,
 		},
 		ResponsibleId: body.ResponsibleId,
+		ApproverId:    body.ApproverId,
 		Deadline:      body.Deadline,
 		Confirmation: tableComponentTypes.DropDownListItem{
 			Id: body.Confirmation,
@@ -162,28 +166,14 @@ func (*ActionHandler) Create(c *gin.Context) {
 		December: tableComponentTypes.DropDownListItem{
 			Id: body.December,
 		},
-		CreatedById:  account.Id,
-		DbStatus:     "active",
-		DbLastStatus: "active",
+		CreatedById:          account.Id,
+		DbStatus:             "active",
+		DbLastStatus:         "active",
+		LastNotificationDate: time.Now().Format("2006-01-02"),
 	})
 
-	// send notification
-	// 4.2	Add/Edit Action-da  həmin Reyestr üzrə Məsul şəxs (full access olan)
-	// Responsible Person-u seçib və Add Action düyməsini basan kimi,
-	// Responsible person və onun rəhbərinə (cc),
-	// həmin Reyestr üzrə Məsul şəxsə (Action yaradan şəxs/cc)
-	// notification email getməlidir. Notification email:
-	// “Dear Recipient,
-	// We would like to inform you that the following action has been assigned to you for implementation:
-	// (action №, action description, action raised date, resources, related function, responsible person, action status, and deadline).
-	// Kindly accept the action and reply to all recipients of this email.
-	// If the action is rejected, so please appropriately reply with brief explanation to all recipients of this email.
-	// Thanks for the prompt response”
-
 	if strings.TrimSpace(body.ResponsibleId) != "" {
-		token := c.Query("token")
-
-		responsible := modules.GetAccountById(body.ResponsibleId, token)
+		responsible := modules.GetAccountById(body.ResponsibleId)
 
 		toContacts := []mailer.EmailContact{
 			{Email: responsible.Email, Name: responsible.Name + " " + responsible.Surname},
@@ -191,21 +181,58 @@ func (*ActionHandler) Create(c *gin.Context) {
 
 		ccContacts := []mailer.EmailContact{}
 
-		lineManager := modules.GetAccountById(responsible.LineManagerId, token)
+		lineManager := modules.GetAccountById(responsible.LineManagerId)
 		if !lineManager.IsEmpty() {
 			ccContacts = append(ccContacts, mailer.EmailContact{Email: lineManager.Email, Name: lineManager.Name + " " + lineManager.Surname})
 		}
 
-		createdBy := modules.GetAccountById(account.Id, token)
+		createdBy := modules.GetAccountById(account.Id)
 		if !createdBy.IsEmpty() {
 			ccContacts = append(ccContacts, mailer.EmailContact{Email: createdBy.Email, Name: createdBy.Name + " " + createdBy.Surname})
 		}
 
+		var dropDownListItemModel tableComponentModels.DropDownListItemModel
+		relativeFunction, _ := dropDownListItemModel.GetById(body.RelativeFunction)
+		status, _ := dropDownListItemModel.GetById(body.Status)
+
+		emailSubject := fmt.Sprintf("New Action Assigned: %s - %s", actionNo, body.Title)
+
+		emailBody := fmt.Sprintf(`
+				<p>Dear %s,</p>
+				<p>We would like to inform you that the following action has been assigned to you for implementation:</p>
+				<br/>
+				<table style="border-collapse: collapse; width: 100%%; max-width: 600px;">
+					<tr><td style="padding: 5px; font-weight: bold; width: 150px;">Action No:</td><td style="padding: 5px;">%s</td></tr>
+					<tr><td style="padding: 5px; font-weight: bold;">Action Description:</td><td style="padding: 5px;">%s</td></tr>
+					<tr><td style="padding: 5px; font-weight: bold;">Action Raised Date:</td><td style="padding: 5px;">%s</td></tr>
+					<tr><td style="padding: 5px; font-weight: bold;">Resources:</td><td style="padding: 5px;">%s (%s)</td></tr>
+					<tr><td style="padding: 5px; font-weight: bold;">Related Function:</td><td style="padding: 5px;">%s</td></tr>
+					<tr><td style="padding: 5px; font-weight: bold;">Responsible Person:</td><td style="padding: 5px;">%s %s</td></tr>
+					<tr><td style="padding: 5px; font-weight: bold;">Action Status:</td><td style="padding: 5px;">%s</td></tr>
+					<tr><td style="padding: 5px; font-weight: bold;">Deadline:</td><td style="padding: 5px;">%s</td></tr>
+				</table>
+				<br/>
+				<p>Kindly accept the action and reply to all recipients of this email.</p>
+				<p>If the action is rejected, so please appropriately reply with brief explanation to all recipients of this email.</p>
+				<br/>
+				<p>Thanks for the prompt response.</p>
+			`,
+			responsible.Name+" "+responsible.Surname,
+			actionNo,
+			body.Title,
+			body.RaiseDate,
+			body.Resources, body.Currency,
+			relativeFunction.Value,
+			responsible.Name, responsible.Surname,
+			status.Value,
+			body.Deadline,
+		)
+
 		err := mailer.SendEmail(
 			toContacts,
 			ccContacts,
-			"TEST",
-			"<h1>test</h1>",
+			emailSubject,
+			emailBody,
 		)
 
 		fmt.Println("errr", err)
@@ -233,6 +260,7 @@ func (*ActionHandler) Update(c *gin.Context) {
 		Currency           string `json:"currency"`
 		RelativeFunction   string `json:"relativeFunction"`
 		ResponsibleId      string `json:"responsibleId"`
+		ApproverId         string `json:"approverId"`
 		Deadline           string `json:"deadline"`
 		Confirmation       string `json:"confirmation"`
 		Status             string `json:"status"`
@@ -276,6 +304,7 @@ func (*ActionHandler) Update(c *gin.Context) {
 		"currency":           body.Currency,
 		"relativeFunction":   body.RelativeFunction,
 		"responsibleId":      body.ResponsibleId,
+		"approverId":         body.ApproverId,
 		"deadline":           body.Deadline,
 		"confirmation":       body.Confirmation,
 		"status":             body.Status,
@@ -297,9 +326,11 @@ func (*ActionHandler) Update(c *gin.Context) {
 	})
 
 	if strings.TrimSpace(body.ResponsibleId) != "" && body.SendNotification == 1 {
-		token := c.Query("token")
+		actionModel.Update(Id, map[string]interface{}{
+			"lastNotificationDate": time.Now().Format("2006-01-02"),
+		})
 
-		responsible := modules.GetAccountById(body.ResponsibleId, token)
+		responsible := modules.GetAccountById(body.ResponsibleId)
 
 		toContacts := []mailer.EmailContact{
 			{Email: responsible.Email, Name: responsible.Name + " " + responsible.Surname},
@@ -307,22 +338,105 @@ func (*ActionHandler) Update(c *gin.Context) {
 
 		ccContacts := []mailer.EmailContact{}
 
-		lineManager := modules.GetAccountById(responsible.LineManagerId, token)
+		lineManager := modules.GetAccountById(responsible.LineManagerId)
 		if !lineManager.IsEmpty() {
 			ccContacts = append(ccContacts, mailer.EmailContact{Email: lineManager.Email, Name: lineManager.Name + " " + lineManager.Surname})
 		}
 
-		createdBy := modules.GetAccountById(currentAction.CreatedById, token)
+		createdBy := modules.GetAccountById(currentAction.CreatedById)
 		if !createdBy.IsEmpty() {
 			ccContacts = append(ccContacts, mailer.EmailContact{Email: createdBy.Email, Name: createdBy.Name + " " + createdBy.Surname})
 		}
 
+		var dropDownListItemModel tableComponentModels.DropDownListItemModel
+		relativeFunction, _ := dropDownListItemModel.GetById(body.RelativeFunction)
+		status, _ := dropDownListItemModel.GetById(body.Status)
+
+		emailSubject := fmt.Sprintf("Action Updated Notification: %s - %s", currentAction.No, body.Title)
+
+		emailBody := fmt.Sprintf(`
+				<p>Dear %s,</p>
+				<p>We would like to inform that some information related to the action assigned to you for implementation has been updated:</p>
+				<br/>
+				<table style="border-collapse: collapse; width: 100%%; max-width: 600px;">
+						<tr><td style="padding: 5px; font-weight: bold; width: 150px;">Action No:</td><td style="padding: 5px;">%s</td></tr>
+						<tr><td style="padding: 5px; font-weight: bold;">Action Description:</td><td style="padding: 5px;">%s</td></tr>
+						<tr><td style="padding: 5px; font-weight: bold;">Action Raised Date:</td><td style="padding: 5px;">%s</td></tr>
+						<tr><td style="padding: 5px; font-weight: bold;">Resources:</td><td style="padding: 5px;">%s (%s)</td></tr>
+						<tr><td style="padding: 5px; font-weight: bold;">Related Function:</td><td style="padding: 5px;">%s</td></tr>
+						<tr><td style="padding: 5px; font-weight: bold;">Responsible Person:</td><td style="padding: 5px;">%s %s</td></tr>
+						<tr><td style="padding: 5px; font-weight: bold;">Action Status:</td><td style="padding: 5px;">%s</td></tr>
+						<tr><td style="padding: 5px; font-weight: bold;">Deadline:</td><td style="padding: 5px;">%s</td></tr>
+				</table>
+				<br/>
+				<p>Thanks for the prompt response.</p>
+			`,
+			responsible.Name+" "+responsible.Surname,
+			currentAction.No,
+			body.Title,
+			body.RaiseDate,
+			body.Resources, body.Currency,
+			relativeFunction.Value,
+			responsible.Name, responsible.Surname,
+			status.Value,
+			body.Deadline,
+		)
+
 		err := mailer.SendEmail(
 			toContacts,
 			ccContacts,
-			"TEST",
-			"<h1>test</h1>",
+			emailSubject,
+			emailBody,
 		)
+
+		if strings.Contains(status.Value, "100") {
+			approver := modules.GetAccountById(body.ApproverId)
+
+			if !approver.IsEmpty() {
+				approverContacts := []mailer.EmailContact{
+					{Email: approver.Email, Name: approver.Name + " " + approver.Surname},
+				}
+
+				approverSubject := fmt.Sprintf("Action Implementation Verification Required: %s", currentAction.No)
+				approverBody := fmt.Sprintf(`
+						<p>Dear %s,</p>
+						<p>I would like to inform you that the following action has been implemented:</p>
+						<br/>
+						<table style="border-collapse: collapse; width: 100%%; max-width: 600px;">
+								<tr><td style="padding: 5px; font-weight: bold; width: 150px;">Action No:</td><td style="padding: 5px;">%s</td></tr>
+								<tr><td style="padding: 5px; font-weight: bold;">Action Description:</td><td style="padding: 5px;">%s</td></tr>
+								<tr><td style="padding: 5px; font-weight: bold;">Action Raised Date:</td><td style="padding: 5px;">%s</td></tr>
+								<tr><td style="padding: 5px; font-weight: bold;">Resources:</td><td style="padding: 5px;">%s (%s)</td></tr>
+								<tr><td style="padding: 5px; font-weight: bold;">Related Function:</td><td style="padding: 5px;">%s</td></tr>
+								<tr><td style="padding: 5px; font-weight: bold;">Responsible Person:</td><td style="padding: 5px;">%s %s</td></tr>
+								<tr><td style="padding: 5px; font-weight: bold;">Action Status:</td><td style="padding: 5px;">%s</td></tr>
+								<tr><td style="padding: 5px; font-weight: bold;">Deadline:</td><td style="padding: 5px;">%s</td></tr>
+						</table>
+						<br/>
+						<p>Please verify the completion of the action by highlighting the appropriate completion status:</p>
+						<p>Completed, Completed with Delay, Rework Required.</p>
+						<br/>
+						<p>Thanks for the prompt response</p>
+					`,
+					approver.Name+" "+approver.Surname,
+					currentAction.No,
+					body.Title,
+					body.RaiseDate,
+					body.Resources, body.Currency,
+					relativeFunction.Value,
+					responsible.Name, responsible.Surname,
+					status.Value,
+					body.Deadline,
+				)
+
+				mailer.SendEmail(
+					approverContacts,
+					[]mailer.EmailContact{},
+					approverSubject,
+					approverBody,
+				)
+			}
+		}
 
 		fmt.Println("errr", err)
 	}
