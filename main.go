@@ -2,7 +2,6 @@ package main
 
 import (
 	dashboardModels "algebra-isosofts-api/models/dashboards"
-	registerComponentModels "algebra-isosofts-api/models/registers/components"
 	"algebra-isosofts-api/routes"
 	"fmt"
 	"os"
@@ -35,16 +34,16 @@ func main() {
 		}
 	}()
 
-	go func() {
-		var actionModel registerComponentModels.ActionModel
+	// go func() {
+	// 	var actionModel registerComponentModels.ActionModel
 
-		ticker := time.NewTicker(24 * time.Hour)
-		defer ticker.Stop()
+	// 	ticker := time.NewTicker(24 * time.Hour)
+	// 	defer ticker.Stop()
 
-		for range ticker.C {
-			actionModel.SendDailyNotifications()
-		}
-	}()
+	// 	for range ticker.C {
+	// 		actionModel.SendDailyNotifications()
+	// 	}
+	// }()
 
 	fmt.Println(err)
 
