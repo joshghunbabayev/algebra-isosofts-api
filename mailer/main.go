@@ -30,8 +30,8 @@ func SendEmail(to []EmailContact, cc []EmailContact, subject, htmlContent string
 
 	// Göndərən şəxs (Brevo panelində təsdiqlənmiş olmalıdır)
 	sender := &sw.SendSmtpEmailSender{
-		Name:  "Joshghun Babayev",
-		Email: "joshghunbabayev@gmail.com",
+		Name:  "IsoSofts Notification",
+		Email: "notification@isosofts.com",
 	}
 
 	// 1. TO (Əsas Alıcılar) Siyahısını Hazırlayırıq
