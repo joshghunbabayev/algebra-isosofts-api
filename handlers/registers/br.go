@@ -23,8 +23,8 @@ func (*BRHandler) GetAll(c *gin.Context) {
 	var brModel registerModels.BRModel
 
 	brs, err := brModel.GetAll(map[string]interface{}{
-		"dbStatus":  status,
 		"companyId": account.CompanyId,
+		"dbStatus":  status,
 	})
 
 	if err != nil {

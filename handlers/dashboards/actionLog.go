@@ -1,6 +1,7 @@
 package dashboardHandlers
 
 import (
+	"algebra-isosofts-api/middlewares"
 	registerModels "algebra-isosofts-api/models/registers"
 	dashboardTypes "algebra-isosofts-api/types/dashboards"
 
@@ -11,6 +12,7 @@ type ActionLogHandler struct {
 }
 
 func (*ActionLogHandler) GetAll(c *gin.Context) {
+	account, _ := c.MustGet("account").(middlewares.RemoteAccount)
 	status := c.Query("status")
 
 	if status == "" {
@@ -35,7 +37,8 @@ func (*ActionLogHandler) GetAll(c *gin.Context) {
 	var aopModel registerModels.AOPModel
 
 	brs, err := brModel.GetAll(map[string]interface{}{
-		"dbStatus": status,
+		"companyId": account.CompanyId,
+		"dbStatus":  status,
 	})
 
 	if err != nil {
@@ -44,7 +47,8 @@ func (*ActionLogHandler) GetAll(c *gin.Context) {
 	}
 
 	hsrs, err := hsrModel.GetAll(map[string]interface{}{
-		"dbStatus": status,
+		"companyId": account.CompanyId,
+		"dbStatus":  status,
 	})
 
 	if err != nil {
@@ -53,7 +57,8 @@ func (*ActionLogHandler) GetAll(c *gin.Context) {
 	}
 
 	legs, err := legModel.GetAll(map[string]interface{}{
-		"dbStatus": status,
+		"companyId": account.CompanyId,
+		"dbStatus":  status,
 	})
 
 	if err != nil {
@@ -62,7 +67,8 @@ func (*ActionLogHandler) GetAll(c *gin.Context) {
 	}
 
 	eais, err := eaiModel.GetAll(map[string]interface{}{
-		"dbStatus": status,
+		"companyId": account.CompanyId,
+		"dbStatus":  status,
 	})
 
 	if err != nil {
@@ -71,7 +77,8 @@ func (*ActionLogHandler) GetAll(c *gin.Context) {
 	}
 
 	eis, err := eiModel.GetAll(map[string]interface{}{
-		"dbStatus": status,
+		"companyId": account.CompanyId,
+		"dbStatus":  status,
 	})
 
 	if err != nil {
@@ -80,7 +87,8 @@ func (*ActionLogHandler) GetAll(c *gin.Context) {
 	}
 
 	tras, err := traModel.GetAll(map[string]interface{}{
-		"dbStatus": status,
+		"companyId": account.CompanyId,
+		"dbStatus":  status,
 	})
 
 	if err != nil {
@@ -89,7 +97,8 @@ func (*ActionLogHandler) GetAll(c *gin.Context) {
 	}
 
 	docs, err := docModel.GetAll(map[string]interface{}{
-		"dbStatus": status,
+		"companyId": account.CompanyId,
+		"dbStatus":  status,
 	})
 
 	if err != nil {
@@ -98,7 +107,8 @@ func (*ActionLogHandler) GetAll(c *gin.Context) {
 	}
 
 	vens, err := venModel.GetAll(map[string]interface{}{
-		"dbStatus": status,
+		"companyId": account.CompanyId,
+		"dbStatus":  status,
 	})
 
 	if err != nil {
@@ -107,7 +117,8 @@ func (*ActionLogHandler) GetAll(c *gin.Context) {
 	}
 
 	cuss, err := cusModel.GetAll(map[string]interface{}{
-		"dbStatus": status,
+		"companyId": account.CompanyId,
+		"dbStatus":  status,
 	})
 
 	if err != nil {
@@ -121,7 +132,8 @@ func (*ActionLogHandler) GetAll(c *gin.Context) {
 	}
 
 	eas, err := eaModel.GetAll(map[string]interface{}{
-		"dbStatus": status,
+		"companyId": account.CompanyId,
+		"dbStatus":  status,
 	})
 
 	if err != nil {
@@ -130,7 +142,8 @@ func (*ActionLogHandler) GetAll(c *gin.Context) {
 	}
 
 	mocs, err := mocModel.GetAll(map[string]interface{}{
-		"dbStatus": status,
+		"companyId": account.CompanyId,
+		"dbStatus":  status,
 	})
 
 	if err != nil {
@@ -139,7 +152,8 @@ func (*ActionLogHandler) GetAll(c *gin.Context) {
 	}
 
 	fins, err := finModel.GetAll(map[string]interface{}{
-		"dbStatus": status,
+		"companyId": account.CompanyId,
+		"dbStatus":  status,
 	})
 
 	if err != nil {
@@ -148,7 +162,8 @@ func (*ActionLogHandler) GetAll(c *gin.Context) {
 	}
 
 	mrms, err := mrmModel.GetAll(map[string]interface{}{
-		"dbStatus": status,
+		"companyId": account.CompanyId,
+		"dbStatus":  status,
 	})
 
 	if err != nil {
@@ -157,7 +172,8 @@ func (*ActionLogHandler) GetAll(c *gin.Context) {
 	}
 
 	aops, err := aopModel.GetAll(map[string]interface{}{
-		"dbStatus": status,
+		"companyId": account.CompanyId,
+		"dbStatus":  status,
 	})
 
 	if err != nil {
